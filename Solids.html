@@ -18,24 +18,26 @@
 <body>
 <header>
     <nav>
-        <a href="#"><img src="images/Solids-Menu.jpg" id="Solids-Menu"></a> <!-- Imagen del menú --> 
-        <div class="search"> 
+        <a href="#"><img src="images/Solids-Menu.jpg" id="Solids-Menu"></a>
+        <div class="search">
             <div class="barra">
                 <div><span class="material-symbols-outlined" id="lupa">search</span></div>
                 <input type="text" placeholder="Search...">
             </div>
         </div>
+
+        <!-- Menú, similar al que tienes el documento -->
         <div class="Secciones">
             <ul class="first-list">
-                <li class="Introduction"> <!--Sección del menu --> 
-                    <a href="#solids">Introduction</a>
+                <li class="Introduction">
+                    <a href="#Introduction">Introduction</a>
                     <ul class="second-list">
-                        <li><a href="#Solids_wh">What is Solids?</a></li>
+                        <li><a href="#what-is">What is Solids?</a></li>
                         <li><a href="#workflow">Solids’ Workflow</a></li>
-                        <li><a href="#Theory">A little bit of theory</a></li>
+                        <li><a href="#theory">A little bit of theory</a></li>
                     </ul>
                 </li>
-                <li class="Solids-Web"> <!--Sección del menu --> 
+                <li class="Solids-Web">
                     <a href="#Solids-Web">Solids in the Web</a>
                     <ul class="second-list">
                         <li><a href="#installing">Installing Dependencies</a></li>
@@ -44,7 +46,7 @@
                         <li><a href="#results">Visualizing the Results</a></li>
                     </ul>
                 </li>
-                <li class="Solids-Local"> <!--Sección del menu --> 
+                <li class="Solids-Local">
                     <a href="#Solids-Local">Solids in Local</a>
                     <ul class="second-list">
                         <li><a href="#installing">Installing Solids</a></li>
@@ -66,13 +68,15 @@
                 </li>
             </ul>
         </div>
-        <div class="Menu">
+
+        <div class="Menu"> 
             <button class="burger-menu" id="burger-menu">
                 <ion-icon class="bars" name="menu-outline"></ion-icon>
             </button>
         </div>
     </nav>
 </header>
+
 
 <section class="content">
     <div class="top-bar">
@@ -87,59 +91,47 @@
     </div>
     <hr class="divider">
 
+
     <div class="texto">
-        <div class="Introduccion">
-            <h1 data-aos="fade-up" id="solids"><b>SOLIDS</b></h1>
-            <p data-aos="fade-up">Solids is a robust, open-source Python package for crystal structure prediction. It natively integrates with the Atomic Simulation Environment (ASE) and uses PyXtal and DScribe Python-libraries to generate symmetry-based random structures and compare their structural features using morphological descriptors. The package is available in the official Python Package Index repository and can be easily installed using pip. Solids can also be run directly in cloud computing environments, such as Google Colab or Kaggle, thanks to its support for ASE and the Effective Medium Theory (EMT) framework, which enable fast, and cost-effective computations. Furthermore, Solids is compatible with UNIX systems—such as Linux and macOS—and offers full integration with the GULP (General Utility Lattice Program) and VASP (Vienna Ab initio Simulation Package) codes, facilitating more rigorous first-principles calculations. Its versatility also allows it to run as a Python library within resource management systems such as PBS or SLURM, making it well-suited for use on computing clusters.</p> 
-            <p>Solids performs energy landscape exploration through two main algorithms:</p>
+
+        <!-- Todo lo correspondiente a la sección Introduction -->
+        <div class="Introduction">
+            <!-- what-is -->
+            <h1 data-aos="fade-up" id="what-is"><b>SOLIDS</b></h1>
+            <p data-aos="fade-up">Solids is a robust, open-source Python package for crystal structure prediction. It natively integrates with the Atomic Simulation Environment (ASE) and uses PyXtal and DScribe Python-libraries to generate symmetry-based random structures and compare their structural features using morphological descriptors. The package is available in the official Python Package Index repository and can be easily installed using pip. Solids can also be run directly in cloud computing environments, such as Google Colab or Kaggle, thanks to its support for ASE and the Effective Medium Theory (EMT) framework, which enable fast, and cost-effective computations. Furthermore, Solids is compatible with UNIX systems—such as Linux and macOS—and offers full integration with the GULP (General Utility Lattice Program) and VASP (Vienna Ab initio Simulation Package) codes, facilitating more rigorous first-principles calculations. Its versatility also allows it to run as a Python library within resource management systems such as PBS or SLURM, making it well-suited for use on computing clusters.</p>
+            <p data-aos="fade-up"><i>Solids</i> performs energy landscape exploration through two main algorithms:</p>
             <ul data-aos="fade-up">
                 <li>The Stochastic Algorithm (SA) generates a set of random crystal structures based on specific space groups and relaxes them using any of the available codes (EMT, GULP, VASP).This simple approach has the advantage of performing relaxation in stages, meaning that the level of theory can be systematically adjusted or changed between them. In practice, this lets you explore the energy landscape efficiently—using low-cost levels of theory for the initial random structures and higher levels for the most promising ones.</li>
                 <li>The Evolutionary Algorithm (EA) builds on SA by introducing evolutive operators—such as crossover and mutation—to improve the exploration of the potential energy surface. Unlike SA, this algorithm uses the same level of theory throughout the entire run, with refinement achieved through successive generations. Each generation creates new candidate structures by combining stable structural traits from previous ones, until a stopping criterion is reached. The EA is designed for more detailed and exhaustive explorations.</li>
             </ul>
+            <!-- workflow -->
+            <h2 data-aos="fade-up" id="workflow">Solids’ Workflow</h2>
             <div class="image-container" data-aos="fade-up">
-                <img src="images/Intro1.1.png" alt="Diagrama de funcionamiento" class="Intro-Images" loading="lazy">
+                <img src="Images\DiagramasDeFlujo.png" alt="Diagrama de funcionamiento" class="Images" loading="lazy">
             </div>
-            <p data-aos="fade-up" id="where">Su modularidad permite adaptar los módulos fácilmente. Además, almacena toda la información generada durante la simulación en archivos <code>.txt</code> y <code>.vasp</code>.</p>
-
-            <h2 data-aos="fade-up">Solids’ Workflow</h2>
-            <p data-aos="fade-up">Puedes descargarlo desde GitHub: <a href="https://github.com/usuario/nombre-del-repositorio.git" target="_blank">Repositorio oficial</a></p>
-            <p data-aos="fade-up">Dentro del repositorio encontrarás las carpetas:</p>
-            <ul class="lista-larga" data-aos="fade-up">
-                <li><b>Discriminate:</b> Filtrado de estructuras repetidas.</li>
-                <li><b>Gega:</b> Implementación del algoritmo genético.</li>
-                <li><b>Gulp:</b> Interfaz con el código GULP.</li>
-                <li><b>Inout:</b> Lectura y validación de parámetros de entrada.</li>
-                <li><b>Kick:</b> Implementación del método estocástico.</li>
-                <li><b>Queuing:</b> Gestión de recursos computacionales.</li>
-                <li><b>Utils:</b> Clases auxiliares.</li>
-                <li><b>Vasp:</b> Interfaz con el código VASP.</li>
-            </ul>
-            <p data-aos="fade-up">El archivo <code>solids</code> es el principal ejecutable. Solo requiere mínima edición.</p>
+            <!-- theory -->
+            <h2 data-aos="fade-up" id="theory">A little bit of theory</h2>
+            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
         </div>
 
-        <div class="Instalacion">
-            <h1 data-aos="fade-up" id="how-to">¿Cómo instalarlo?</h1>
-            <p data-aos="fade-up" id="depen">Solids requiere una instalación previa de VASP o GULP y dependencias en Python 3.5 o superior. El paquete principal es <b>PyXtal</b>, el cual incluye bibliotecas como NumPy y Spglib.</p>
-            <p data-aos="fade-up">Para instalar:</p>
-            <div class="code-container" data-aos="fade-up">
-                <pre><code class="language-bash">pip install pyxtal</code></pre>
-            </div>
-            <p data-aos="fade-up">Luego, edita la primera línea del archivo <code>solids</code> para que apunte a tu intérprete de Python con PyXtal instalado.</p>
+        <!-- Todo lo correspondiente a la sección Solids in the Web-->
+        <div class="Solids-Web">
+            <h1 data-aos="fade-up" id="Solids-Web"><b>Solids in the Web</b></h1>
+            <!-- Installing -->   
+            <h2 data-aos="fade-up" id="installing">Installing Dependencies</h2>         
+            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
+            <!-- input -->
+            <h2 data-aos="fade-up" id="input">Adding the Input</h2>
+            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
+            <!-- output -->
+            <h2 data-aos="fade-up" id="output">Understanding the Output</h2>
+            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
+            <!-- results -->
+            <h2 data-aos="fade-up" id="results">Visualizing the Results</h2>
+            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
         </div>
 
-        <div class="Ejemplos">
-            <h1 data-aos="fade-up" id="examples">Ejemplos</h1>
-            <p data-aos="fade-up">Para probar la instalación:</p>
-            <div class="code-container" data-aos="fade-up">
-                <pre><code class="language-bash">solids</code></pre>
-            </div>
-            <p data-aos="fade-up">Para generar un archivo de entrada usando TiO₂ con SM:</p>
-            <div class="code-container" data-aos="fade-up">
-                <pre><code class="language-bash">solids --example_SM_gulp_TiO2</code></pre>
-            </div>
-            <p data-aos="fade-up">Esto genera un archivo <code>INPUT.txt</code> con parámetros como:</p>
-
-            <!-- Cuadro de código -->
+        <!-- Ejemplo de cómo colocar un código en la página -->
             <div class="code-container" data-aos="fade-up">
             <div class="code-header">
                 <div class="buttons">
@@ -153,47 +145,12 @@
                 </div>
             </div>
             <pre><code class="language-python">
+            Este es el texto que aparece en el cuadro de código.
             def saludo():
                 print("Hola, Solids!")
+            #Todo lo anterior no se modifica, por favor.
             </code></pre>
             </div>
-
-            <!-- Cuadro de código -->
-            <div class="code-container" data-aos="fade-up">
-            <div class="code-header">
-                <div class="buttons">
-                <div class="button red"></div>
-                <div class="button yellow"></div>
-                <div class="button green"></div>
-                </div>
-                <div class="copy-code" onclick="copyCode(this)">
-                <ion-icon name="copy-outline"></ion-icon>
-                <span>Copiar</span>
-                </div>
-            </div>
-            <pre><code class="language-python">
-            HOLA
-            </code></pre>
-            </div>
-        </div>
-
-        <div class="Salida">
-            <h1 data-aos="fade-up" id="input">Archivos de salida</h1>
-            <p data-aos="fade-up">Solids produce archivos como:</p>
-            <ul data-aos="fade-up">
-                <li><b>solids_out.txt:</b> Registro completo del proceso.</li>
-                <li><b>initial.vasp:</b> Estructuras iniciales.</li>
-                <li><b>stageN.vasp:</b> Estructuras por etapa de relajación.</li>
-                <li><b>summary.vasp:</b> Mejores estructuras encontradas.</li>
-                <li><b>generationN/:</b> Carpeta por generación con entradas/salidas.</li>
-            </ul>
-            <p data-aos="fade-up">Nombres comunes de archivos:</p>
-            <ul data-aos="fade-up">
-                <li><code>mating_001_001</code>: Estructura generada por cruce.</li>
-                <li><code>mutant_001_002</code>: Resultado de mutación.</li>
-                <li><code>random_001_004</code>: Estructura aleatoria.</li>
-            </ul>
-        </div>
     </div>
 </section>
 
