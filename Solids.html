@@ -94,7 +94,7 @@
 
     <div class="texto">
         <!-- Todo lo correspondiente a la sección Introduction -->
-        <div class="Introduction">
+        <div class="Introduction" id="Introduction">
             <!-- what-is -->
             <h1 data-aos="fade-up" id="what-is"><b>SOLIDS</b></h1>
             <p data-aos="fade-up">Solids is a robust, open-source Python package for crystal structure prediction. It natively integrates with the Atomic Simulation Environment (ASE) and uses PyXtal and DScribe Python-libraries to generate symmetry-based random structures and compare their structural features using morphological descriptors. The package is available in the official Python Package Index repository and can be easily installed using pip. Solids can also be run directly in cloud computing environments, such as Google Colab or Kaggle, thanks to its support for ASE and the Effective Medium Theory (EMT) framework, which enable fast, and cost-effective computations. Furthermore, Solids is compatible with UNIX systems—such as Linux and macOS—and offers full integration with the GULP (General Utility Lattice Program) and VASP (Vienna Ab initio Simulation Package) codes, facilitating more rigorous first-principles calculations. Its versatility also allows it to run as a Python library within resource management systems such as PBS or SLURM, making it well-suited for use on computing clusters.</p>
@@ -114,23 +114,13 @@
         </div>
 
         <!-- Todo lo correspondiente a la sección Solids in the Web-->
-        <div class="Solids-Web">
+        <div class="Solids-Web" id="Solids-Web">
             <h1 data-aos="fade-up" id="Solids-Web"><b>Solids in the Web</b></h1>
             <!-- Installing -->   
             <h2 data-aos="fade-up" id="installing">Installing Dependencies</h2>         
             <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
-            <!-- input -->
-            <h2 data-aos="fade-up" id="input">Adding the Input</h2>
-            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
-            <!-- output -->
-            <h2 data-aos="fade-up" id="output">Understanding the Output</h2>
-            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
-            <!-- results -->
-            <h2 data-aos="fade-up" id="results">Visualizing the Results</h2>
-            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
-        </div>
-
-        <!-- Ejemplo de cómo colocar un código en la página -->
+            
+            <!-- Ejemplo de cómo colocar un código en la página -->
             <div class="code-container" data-aos="fade-up">
             <div class="code-header">
                 <div class="buttons">
@@ -151,8 +141,19 @@
             </code></pre>
             </div>
 
+            <!-- input -->
+            <h2 data-aos="fade-up" id="input">Adding the Input</h2>
+            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
+            <!-- output -->
+            <h2 data-aos="fade-up" id="output">Understanding the Output</h2>
+            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
+            <!-- results -->
+            <h2 data-aos="fade-up" id="results">Visualizing the Results</h2>
+            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
+        </div>
+
         <!-- Todo lo correspondiente a la sección Solids in Local-->
-        <div class="Solids-Local">
+        <div class="Solids-Local" id="Solids-Local">
             <h1 data-aos="fade-up" id="Solids-Local"><b>Solids in Local</b></h1>
             <!-- Installing -->   
             <h2 data-aos="fade-up" id="installing-local">Installing Solids</h2>         
@@ -167,7 +168,33 @@
             <h2 data-aos="fade-up" id="exploration">Explorations using Solids</h2>
             <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
         </div>
-    </div>
+
+        <!-- Sección About the Developer -->
+        <div class="Developer-Info" id="developer-info">
+            <h1 data-aos="fade-up" id="developer-info"><b>About the Developer</b></h1>
+            <!-- contact, información obtenida de ChatGPT-->
+            <h2 data-aos="fade-up" id="contact">Contact Information</h2>
+            <p data-aos="fade-up">
+            If you would like to collaborate, request technical support, or explore opportunities related to our scientific research feel free to reach out. We are always open to new ideas, partnerships, and interdisciplinary work.
+            </p>
+            <p data-aos="fade-up" style="margin-top: 10px;">You can contact us through the following channels, and we will get back to you as soon as possible:</p>
+            <ul data-aos="fade-up" style="margin-top: 10px; list-style: none; padding-left: 0;">
+                <li><strong>Email:</strong> <a href="mailto:info@.org">info@.org</a></li>
+                <li><strong>Phone:</strong> +52 (999) 000 0000</li>
+                <li><strong>Location:</strong> Mérida, Yucatán, México</li>
+                <li><strong>LinkedIn:</strong> <a href="https://linkedin.com" target="_blank">linkedin.com/company/</a></li>
+                <li><strong>GitHub:</strong> <a href="https://github.com" target="_blank">github.com/</a></li>
+            </ul>
+            <p data-aos="fade-up" style="margin-top: 15px;">
+            Whether you’re a student, researcher, company, or simply curious about innovative technology, we’d love to hear from you.  
+            Let’s build something meaningful together.</p>
+            <!-- download -->
+            <h2 data-aos="fade-up" id="download">Download PDF Version</h2>
+            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
+            <!-- acknowledgments -->
+            <h2 data-aos="fade-up" id="acknowledgments">Acknowledgments</h2>
+            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
+        </div>
 </section>
 
 <footer>
@@ -181,4 +208,5 @@
 <script src="Solids.js"></script>
 </body>
 </html>
+
 
