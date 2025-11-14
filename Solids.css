@@ -20,7 +20,7 @@ header nav {
     display: flex;
     flex-direction: column;
     width: 300px;
-    font-size: 16px; 
+    font-size: 16px;
     position: fixed;
     top: 160px;       /* debajo del logo y la barra */
     left: 10px;
@@ -206,6 +206,11 @@ header nav img#Solids-Menu:hover {
   transition: all 0.3s ease-in-out;
 }
 
+/* 🔥 Cambiar color del texto en hover */
+.first-list li:hover > a {
+    color: black !important;
+}
+
 .first-list li:hover {
   background-color: #d3d3d3;
   border-left: 4px solid #598aa8; /* 🔹 mantiene rectángulo */
@@ -287,10 +292,12 @@ header nav img#Solids-Menu:hover {
 /* Barra superior */
 .top-bar {
     display: flex;
+    justify-content: space-between;  
     align-items: center;
     color: #333;
     font-size: 16px;
-    margin-bottom: -10px;
+    margin-bottom: -20px;
+    margin-top: -17px; 
 }
 .left-content {
     align-content: start;
@@ -327,17 +334,16 @@ header nav img#Solids-Menu:hover {
 /*Contenido*/
 .content {
     flex: 1;
-    max-width: 1000px;
-    margin-left: 335px;
-    margin-right: 58px;
+    margin-left: 340px;   
+    margin-right: 50px;     
     margin-top: 18px;
-    padding: 0px 20px;
-
-    background: #ffffff; 
-    border-radius: 20px; 
-    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 20px;
     box-shadow: 0 2px 2px #adb7bd;
+    max-width: none;            
 }
+
 .content a{
     text-decoration: none;
 }
@@ -347,6 +353,14 @@ header nav img#Solids-Menu:hover {
 .texto a:hover {
     color:#9832a3;
 }
+.texto > div {
+    display: none;
+}
+
+.texto > .Introduction {
+    display: block;
+}
+
 .content h1{
     color: #110846;
 }
@@ -354,6 +368,9 @@ header nav img#Solids-Menu:hover {
     color: #110846;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    scroll-margin-top: 120px; 
+}
 
 /*Introducción*/
 .image-container {
@@ -361,15 +378,15 @@ header nav img#Solids-Menu:hover {
     justify-content: center; 
     margin: 20px 0; 
 }
-.Intro-Images {
+.Images {
     width: 100%; 
-    max-width: 400px; 
+    max-width: 800px; 
     height: auto; 
     border-radius: 10px; 
     box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
     box-shadow: 0 2px 2px #adb7bd;
 }
-.Intro-Images:hover {
+.Images:hover {
     transform: scale(1.03); 
     transition: transform 0.1s ease-in-out;
 }
@@ -397,7 +414,7 @@ header nav img#Solids-Menu:hover {
   justify-content: space-between;
   align-items: center;
   background-color: #f5f5f5;
-  padding: 8px 12px;
+  padding: 10px 15px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   width: 100%;
@@ -436,16 +453,21 @@ header nav img#Solids-Menu:hover {
 }
 
 .code-container pre {
-  width: 100%;
+  width: calc(100% - 0px);
   background-color: #2d2d2d;
   color: #f8f8f2;
-  margin: 0;
-  padding: 5px;
+  margin: 0 !important;
+  padding: 12px 15px;  
   overflow-x: auto;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-radius: 0 0 10px 10px; 
   box-shadow: 0 2px 2px #adb7bd;
   font-family: 'Fira Code', monospace;
+}
+
+.code-container pre code {
+    margin: 0 !important;    
+    padding: 0 !important; 
+    display: block;                    
 }
 
 /*Final*/
@@ -480,7 +502,7 @@ footer {
     }
 }
 /* Media Queries */
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
     header nav {
         display: flex;
         flex-direction: row;
