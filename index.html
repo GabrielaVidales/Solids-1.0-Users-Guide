@@ -97,11 +97,25 @@
         <div class="Introduction" id="Introduction">
             <!-- what-is -->
             <h1 data-aos="fade-up" id="what-is"><b>SOLIDS</b></h1>
-            <p data-aos="fade-up">Solids is a robust, open-source Python package for crystal structure prediction. It natively integrates with the Atomic Simulation Environment (ASE) and uses PyXtal and DScribe Python-libraries to generate symmetry-based random structures and compare their structural features using morphological descriptors. The package is available in the official Python Package Index repository and can be easily installed using pip. Solids can also be run directly in cloud computing environments, such as Google Colab or Kaggle, thanks to its support for ASE and the Effective Medium Theory (EMT) framework, which enable fast, and cost-effective computations. Furthermore, Solids is compatible with UNIX systems—such as Linux and macOS—and offers full integration with the GULP (General Utility Lattice Program) and VASP (Vienna Ab initio Simulation Package) codes, facilitating more rigorous first-principles calculations. Its versatility also allows it to run as a Python library within resource management systems such as PBS or SLURM, making it well-suited for use on computing clusters.</p>
+            <p data-aos="fade-up"><i>Solids</i> is a robust, open-source Python package for crystal structure prediction. 
+                It natively integrates with the Atomic Simulation Environment (<a href="https://ase-lib.org">ASE</a>) and uses 
+                <a href="https://pyxtal.readthedocs.io/en/latest/#">PyXtal</a> 
+                and <a href="https://singroup.github.io/dscribe/latest/#">DScribe</a> to generate symmetry-based random structures 
+                and compare their structural features using morphological descriptors.
+            <ul data-aos="fade-up"> 
+                <li>It is available in the official <a href="https://pypi.org">Python Package Index</a> repository and can be easily installed using pip.</li>
+                <li>It can be run directly in cloud computing environments, such as Google Colab or Kaggle</li>
+                <li>It is compatible with UNIX systems—such as Linux and macOS</li>
+                <li>It offers full integration with GULP, VASP, and EMT </li>
+                <li>It can run as a Python library within resource management systems such as PBS or SLURM, making it well-suited for use on computing clusters.</li>
+            </ul> 
+            </p> 
             <p data-aos="fade-up"><i>Solids</i> performs energy landscape exploration through two main algorithms:</p>
             <ul data-aos="fade-up">
-                <li>The Stochastic Algorithm (SA) generates a set of random crystal structures based on specific space groups and relaxes them using any of the available codes (EMT, GULP, VASP).This simple approach has the advantage of performing relaxation in stages, meaning that the level of theory can be systematically adjusted or changed between them. In practice, this lets you explore the energy landscape efficiently—using low-cost levels of theory for the initial random structures and higher levels for the most promising ones.</li>
-                <li>The Evolutionary Algorithm (EA) builds on SA by introducing evolutive operators—such as crossover and mutation—to improve the exploration of the potential energy surface. Unlike SA, this algorithm uses the same level of theory throughout the entire run, with refinement achieved through successive generations. Each generation creates new candidate structures by combining stable structural traits from previous ones, until a stopping criterion is reached. The EA is designed for more detailed and exhaustive explorations.</li>
+                <li><b>The Stochastic Algorithm</b> allows for effective pree-screening of the energy landscape by performing 
+                    relaxation in stages, meaning that the level of theory can be adjusted or changed mid-run.</li>
+                <li><b>The Evolutionary Algorithm</b> builds on SA by creating new generations using evolutive operators such as 
+                    crossover and mutation to deepend the exploration of the potential energy surface.</li>
             </ul>
             <!-- workflow -->
             <h2 data-aos="fade-up" id="workflow">Solids’ Workflow</h2>
@@ -110,7 +124,81 @@
             </div>
             <!-- theory -->
             <h2 data-aos="fade-up" id="theory">A little bit of theory</h2>
-            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
+                <h3 data-aos="fade-up" id="theory">Crystalline Structures and their Relationship with Energy</h3>
+                <p data-aos="fade-up">It is no secret that using modern first principle calculations and the knowledge of the atomic 
+                    arrangement of a system, we can estimate and even predict its properties. Also, we know that theoretical low-energy 
+                    structures have the highest probabilities of being found in nature. Therefore, locating the nuclear positions of a 
+                    chemical system when it is lowest in energy, i.e., the ground state equilibrium geometry, is incredibly important to 
+                    modern chemists. If we add to this argument that such theoretical investigations allow one to analyze structures under 
+                    extreme conditions of pressure and temperature, this makes them an excellent ally to cumbersome studies.</p>
+                <p data-aos="fade-up">However, in order to locate the structural geometry lowest in energy, the so-called Global Minimum 
+                    (GM), is not a trivial task. Any algorithm tasked with the finding of a GM is faced with two major challenges: The 
+                    first one is of mathematical nature since the dimension of the abstract construct —known as the Potential Energy 
+                    Surface (PES)— where we plot each possible atomic configuration vs its energy, depends on the degrees of freedom of 
+                    the system (3N-6 for a non-linear molecule with N atoms). This means that the PES is exceedingly multidimensional!</p>
+                <p data-aos="fade-up">The second challenge is of statistical nature, since there is an almost infinite number of possible
+                    arrangements for a given set of atoms. Actually, it is estimated that the number of possible configurations for a 
+                    periodic system with a cubic cell volume of 10 Å<sup>3</sup> containing only 10 atoms of compound AB, is of the order 
+                    of 10<sup>14</sup>. If we increase the number of atoms inside the unit cell up to 30, possible configurations increase
+                    up to a staggering 10<sup>47</sup>. Imagine having to evaluate the energy of all these configurations, compare them,
+                    and then locate the one with the lowest energy of them all. This is, to say it mildly, a really impractical approach</p>
+                <p data-aos="fade-up">So, if we wish to locate the atomic configuration with the lowest possible energy, a.k.a the GM, of 
+                    a chemical composition, we need a way to intelligently explore some of the most promising configurations that the 
+                    complicated PES has to offer. Our tool has to be capable of locating with reasonable accuracy, in reasonable time, 
+                    and using reasonable resources, the GM of any given chemical composition, under any condition of pressure and 
+                    temperature. Seems impossible?</p>
+
+            <h3 data-aos="fade-up" id="theory">Evolutive Algorithms to the Rescue</h3>
+                <p data-aos="fade-up">There are many proposals as to how to efficiently explore the PES and locate GMs for all  kinds of 
+                    chemical compositions. However, there is a specific set of algorithms —whose official title is Evolutive Algorithms, 
+                    or EAs— that generate a collection of random initial candidates and refine their characteristics, minimizing the energy 
+                    associated with their atomic arrangement through a combination of local optimization means and evolutive operators. EAs 
+                    mimic the evolution of biological species where desirable traits are passed on through generations until an optimal set 
+                    of individuals are created.</p>
+                <h4 data-aos="fade-up" id="theory">Crossover</h4>
+                    <p data-aos="fade-up">In the context of crystalline structures, we refer to “desirable traits” to energetically stable 
+                        motifs of the crystal. These chracteristics have to be inherited to new structures aiming to reduce the enegy. To do
+                        so, one selects two low-energy “parents” and “cuts” them across the same unit cell vector. Then, one matches the two
+                        parent-slices to create a “child” that retains their structural information. The idea is that, across time, the good 
+                        characteristics of the structures are refined. The process in charge of this is known as Crossover and a graphic 
+                        representation is found in the image below. Notice that both parents pass on only a segment of their atomic 
+                        arrangement to the child which, in turn, “looks” like its parents.</p>
+                    <!-- Agregar imagen de crossover -->
+                <h4 data-aos="fade-up" id="theory">Mutation</h4>
+                    <p data-aos="fade-up">Despite Crossover&apos;s best efforts, its usage alone does not maintain enough diversity in the pool of 
+                    structures. Therefore, a very important set of candidates are introduced: <b>the mutants</b>. In <i>Solids</i> the two 
+                    mutations implemented are known as <b>lattice strain</b>, and <b>atomic exchange</b>.</p>
+                    <p data-aos="fade-up"> 
+                    In <b>lattice strain</b>, the unit cell is deformed by applying a strain matrix to the cell&apos;s vectors and potentially 
+                    modifying the interatomic distances of the candidate. This operator explores the energetic vicinity of the candidate and 
+                    lets us explore it.</p>
+                    <!-- Agregar imágen de lattice strain-->
+                    <p data-aos="fade-up"><b>Atomic exchange</b> is more aggressive since it takes the atomic positions and species
+                    of two different atoms inside the unit cell and swaps their species without changing the coordinates. This effectively 
+                    creates spikes in the energy of the candidates but allows us to explore sections of the energy landscape that are impossible 
+                    to reach using only Crossover or Lattice strain alone.</p>
+                    <!-- agregar imagen de atomic exchange -->
+        <h3 data-aos="fade-up" id="theory">Relaxation and Selection of structures</h3>
+            <p data-aos="fade-up">Now, in nature, children&apos;s traits are tested against the environment to see if the inherited characteristics 
+                worked or not. Fit individuals are able to reproduce while inadequate traits are discarded. To check for fitness in theoretical 
+                chemistry, it is necessary to know if the child can lower the energy of its parents. This is achieved via local optimization, a 
+                process where theoretical calculations are used to modify certain parameters of the structure, such as unit cell and interatomic 
+                distances, to locate the most relaxed configuration of the child, i.e., the one with the lowest energy. Local optimization is 
+                achieved using external relaxation codes like VASP, Quantum Espresso, GULP and many others. Solids is interfaced with VASP, GULP 
+                and ASE&apos;s EMT. The image below displays a child&apos;s atomic arrangement before and after relaxation.</p>
+                <!-- agregar imagen de structure relaxation -->
+            <p data-aos="fade-up">The resulting set of structures are ranked by energy and a fitness value is assigned to them. The value of the 
+                fitness is inversely proportional to the structure&apos;s energy, i.e., the lower the energy, the higher the fitness. Later, the 
+                candidates “compete” between them for the right to pass on their traits, but instead of fighting to the death, they are selected 
+                randomly, giving structures with higher values of fitness the greatest probability to be chosen. This has the effect of 
+                preferring adequate traits in new generations but keeping the mix rich in diversity.</p>
+        <h3 data-aos="fade-up" id="theory">Results</h3>
+            <p data-aos="fade-up">Finally, the whole process of generating candidates, relaxing them, and passing on their traits is repeated a 
+                given number of times. The final result is, hopefully, a putative Global Minimum, and a set of low-energy structures. Notice that 
+                we used the word putative next to global minimum, this is because it is near-impossible to evaluate all possible atomic 
+                configurations and there will always be a little possibility of finding a structure with lower energy. Although this might 
+                sound discouraging, it only means that no matter what, there is always room for improvement, and isn’t that what science is all 
+                about?</p>
         </div>
 
         <!-- Todo lo correspondiente a la sección Solids in the Web-->
