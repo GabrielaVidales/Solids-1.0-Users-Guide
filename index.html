@@ -197,17 +197,49 @@
                 given number of times. The final result is, hopefully, a putative Global Minimum, and a set of low-energy structures. Notice that 
                 we used the word putative next to global minimum, this is because it is near-impossible to evaluate all possible atomic 
                 configurations and there will always be a little possibility of finding a structure with lower energy. Although this might 
-                sound discouraging, it only means that no matter what, there is always room for improvement, and isn’t that what science is all 
+                sound discouraging, it only means that no matter what, there is always room for improvement, and isn&apos;t that what science is all 
                 about?</p>
         </div>
 
         <!-- Todo lo correspondiente a la sección Solids in the Web-->
         <div class="Solids-Web" id="Solids-Web">
             <h1 data-aos="fade-up" id="Solids-Web"><b>Solids in the Web</b></h1>
+            <p data-aos="fade-up">One of the main advantages of Solids and its integration with the Atomic Simulation Environment (<a href="https://ase-lib.org">ASE</a>) 
+                is the ability to run explorations on external servers. We illustrate this using the Google Colab platform, 
+                which offer free access and strong performance designed for collaborative coding. We highly recommend 
+                performing initial tests of Solids using these platforms</p>
             <!-- Installing -->   
-            <h2 data-aos="fade-up" id="installing">Installing Dependencies</h2>         
-            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
-            
+            <h2 data-aos="fade-up" id="installing">Installing Dependencies</h2>
+            <p data-aos="fade-up">For this test, open a notebook in Google Colab and install the external dependencies and the 
+                main code by typing:</p>
+                
+            <div class="code-container" data-aos="fade-up">
+            <div class="code-header">
+                <div class="buttons">
+                <div class="button red"></div>
+                <div class="button yellow"></div>
+                <div class="button green"></div>
+                </div>
+                <div class="copy-code" onclick="copyCode(this)">
+                <ion-icon name="copy-outline"></ion-icon>
+                <span>Copiar</span>
+                </div>
+            </div>
+            <pre><code class="language-python">
+                !pip install solids==0.3.1
+            </code></pre>
+            </div>
+
+
+            <!-- input -->
+            <h2 data-aos="fade-up" id="input">Adding the Input</h2>
+            <p data-aos="fade-up">The following lines show the input required for Solids to explore 3D Al10 crystals using the Effective 
+            Medium Theory (EMT) relaxation method implemented in ASE and the Evolutive Algorithm provided by Solids as the exploration 
+            engine. The input includes all the flags needed to run calculations with both available algorithms (Stochastic and 
+            Evolutionary). To switch between them, simply update the “algorithm” flag. Solids is designed to recognize case-sensitive 
+            flags, allowing you to easily change schemes by editing the corresponding parameter. If you&apos;d like to explore the code and 
+            its features, feel free to modify the lines below, add them to the notebook, and let the code do its thing!</p>
+            <!-- output -->
             <!-- Ejemplo de cómo colocar un código en la página -->
             <div class="code-container" data-aos="fade-up">
             <div class="code-header">
@@ -222,22 +254,141 @@
                 </div>
             </div>
             <pre><code class="language-python">
-            Este es el texto que aparece en el cuadro de código.
-            def saludo():
-                print("Hola, Solids!")
-            #Todo lo anterior no se modifica, por favor.
+            input_text = """
+            ---COMPOSITION---
+            Al 10
+            ---COMPOSITION---
+            formula_units        1          #The number of atoms in composition are multiplied by this number
+            dimension            3          #Solids can handle 2- and 3-dimensional crystals
+            volume_factor        1.0        #The volume factor of the unit cell
+            tol_atomic_overlap   0.95       #The minimum distance between atoms is 95% the sum of their radii
+
+            #ALGORITHM PARAMETERS:
+            algorithm            evolutive  #Stochastic -> Stochastic algorithm, evolutive-> Evolutive Algorithm
+            nof_initpop          10         #Size of the initial population of crystals
+
+            #Evolutive:
+            nof_matings          15         #Number of matings
+            nof_strains          10         #Number of strains
+            nof_xchange          5          #Number of atom exchanges
+
+            #NICHING PARAMETERS:
+            tol_similarity       0.97       #Tol for similarity
+            cutoff_energy        5.0        #Energy Cut-off
+            cutoff_population    10         #Number of final candidates
+
+            #HALT CRITERION:
+            #Stochastic:
+            nof_stages            2       #Number of Optimization Stages in the Stochastich algorithm
+
+            #STOP CRITERION:
+            nof_generations         20   #Max generations
+            nof_repeats             5    #Number of repeated polymorphs
+            nof_stagnant            7    #Max stagnant cycles
+
+            #THEORY LEVEL:
+            calculator            EMT     #Available calculators: EMT, VASP, GULP
+            nof_processes         10      #Number of parallel local opts
+            """
+            #Execution of main code
+            inputfile = 'INPUT.txt'
+            with open(inputfile, "w") as f: f.write(input_text)
+                if __name__ == "__main__":
+            from solids.heuristic  import mainAlgorithm
+            xopt_sort=mainAlgorithm(inputfile)
+            </code></pre>
+            </div>
+            
+            <h2 data-aos="fade-up" id="output">Understanding the Output</h2>
+            <p data-aos="fade-up">The output of every search is divided into four categories: <b>Generation of initial candidates</b>,
+            <b>Niching</b>, <b>Generation summary</b>, and <b>Global summary</b> wich are detailed in the next sections.</p>
+
+            <h3 data-aos="fade-up" id="initial_candidates">Generation of initial candidates</h3>
+
+            <p data-aos="fade-up">Since we&apos;re using the Evolutionary Algorithm, there is a zero (0) after GENERATION. This indicates 
+            that this is the first set of structures being created. As the search progresses, the value next to GENERATION increases 
+            to match the current iteration.</p>
+            <!-- agregar imagen output1 -->
+            
+            <p data-aos="fade-up">Below this section, the ID of each candidate describes how the structure was generated (random / crossover / mutant), 
+            the generation under study (e.g., _000_), and the structure number (e.g., _001_). Therefore, the fifth candidate created by 
+            crossover in generation 10 will have the ID crossover_010_005.</p>
+
+            <p data-aos="fade-up">Next to the ID, you&apos;ll find the space group used to generate the structure (SG_). The numbering 
+            follows the Hermann–Mauguin convention, which classifies 3D space groups as triclinic (1–2), monoclinic (3–15), orthorhombic 
+            (16–74), tetragonal (75–142), trigonal–hexagonal (143–194), and cubic (195–230).</p>
+
+            <p data-aos="fade-up">Naturally, the reference image will differ from yours due to the stochastic nature of the algorithm. 
+            However, you can control the number and type of structures generated by modifying the values of the flags nof_initpop 
+            (controls the initial population), nof_matings (controls the number of matings created), nof_strains (controls the number 
+            of mutants created by lattice strain), and nof_xchange (controls the number of mutants created by atomic exchange).</p>
+
+            <h3 data-aos="fade-up">Niching</h3>
+            <p data-aos="fade-up">The niching process removes duplicate structural information by characterizing all individuals in a 
+            generation using MBTR descriptors. This is accomplished through Python&apos;s <a href="https://singroup.github.io/dscribe/latest/#">DScribe</a> library, 
+            which computes the descriptors for each candidate. These fingerprints are then compared to one another, and any structures 
+            whose similarity exceeds a defined threshold are discarded. The flag controlling the similarity threshold tolerance is 
+            tol_similarity.</p>
+            
+            <p data-aos="fade-up">In the Evolutionary Algorithm, niching is applied in two stages: first, a comparison among elements 
+            within the current generation; and second, a comparison between the unique elements of that generation and all previously 
+            found structures (the Pool elements). Since structural relaxation may converge to the same minima, the first comparison 
+            removes redundant information within a given generation after optimization, while the second eliminates duplicates from 
+            the overall structure pool.</p>
+
+            <p data-aos="fade-up">Finally, notice that there is an energy-based niching technique for the curated list of candidates. 
+            The energy of each structure in the set is compared to that of the lowest-energy candidate, and any candidates whose 
+            energy difference exceeds the threshold defined by the cutoff_energy flag are discarded.</p>
+
+            <!-- agregar imagen output2 -->
+
+            <h2 data-aos="fade-up" id="generation summary">Generation Summary</h2>
+            <p data-aos="fade-up">The entire compendium of structures found in the generation is displayed in the GEN. SUMMARY 
+                section. Here, you will find (in order from left-to-right) the ranking, ID, computed energy (in eV), energy 
+                difference relative to the lowest-energy structure found, and the fitness of each candidate. The fitness correlates 
+                with the probability of being chosen to participate in the inheritance process, and the structures are sorted by 
+                energy.</p>
+            
+            <!-- agregar imagen output3 -->
+            
+            <h2 data-aos="fade-up" id="global summary">Global Summary</h2>
+            <p data-aos="fade-up">Finally, the GLOBAL SUMMARY section displays the best structures found so far through the entire run. 
+                The cutoff_population flag controls the number of structures presented in this list, and the candidates listed here 
+                compete to create the next set of crossover and mutants. Here, you will find (in order from left-to-right) the ranking, 
+                ID, computed energy (in eV), energy difference relative to the lowest-energy structure found, and the fitness of each 
+                candidate. The fitness correlates with the probability of being chosen to participate in the inheritance process, and 
+                the structures are sorted by energy.</p>
+
+            <h2 data-aos="fade-up" id="results">Visualizing the Results</h2>
+            <p data-aos="fade-up">Solids uses the visualization tool implemented in Aegon to present you with an embedded iterative 
+                image of the resulting candidate. To use it, simply run the next code:</p>
+            
+            <div class="code-container" data-aos="fade-up">
+            <div class="code-header">
+                <div class="buttons">
+                <div class="button red"></div>
+                <div class="button yellow"></div>
+                <div class="button green"></div>
+                </div>
+                <div class="copy-code" onclick="copyCode(this)">
+                <ion-icon name="copy-outline"></ion-icon>
+                <span>Copiar</span>
+                </div>
+            </div>
+            <pre><code class="language-python">
+                from aegon.libgcolab import viewmol_ASE
+                from aegon.libposcar import conventional
+                print(xopt_sort[0].info['e'])
+                viewmol_ASE(conventional(xopt_sort[0],1.1))
             </code></pre>
             </div>
 
-            <!-- input -->
-            <h2 data-aos="fade-up" id="input">Adding the Input</h2>
-            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
-            <!-- output -->
-            <h2 data-aos="fade-up" id="output">Understanding the Output</h2>
-            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
-            <!-- results -->
-            <h2 data-aos="fade-up" id="results">Visualizing the Results</h2>
-            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
+            <p data-aos="fade-up">If you wish to modify the size of the presented cell, just change the final number 
+                in the viewmol_ASE function to any desired value. Right now, this code shows the unit cell expanded by 
+                110% in all three directions.</p>
+
+            <!-- Agregar imagen output4 -->
+
         </div>
 
         <!-- Todo lo correspondiente a la sección Solids in Local-->
