@@ -372,7 +372,7 @@
                 </div>
                 <div class="copy-code" onclick="copyCode(this)">
                 <ion-icon name="copy-outline"></ion-icon>
-                <span>Copiar</span>
+                <span>Copy</span>
                 </div>
             </div>
             <pre><code class="language-python">
@@ -392,17 +392,123 @@
         </div>
 
         <!-- Todo lo correspondiente a la sección Solids in Local-->
+
         <div class="Solids-Local" id="Solids-Local">
             <h1 data-aos="fade-up" id="Solids-Local"><b>Solids in Local</b></h1>
             <!-- Installing -->   
             <h2 data-aos="fade-up" id="installing-local">Installing Solids</h2>         
-            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
+            <p data-aos="fade-up">In linux-based systems you can install Solids by simply openingn a terminal and typing:</p>
+
+            <div class="code-container" data-aos="fade-up">
+            <div class="code-header">
+                <div class="buttons">
+                <div class="button red"></div>
+                <div class="button yellow"></div>
+                <div class="button green"></div>
+                </div>
+                <div class="copy-code" onclick="copyCode(this)">
+                <ion-icon name="copy-outline"></ion-icon>
+                <span>Copy</span>
+                </div>
+            </div>
+            <pre><code class="language-python">
+            pip install solids==0.3.1
+            </code></pre>
+            </div>
+
+            <p data-aos="fade-up">If you are more into installing things on your own, you can make a copy of the source code using:</p>
+
+            <div class="code-container" data-aos="fade-up">
+            <div class="code-header">
+                <div class="buttons">
+                <div class="button red"></div>
+                <div class="button yellow"></div>
+                <div class="button green"></div>
+                </div>
+                <div class="copy-code" onclick="copyCode(this)">
+                <ion-icon name="copy-outline"></ion-icon>
+                <span>Copy</span>
+                </div>
+            </div>
+            <pre><code class="language-python">
+            git clone https://github.com/Carloast0790/SolidASE_0.0.git
+            </code></pre>
+            </div>
+
+            <p data-aos="fade-up">Notice that during manual installation it is necessary to update your PYTHONPATH to the 
+            desired working folder. In UNIX systems—such as Linux and macOS— this is done by editing the .bashrc file and 
+            updating the PYTHONPATH variable. For example, if your working directory is /home/solids/ then the variable 
+            should look something like this: export PYTHONPATH=/home/solids:$PYTHONPATH. For more information clik <a href="https://www.geeksforgeeks.org/python/pythonpath-environment-variable-in-python">here</a>.</p>
+
             <!-- launching -->
             <h2 data-aos="fade-up" id="launching">Launching Solids</h2>
-            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
+            <p data-aos="fade-up">Once installed, in the working directory you will find the folder named Solids1.0/ and 
+            within it, the next executables:</p>
+            <ul>
+                <li>run_solids_emt.py</li>
+                <li>run_solids_gulp.py</li>
+                <li>run_solids_vasp.py</li>
+            </ul>
+            <p data-aos="fade-up">Each of these codes contains the basic input required to run a search using a specific 
+            calculator—as written in the name of the code. We recommend first running a search using the default values 
+            for the EMT calculator. This is done by simply typing:</p>
+
+            <div class="code-container" data-aos="fade-up">
+            <div class="code-header">
+                <div class="buttons">
+                <div class="button red"></div>
+                <div class="button yellow"></div>
+                <div class="button green"></div>
+                </div>
+                <div class="copy-code" onclick="copyCode(this)">
+                <ion-icon name="copy-outline"></ion-icon>
+                <span>Copy</span>
+                </div>
+            </div>
+            <pre><code class="language-python">
+            ./run_solids_emt.py 
+            </code></pre>
+            </div>
+
+            <p data-aos="fade-up">Calculations using EMT are extremely cheap, and can be carried out locally with fairly accurate 
+            results (as long as one uses the elements in which the potentials were trained, namely Al, Cu, Ag, Au, Ni, Pd and Pt). 
+            If you desire to personalize the values of the flags used in the search, just edit the information of the input_text 
+            located at the top of the run_solids_emt.py file using any desired/available text editor. A complete description of the 
+            flags used can be found in the section The Stochastich Method and EMT. This procedure is standard to all runs: edit the 
+            input_txt section inside the run_solids file that has the extension of the desired calculator, and execute them.</p>
+
             <!-- output -->
             <h2 data-aos="fade-up" id="output-local">Understanding the Output</h2>
-            <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
+            <p data-aos="fade-up">The output of every search is shown on the screen and it is divided into four categories: Generation 
+            of Candidates, Niching, Generation Summary and Global Summary. The information displayed in these sections will vary 
+            when using the different algorithms available in Solids (Stochastic and Evolutive), but their format is the same.</p>
+
+            <h3 data-aos="fade-up" id="output-local">Generation of candidates</h3>
+            <p data-aos="fade-up">When using the Stochastic algorithm (SA), candidate structures are constructed only one time 
+            whereas when using the Evolutive algorithm (EA), this is an iterative process. Therefore, when using SA a list 
+            displaying all generated structures is shown:</p>
+            
+            <!-- Agregar imagen population generation -->
+
+            <p data-aos="fade-up">In contrast, when using EA, this section looks like this:</p>
+
+            <!-- Agregar imagen population generation GA -->
+
+            <p data-aos="fade-up">Notice that there is a zero (0) after GENERATION. This is because this is the first set of 
+            structures to be created. However, the value next to GENERATION is updated in each iteration.</p>
+
+            <p data-aos="fade-up">Below this section, you can find descriptions of the point group used to build the structure 
+            and the assigned ID number. In EA,descriptions include the type of operator used to create the new structures 
+            (mating and mutant). Of course, this image will differ from the one in your output because of the stochastic 
+            nature of the algorithms. The number of structures generated obeys the values assigned to nof_initpop, nof_matings, 
+            nof_strains, and nof_xchange values.</p>
+
+            <h3 data-aos="fade-up" id="output-local">Niching</h3>
+            <p data-aos="fade-up">The niching process eliminates duplicate structural information by comparing MBTR descriptors 
+            of the candidates and eliminating those that are too alike. The parameter controlling the tolerance for similarity 
+            is tol_similarity. Also, Solids implements an energy cutoff that removes solutions whose energy difference, compared 
+            with the best solution so-far-located, exceeds a given threshold (cutoff_energy).</p>
+
             <!-- exploration -->
             <h2 data-aos="fade-up" id="exploration">Explorations using Solids</h2>
             <p data-aos="fade-up">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
