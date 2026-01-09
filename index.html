@@ -532,8 +532,8 @@
 
             <!-- emt -->
             <h2 data-aos="fade-up" id="explorationEMT">Solids and EMT</h2>
-            <h3 data-aos="fade-up" id="exploration">The Al<sub>10</sub> case</h3>
-            <h4 data-aos="fade-up" id="exploration">Editing the input</h4>
+            <h3 data-aos="fade-up">The Al<sub>10</sub> case</h3>
+            <h4 data-aos="fade-up">Editing the input</h4>
             <p data-aos="fade-up;style=text-align: justify">Before running any exploration, you need to edit the <i>running_solids_emt.py</i> file, which contains the default 
             values for all required flags. This default input is set up to explore 3D Al<sub>10</sub> crystals using the Stochastic Algorithm, which 
             generates 50 random initial candidates and performs a two-stage relaxation process with EMT. However, you can modify any of 
@@ -590,7 +590,7 @@
             modify the value of the algorithm flag (and any associated ones), then run the code!
             </p>
 
-            <h4 data-aos="fade-up" id="exploration">Expected results</h4>
+            <h4 data-aos="fade-up">Expected results</h4>
             <p data-aos="fade-up;style=text-align: justify">The resulting structure is a Copper-structured crystal with the cubic Fm̅3m space group. Al is bonded 
             to twelve equivalent Al atoms to form a mixture of corner, edge, and face-sharing AlAl<sub>12</sub> cuboctahedra. All Al-Al bond lengths 
             should be around 2.86 Å. The resulting structure is shown in the figure.</p>
@@ -606,7 +606,7 @@
             summary.vasp file.
 
             <h3 data-aos="fade-up" id="explorationGULP">Solids and GULP, the TiO<sub>2</sub> case</h3>
-            <h4 data-aos="fade-up" id="exploration">Editing the input</h4>
+            <h4 data-aos="fade-up">Editing the input</h4>
             <p data-aos="fade-up;style=text-align: justify">Before running any exploration, you need to edit the <i>running_solids_gulp.py</i> file, which contains the default 
             values for all required flags. This default input is set up to explore 3D TiO<sub>2</sub> crystals using the Evolutive Algorithm, which 
             generates 10 random initial candidates, and improves upon them through 10 generations, each composed by 20 matings and 12 mutants. 
@@ -679,7 +679,7 @@
             designed to read only the case-sensitive flags relevant to the selected algorithm. To switch between algorithms, simply 
             modify the value of the algorithm flag (and any associated ones), then run the code!</p>
 
-            <h4 data-aos="fade-up" id="exploration">Expected results</h4>
+            <h4 data-aos="fade-up">Expected results</h4>
             <p data-aos="fade-up;style=text-align: justify">The resulting structure is the well-known rutile phase with the tetragonal P4₂/mnm space group where 
             the Ti<sup>4+</sup> (blue) is bonded to six equivalent O<sup>2-</sup>(red) atoms to form a mixture of corner and 
             edge-sharing TiO<sub>6</sub> octahedra. There are four shorter (1.95 Å) and two longer (1.98 Å) Ti-O bond lengths. 
@@ -695,7 +695,7 @@
             the anatase phase is also present in the higher-energy allotropes list.</p>
         
             <h3 data-aos="fade-up" id="explorationPressure">Explorations under pressure, the MgAl<sub>2</sub>O<sub>4</sub> case</h3>
-            <h4 data-aos="fade-up" id="exploration">Editing the input</h4>
+            <h4 data-aos="fade-up">Editing the input</h4>
             <p data-aos="fade-up;style=text-align: justify">Solids can harvest the capacities of external relaxation codes to carry explorations under pressure. 
             To exemplify this, we present you with the example to carry out the exploration of MgAl<sub>2</sub>O<sub>4</sub> under 100 GPa of external 
             pressure, using a super cell of 28 atoms (4 formula units), and the Evolutive Algorithm.</p>
@@ -779,7 +779,7 @@
             of the crystal, this section must change as well. Sudopotentials are highly case-sensitive and are not 
             interchangeable.</p>
 
-            <h4 data-aos="fade-up" id="exploration">Expected results</h4>
+            <h4 data-aos="fade-up">Expected results</h4>
             <p data-aos="fade-up;style=text-align: justify">The resulting structure is a face-centered densely packed cubic lattice with a Fd3m 
             space group. Internally, a sublattice composed of Mg2+ ions in an O-tetrahedral environment coexists with 
             an octahedral environment formed by  Al<sup>3+</sup>. Notice that MgO<sub>4</sub> tetrahedra share corners 
@@ -796,7 +796,7 @@
 
 
             <h3 data-aos="fade-up" id="explorationConstriction">Explorations guided by constrictions, the MgSiO<sub>3</sub> case</h3>
-            <h4 data-aos="fade-up" id="exploration">Editing the input</h4>
+            <h4 data-aos="fade-up">Editing the input</h4>
             <p data-aos="fade-up;style=text-align: justify">A great example of the importance of crystal structure prediction is the identification 
             by <a href="https://uspex-team.org/en">USPEX</a> of the post-perovskite phase of the MgSiO<sub>3</sub>, one of 
             the main components of earth&apos;s lower mantle. USPEX detected that this phase is only stable under extreme conditions 
@@ -891,7 +891,7 @@
             need of extra flags in the GULP block. NOTE: If you change the composition of the crystal, this section must 
             change as well. Sudopotentials are highly case-sensitive and are not interchangeable.</p>
 
-            <h4 data-aos="fade-up" id="exploration">Expected results</h4>
+            <h4 data-aos="fade-up">Expected results</h4>
             <p data-aos="fade-up;style=text-align: justify">The structure of the post-perovskite phase of MgSiO<sub>3</sub> (corresponding to 
             the one calculated at 120 GPa) is shown with blue octahedra of SiO<sub>6</sub> and orange spheres 
             representing the Mg atoms. This structure shows similarities with known structures for Fe<sub>2</sub>O<sub>3</sub>,
@@ -904,8 +904,8 @@
             <p data-aos="fade-up;style=text-align: justify">Since the exploration uses the Evolutive algorithm, the best structures are stored in 
             the summary.vasp file along with the higher energy structures located during the run. </p>
             
-                        <h3 data-aos="fade-up" id="explorationVASP">Solids and VASP, the C<sub>8</sub> case</h3>
-            <h4 data-aos="fade-up" id="exploration">Editing the input</h4>
+            <h3 data-aos="fade-up" id="explorationVASP">Solids and VASP, the C<sub>8</sub> case</h3>
+            <h4 data-aos="fade-up">Editing the input</h4>
             <p data-aos="fade-up;style=text-align: justify">Before running any exploration, you need to edit the <i>running_solids_vasp.py</i> file, which contains the default 
             values for all required flags. This default input is set up to explore 3D C<sub>8</sub> crystals using the Evolutive Algorithm, which 
             generates 10 random initial candidates, and improves upon them through 10 generations, each composed by 20 matings and 6 mutants. 
@@ -966,7 +966,7 @@
             designed to read only the case-sensitive flags relevant to the selected algorithm. To switch between algorithms, simply 
             modify the value of the algorithm flag (and any associated ones), then run the code!</p>
 
-            <h4 data-aos="fade-up" id="exploration">Expected results</h4>
+            <h4 data-aos="fade-up">Expected results</h4>
             <p data-aos="fade-up;style=text-align: justify">The best structure found by the algorithm was composed of graphite layers in 
             AB-stacking with an average C-C distance of 1.42 Å  within the 6-carbon ring. Moreover, amongst the 
             high-energy allotropes, it is also found the diamond phase with its characteristic face centered cubic 
@@ -983,20 +983,25 @@
 
             <!-- output -->
             <h2 data-aos="fade-up" id="output-local">Understanding the Output</h2>
-            <p data-aos="fade-up;style=text-align: justify">The output of every search is shown on the screen and it is divided into four categories: Generation 
-            of Candidates, Niching, Generation Summary and Global Summary. The information displayed in these sections will vary 
-            when using the different algorithms available in Solids (Stochastic and Evolutive), but their format is the same.</p>
+            <p data-aos="fade-up;style=text-align: justify">The output of every search is shown on the screen and it is divided into four 
+            categories: <b>Generation of Candidates</b> , <b>Niching</b>, <b>Generation Summary</b> and <b>Global Summary</b>. The 
+            information displayed in these sections varies according the algorithms at hand (Stochastic and Evolutive), 
+            but the format is very similar.</p>
 
-            <h3 data-aos="fade-up" id="output-local">Generation of candidates</h3>
-            <p data-aos="fade-up;style=text-align: justify">When using the Stochastic algorithm (SA), candidate structures are constructed only one time 
-            whereas when using the Evolutive algorithm (EA), this is an iterative process. Therefore, when using SA a list 
-            displaying all generated structures is shown:</p>
+            <h3 data-aos="fade-up">Generation of candidates</h3>
+            <p data-aos="fade-up;style=text-align: justify">When using the Stochastic algorithm (SA), random initial candidate structures 
+            are built only one time, whereas when using the Evolutive algorithm (EA) this is an iterative process. The output for SA look
+            like this:</p>
             
-            <!-- Agregar imagen population generation -->
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaSA_genStruct.png" alt="Output for SA generation of structures" class="Images" loading="lazy">
+            </div>
 
             <p data-aos="fade-up;style=text-align: justify">In contrast, when using EA, this section looks like this:</p>
 
-            <!-- Agregar imagen population generation GA -->
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaEA_genStruct.png" alt="Output for EA generation of structures" class="Images" loading="lazy">
+            </div>
 
             <p data-aos="fade-up;style=text-align: justify">Notice that there is a zero (0) after GENERATION. This is because this is the first set of 
             structures to be created. However, the value next to GENERATION is updated in each iteration.</p>
@@ -1007,52 +1012,55 @@
             nature of the algorithms. The number of structures generated obeys the values assigned to nof_initpop, nof_matings, 
             nof_strains, and nof_xchange values.</p>
 
-            <h3 data-aos="fade-up" id="output-local">Niching</h3>
-            <p data-aos="fade-up;style=text-align: justify">The niching process eliminates duplicate structural information by comparing MBTR descriptors 
-            of the candidates and eliminating those that are too alike. The parameter controlling the tolerance for similarity 
-            is tol_similarity. Also, Solids implements an energy cutoff that removes solutions whose energy difference, compared 
+            <h3 data-aos="fade-up">Niching</h3>
+            <p data-aos="fade-up;style=text-align: justify">The niching process eliminates duplicate structural information by 
+            comparing MBTR descriptors of the candidates and eliminating those that are too alike. The parameter controlling 
+            the tolerance for similarity is tol_similarity. Also, Solids implements an energy cutoff that removes solutions whose energy difference, compared 
             with the best solution so-far-located, exceeds a given threshold (cutoff_energy).</p>
 
-            <p data-aos="fade-up;style=text-align: justify">In EA, niching is implemented in two ways: Elements of a generation compared with their peers, 
-            and elements of the Pool compared with the generation. The first comparison removes redundancies in the generation, 
-            and the second one prevents redundancies in the pool of structures. Notice that energy-based niching is also carried out.</p>
+            <p data-aos="fade-up;style=text-align: justify">In EA, niching is implemented in two ways: Elements of each generation compared 
+            with themselves (GENvsGEN), and the resulting unique elements compared with those of the Pool (GENvsPOOL). 
+            The first comparison removes structural redundancies in the generation, and the second one prevents redundancies 
+            when transfering genes to new generations. Notice that energy-based niching is also carried out (EnergyComp). 
+            In SA, there are only GENvsGEN and EnergyComp.</p>
 
-            <!-- Agregar imagen Niching 1 -->
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaNiching_EA.png" alt="Output for EA generation of structures" class="Images" loading="lazy">
+            </div>
 
-            <p data-aos="fade-up;style=text-align: justify">In SA, there are only generation and energy comparisons.</p>
+            <h3 data-aos="fade-up">Generation Summary</h3>
+            <p data-aos="fade-up;style=text-align: justify">The entire compendium of structures found in the run, along with their energies 
+            and energy differences relative to the lowest-energy structure, is displayed in the <b>SUMMARY</b> section. Consisting in a
+            list of unique structures, ordered by energy (lowest first) that possess adequate levels of energy. 
+            
+            When using SA, the generation summary is displayed in stages of relaxation. The first column displays the number of 
+            the candidate, followed by its ID, energy (in eV), and the energy difference with respect to the local minimum.
 
-            <!-- Agregar imagen Niching 2 -->
+            Notice the ID contains information about the stage at hand and its position in the list, 
+            e.g., stage_002_0001 corresponds to the best structure located in the second stage of the process.</p>
 
-            <h3 data-aos="fade-up" id="output-local">Generation Summary</h3>
-            <p data-aos="fade-up;style=text-align: justify">The entire compendium of structures found in the run, along with their energies and energy 
-            differences relative to the lowest-energy structure, is displayed in the GEN. SUMMARY section. The resulting set 
-            of structures will consist of those unique candidates that possess adequate levels of energy. The display varies 
-            when using SA and EA, but the format is very similar. When using SA, the generation summary is displayed in stages. 
-            The first row is the number of candidates, followed by the ID of the candidate, its energy and the energy difference 
-            with respect to the local minimum. Notice that the ID contains information regarding the stage of the process and the 
-            number of candidates, e.g., stage_002_0001 corresponds to the best structure located in the second stage of the process.</p>
-
-            <!-- Agregar Imagen Output 1 -->
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaSummary_SA.png" alt="Output for SA generation summary" class="Images" loading="lazy">
+            </div>
 
             <p data-aos="fade-up;style=text-align: justify">Similarly, when using EA, the information is displayed by generation. Here, the ID contains information 
             of the type of operator applied in the construction of the candidate, the generation it was built, and the number of structure, 
             e.g., mutant_002_0003 implies that this candidate was built using mutation in the second generation and was the 3rd mutant created 
             in that generation.</p>
 
-            <!-- Agregar imagen Output 2 -->
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaSummary_EA.png" alt="Output for EA generation summary" class="Images" loading="lazy">
+            </div>
 
-            <h3 data-aos="fade-up" id="output-local">Global Summary</h3>
-            <p data-aos="fade-up;style=text-align: justify">Finally, the GLOBAL SUMMARY section displays the best structures found through the entire run. The 
-            cutoff_population flag controls the number of structures presented in this list. When using EA, the structures listed are used to 
-            generate the next set of candidates, and are sorted by energy, with the lowest-energy candidates first in the list. Their energy 
-            difference relative to the lowest-energy structure found and their aptitude are presented in the last two rows.</p>
+            <h3 data-aos="fade-up">Global Summary</h3>
+            <p data-aos="fade-up;style=text-align: justify">Finally, the <b>GLOBAL SUMMARY</b> section displays the best structures found 
+            through the entire run. When using EA, the structures listed in this section are used to create the next set of candidates. 
+            As well as in the previous summary, candidates are sorted by energy with the lowest-energy candidates first in the list. 
+            </p>
 
-            <!-- Agregar imagen output3 -->
-
-            <p data-aos="fade-up;style=text-align: justify">When using SA, the global summary is presented per stage:</p>
-
-            <!-- Agregar imagen output4 -->
-
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaGlobalSummary.png" alt="Output for global summary" class="Images" loading="lazy">
+            </div>
         </div>
 
         <!-- developer -->
