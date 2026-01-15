@@ -12,9 +12,10 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="stylesheet" href="styles.css">
-    <title>Solids 1.0 User’s Guide</title>
+    <title>Solids 1.0 User&apos;s Guide</title>
 </head>
 
+<!-- Menus -->
 <body>
 <header>
     <nav>
@@ -33,26 +34,33 @@
                     <a href="#Introduction">Introduction</a>
                     <ul class="second-list">
                         <li><a href="#what-is">What is Solids?</a></li>
-                        <li><a href="#workflow">Solids’ Workflow</a></li>
+                        <li><a href="#workflow">Solids&apos; Workflow</a></li>
+                        <li><a href="#install">Installing Solids</a></li>
+                        <li><a href="#runningSolids">Running Solids</a></li>
                         <li><a href="#theory">A little bit of theory</a></li>
                     </ul>
                 </li>
                 <li class="Solids-Web">
-                    <a href="#Solids-Web">Solids in the Web</a>
+                    <a href="#Solids-Web">Using Solids in the Web</a>
                     <ul class="second-list">
-                        <li><a href="#installing">Installing Dependencies</a></li>
+                        <li><a href="#installing">Installing the code</a></li>
                         <li><a href="#input">Adding the Input</a></li>
                         <li><a href="#output">Understanding the Output </a></li>
                         <li><a href="#results">Visualizing the Results</a></li>
                     </ul>
                 </li>
                 <li class="Solids-Local">
-                    <a href="#Solids-Local">Solids in Local</a>
+                    <a href="#Solids-Local">Using Solids in Local</a>
                     <ul class="second-list">
-                        <li><a href="#installing-local">Installing Solids</a></li>
-                        <li><a href="#launching">Launching Solids</a></li>
+                        <li><a href="#launching">Running Solids</a></li>
+                        <li><a href="#explorationEMT">Explorations using EMT</a></li>
+                        <li><a href="#explorationGULP">Explorations using GULP</a></li>
+                        <ul>
+                            <li><a href="#explorationPressure">Explorations under pressure</a></li>
+                            <li><a href="#explorationConstriction">Explorations guided by constrictions</a></li>
+                        </ul>
+                        <li><a href="#explorationVASP">Explorations using VASP</a></li>
                         <li><a href="#output-local">Understanding the Output </a></li>
-                        <li><a href="#exploration">Explorations using Solids</a></li>
                     </ul>
                 </li>
                 <li class="Developer-Info">
@@ -75,10 +83,9 @@
     </nav>
 </header>
 
-
+<!-- Contents -->
 <section class="content">
-
-    <!-- Lo que aparece en la parte superior del contenedor antes del texto -->
+    <!-- top -->
     <div class="top-bar">
         <div class="left-content">
             <a href="#" class="home-link" id="top-bar"><span class="material-symbols-outlined home-icon">home</span></a>
@@ -91,11 +98,9 @@
     </div>
     <hr class="divider">
 
-
     <div class="texto">
-        <!-- Todo lo correspondiente a la sección Introduction -->
+        <!-- introduction -->
         <div class="Introduction" id="Introduction">
-            <!-- what-is -->
             <h1 data-aos="fade-up" id="what-is"><b>SOLIDS</b></h1>
             <p data-aos="fade-up;style=text-align: justify"> <i>Solids</i> is a robust, open-source Python package for crystal structure prediction. 
                 It natively integrates with the Atomic Simulation Environment (<a href="https://ase-lib.org">ASE</a>) and uses 
@@ -103,13 +108,19 @@
                 and <a href="https://singroup.github.io/dscribe/latest/#">DScribe</a> to generate symmetry-based random structures 
                 and compare their structural features using morphological descriptors.
             <ul data-aos="fade-up"> 
-                <li>It is available in the official <a href="https://pypi.org">Python Package Index</a> repository and can be easily installed using pip.</li>
+                <li>It is available in the official <a href="https://pypi.org">Python Package Index</a> repository and can be easily installed 
+                using pip.</li>
                 <li>It can be run directly in cloud computing environments, such as Google Colab or Kaggle</li>
                 <li>It is compatible with UNIX systems—such as Linux and macOS</li>
-                <li>It offers full integration with GULP, VASP, and EMT </li>
-                <li>It can run as a Python library within resource management systems such as PBS or SLURM, making it well-suited for use on computing clusters.</li>
+                <li>It offers full integration with <a href="https://gulp.curtin.edu.au">GULP</a>, <a href="https://www.vasp.at">VASP</a>, 
+                and ASE's EMT </li>
+                <li>It can run as a Python library within resource management systems such as PBS or SLURM, making it well-suited for use 
+                    on computing clusters.</li>
             </ul> 
             </p> 
+           
+            <!-- workflow -->
+            <h2 data-aos="fade-up" id="workflow">Solids&apos; Workflow</h2>
             <p data-aos="fade-up;style=text-align: justify"><i>Solids</i> performs energy landscape exploration through two main algorithms:</p>
             <ul data-aos="fade-up">
                 <li><b>The Stochastic Algorithm</b> allows for effective pree-screening of the energy landscape by performing 
@@ -117,68 +128,153 @@
                 <li><b>The Evolutionary Algorithm</b> builds on SA by creating new generations using evolutive operators such as 
                     crossover and mutation to deepend the exploration of the potential energy surface.</li>
             </ul>
-            <!-- workflow -->
-            <h2 data-aos="fade-up" id="workflow">Solids’ Workflow</h2>
             <div class="image-container" data-aos="fade-up">
-                <img src="Images\DiagramasDeFlujo.png" alt="Diagrama de funcionamiento" class="Images" loading="lazy">
+                <img src="images\DiagramasDeFlujo.png" alt="Diagrama de funcionamiento" class="Images" loading="lazy">
             </div>
+
+            <!-- -- installation -- -->
+            <h2 data-aos="fade-up" id="install">Installing Solids</h2>         
+            <p data-aos="fade-up;style=text-align: justify">In Unix-based systems such as Linux and MacOS you can install Solids by simply 
+            opening a terminal and typing:</p>
+
+            <div class="code-container" data-aos="fade-up">
+            <div class="code-header">
+                <div class="buttons">
+                <div class="button red"></div>
+                <div class="button yellow"></div>
+                <div class="button green"></div>
+                </div>
+                <div class="copy-code" onclick="copyCode(this)">
+                <ion-icon name="copy-outline"></ion-icon>
+                <span>Copy</span>
+                </div>
+            </div>
+            <pre><code class="language-python">
+            pip install solids
+            </code></pre>
+            </div>
+
+            <p data-aos="fade-up;style=text-align: justify">If you are more into installing things on your own, you can clone 
+            the <a href="https://github.com/Carloast0790/SolidASE_0.0.git">GitHub repository</a>. Feel free to edit it and add 
+            your own touch to the code! Notice however that during manual installation it is necessary to update your 
+            PYTHONPATH to the working folder where Solids will be installed. In UNIX systems this is done by editing the .bashrc file and 
+            updating the PYTHONPATH variable. For example, if your working directory is /home/solids/ then the variable 
+            should look something like this:</p>
+
+            <div class="code-container" data-aos="fade-up">
+            <div class="code-header">
+                <div class="buttons">
+                <div class="button red"></div>
+                <div class="button yellow"></div>
+                <div class="button green"></div>
+                </div>
+                <div class="copy-code" onclick="copyCode(this)">
+                <ion-icon name="copy-outline"></ion-icon>
+                <span>Copy</span>
+                </div>
+            </div>
+            <pre><code class="language-python">
+            export PYTHONPATH=/home/solids:$PYTHONPATH
+            </code></pre>
+            </div>
+            <p data-aos="fade-up;style=text-align: justify">For more information on how to modify your path clik <a href="https://www.geeksforgeeks.org/python/pythonpath-environment-variable-in-python">here</a></p> 
+            
+            <!-- running -->
+            <h2 data-aos="fade-up" id="runningSolids">Running Solids</h2>
+            <p data-aos="fade-up;style=text-align: justify">After succesfull installation, the working directory will contain a folder named <b>Solids1.0/</b> 
+            and within it, the next group of files:</p>
+            <ul>
+                <li>INPUT_emt.txt</li>
+                <li>INPUT_gulp.txt</li>
+                <li>INPUT_vasp.txt</li>
+                <li>run_solids.py</li>
+                <li>/solids</li>
+            </ul>
+            <p data-aos="fade-up;style=text-align: justify">Each of the INPUT files contains the required basic flags to run a calculation 
+            using a specific relaxation software -as specified after the underscore of the file. We recommend to carry preliminary tests 
+            using the EMT calculator. To run the code and store its output in a file named out.txt simply type:</p>
+
+            <div class="code-container" data-aos="fade-up">
+            <div class="code-header">
+                <div class="buttons">
+                <div class="button red"></div>
+                <div class="button yellow"></div>
+                <div class="button green"></div>
+                </div>
+                <div class="copy-code" onclick="copyCode(this)">
+                <ion-icon name="copy-outline"></ion-icon>
+                <span>Copy</span>
+                </div>
+            </div>
+            <pre><code class="language-python">
+            ./run_solids_emt.py INPUT_emt.txt > out.txt
+            </code></pre>
+            </div>
+
+            <p data-aos="fade-up;style=text-align: justify">
+            You can personalize the search to your needs by changing the values of the flags in the INPUT.txt file using any 
+            desired/available text editor. </p>
+            <p data-aos="fade-up;style=text-align: justify">
+            A complete description of the flags used can be found in the section Explorations using EMT. 
+            </p>
+
             <!-- theory -->
             <h2 data-aos="fade-up" id="theory">A little bit of theory</h2>
-                <h3 data-aos="fade-up" id="theory">Crystalline Structures and their Relationship with Energy</h3>
-                <p data-aos="fade-up;style=text-align: justify">It is no secret that using modern first principle calculations and the knowledge of the atomic 
-                    arrangement of a system, we can estimate and even predict its properties. Also, we know that theoretical low-energy 
-                    structures have the highest probabilities of being found in nature. Therefore, locating the nuclear positions of a 
-                    chemical system when it is lowest in energy, i.e., the ground state equilibrium geometry, is incredibly important to 
-                    modern chemists. If we add to this argument that such theoretical investigations allow one to analyze structures under 
-                    extreme conditions of pressure and temperature, this makes them an excellent ally to cumbersome studies.</p>
-                <p data-aos="fade-up;style=text-align: justify">However, in order to locate the structural geometry lowest in energy, the so-called Global Minimum 
-                    (GM), is not a trivial task. Any algorithm tasked with the finding of a GM is faced with two major challenges: The 
-                    first one is of mathematical nature since the dimension of the abstract construct —known as the Potential Energy 
-                    Surface (PES)— where we plot each possible atomic configuration vs its energy, depends on the degrees of freedom of 
-                    the system (3N-6 for a non-linear molecule with N atoms). This means that the PES is exceedingly multidimensional!</p>
-                <p data-aos="fade-up;style=text-align: justify">The second challenge is of statistical nature, since there is an almost infinite number of possible
-                    arrangements for a given set of atoms. Actually, it is estimated that the number of possible configurations for a 
-                    periodic system with a cubic cell volume of 10 Å<sup>3</sup> containing only 10 atoms of compound AB, is of the order 
-                    of 10<sup>14</sup>. If we increase the number of atoms inside the unit cell up to 30, possible configurations increase
-                    up to a staggering 10<sup>47</sup>. Imagine having to evaluate the energy of all these configurations, compare them,
-                    and then locate the one with the lowest energy of them all. This is, to say it mildly, a really impractical approach</p>
-                <p data-aos="fade-up;style=text-align: justify">So, if we wish to locate the atomic configuration with the lowest possible energy, a.k.a the GM, of 
-                    a chemical composition, we need a way to intelligently explore some of the most promising configurations that the 
-                    complicated PES has to offer. Our tool has to be capable of locating with reasonable accuracy, in reasonable time, 
-                    and using reasonable resources, the GM of any given chemical composition, under any condition of pressure and 
-                    temperature. Seems impossible?</p>
+            <h3 data-aos="fade-up" id="theory">Crystalline Structures and their Relationship with Energy</h3>
+            <p data-aos="fade-up;style=text-align: justify">It is no secret that using modern first principle calculations and the knowledge of the atomic 
+                arrangement of a system, we can estimate and even predict its properties. Also, we know that theoretical low-energy 
+                structures have the highest probabilities of being found in nature. Therefore, locating the nuclear positions of a 
+                chemical system when it is lowest in energy, i.e., the ground state equilibrium geometry, is incredibly important to 
+                modern chemists. If we add to this argument that such theoretical investigations allow one to analyze structures under 
+                extreme conditions of pressure and temperature, this makes them an excellent ally to cumbersome studies.</p>
+            <p data-aos="fade-up;style=text-align: justify">However, in order to locate the structural geometry lowest in energy, the so-called Global Minimum 
+                (GM), is not a trivial task. Any algorithm tasked with the finding of a GM is faced with two major challenges: The 
+                first one is of mathematical nature since the dimension of the abstract construct —known as the Potential Energy 
+                Surface (PES)— where we plot each possible atomic configuration vs its energy, depends on the degrees of freedom of 
+                the system (3N-6 for a non-linear molecule with N atoms). This means that the PES is exceedingly multidimensional!</p>
+            <p data-aos="fade-up;style=text-align: justify">The second challenge is of statistical nature, since there is an almost infinite number of possible
+                arrangements for a given set of atoms. Actually, it is estimated that the number of possible configurations for a 
+                periodic system with a cubic cell volume of 10 Å<sup>3</sup> containing only 10 atoms of compound AB, is of the order 
+                of 10<sup>14</sup>. If we increase the number of atoms inside the unit cell up to 30, possible configurations increase
+                up to a staggering 10<sup>47</sup>. Imagine having to evaluate the energy of all these configurations, compare them,
+                and then locate the one with the lowest energy of them all. This is, to say it mildly, a really impractical approach</p>
+            <p data-aos="fade-up;style=text-align: justify">So, if we wish to locate the atomic configuration with the lowest possible energy, a.k.a the GM, of 
+                a chemical composition, we need a way to intelligently explore some of the most promising configurations that the 
+                complicated PES has to offer. Our tool has to be capable of locating with reasonable accuracy, in reasonable time, 
+                and using reasonable resources, the GM of any given chemical composition, under any condition of pressure and 
+                temperature. Seems impossible?</p>
 
             <h3 data-aos="fade-up" id="theory">Evolutive Algorithms to the Rescue</h3>
-                <p data-aos="fade-up;style=text-align: justify">There are many proposals as to how to efficiently explore the PES and locate GMs for all  kinds of 
-                    chemical compositions. However, there is a specific set of algorithms —whose official title is Evolutive Algorithms, 
-                    or EAs— that generate a collection of random initial candidates and refine their characteristics, minimizing the energy 
-                    associated with their atomic arrangement through a combination of local optimization means and evolutive operators. EAs 
-                    mimic the evolution of biological species where desirable traits are passed on through generations until an optimal set 
-                    of individuals are created.</p>
-                <h4 data-aos="fade-up" id="theory">Crossover</h4>
-                    <p data-aos="fade-up;style=text-align: justify">In the context of crystalline structures, we refer to “desirable traits” to energetically stable 
-                        motifs of the crystal. These chracteristics have to be inherited to new structures aiming to reduce the enegy. To do
-                        so, one selects two low-energy “parents” and “cuts” them across the same unit cell vector. Then, one matches the two
-                        parent-slices to create a “child” that retains their structural information. The idea is that, across time, the good 
-                        characteristics of the structures are refined. The process in charge of this is known as Crossover and a graphic 
-                        representation is found in the image below. Notice that both parents pass on only a segment of their atomic 
-                        arrangement to the child which, in turn, “looks” like its parents.</p>
-                    <!-- Agregar imagen de crossover -->
-                <h4 data-aos="fade-up" id="theory">Mutation</h4>
-                    <p data-aos="fade-up;style=text-align: justify">Despite Crossover&apos;s best efforts, its usage alone does not maintain enough diversity in the pool of 
-                    structures. Therefore, a very important set of candidates are introduced: <b>the mutants</b>. In <i>Solids</i> the two 
-                    mutations implemented are known as <b>lattice strain</b>, and <b>atomic exchange</b>.</p>
-                    <p data-aos="fade-up;style=text-align: justify"> 
-                    In <b>lattice strain</b>, the unit cell is deformed by applying a strain matrix to the cell&apos;s vectors and potentially 
-                    modifying the interatomic distances of the candidate. This operator explores the energetic vicinity of the candidate and 
-                    lets us explore it.</p>
-                    <!-- Agregar imágen de lattice strain-->
-                    <p data-aos="fade-up;style=text-align: justify"><b>Atomic exchange</b> is more aggressive since it takes the atomic positions and species
-                    of two different atoms inside the unit cell and swaps their species without changing the coordinates. This effectively 
-                    creates spikes in the energy of the candidates but allows us to explore sections of the energy landscape that are impossible 
-                    to reach using only Crossover or Lattice strain alone.</p>
-                    <!-- agregar imagen de atomic exchange -->
-        <h3 data-aos="fade-up" id="theory">Relaxation and Selection of structures</h3>
+            <p data-aos="fade-up;style=text-align: justify">There are many proposals as to how to efficiently explore the PES and locate GMs for all  kinds of 
+                chemical compositions. However, there is a specific set of algorithms —whose official title is Evolutive Algorithms, 
+                or EAs— that generate a collection of random initial candidates and refine their characteristics, minimizing the energy 
+                associated with their atomic arrangement through a combination of local optimization means and evolutive operators. EAs 
+                mimic the evolution of biological species where desirable traits are passed on through generations until an optimal set 
+                of individuals are created.</p>
+            <h4 data-aos="fade-up" id="theory">Crossover</h4>
+            <p data-aos="fade-up;style=text-align: justify">In the context of crystalline structures, we refer to “desirable traits” to energetically stable 
+                motifs of the crystal. These chracteristics have to be inherited to new structures aiming to reduce the enegy. To do
+                so, one selects two low-energy “parents” and “cuts” them across the same unit cell vector. Then, one matches the two
+                parent-slices to create a “child” that retains their structural information. The idea is that, across time, the good 
+                characteristics of the structures are refined. The process in charge of this is known as Crossover and a graphic 
+                representation is found in the image below. Notice that both parents pass on only a segment of their atomic 
+                arrangement to the child which, in turn, “looks” like its parents.</p>
+                <!-- Agregar imagen de crossover -->
+            <h4 data-aos="fade-up" id="theory">Mutation</h4>
+            <p data-aos="fade-up;style=text-align: justify">Despite Crossover&apos;s best efforts, its usage alone does not maintain enough diversity in the pool of 
+            structures. Therefore, a very important set of candidates are introduced: <b>the mutants</b>. In <i>Solids</i> the two 
+            mutations implemented are known as <b>lattice strain</b>, and <b>atomic exchange</b>.</p>
+            <p data-aos="fade-up;style=text-align: justify"> 
+            In <b>lattice strain</b>, the unit cell is deformed by applying a strain matrix to the cell&apos;s vectors and potentially 
+            modifying the interatomic distances of the candidate. This operator explores the energetic vicinity of the candidate and 
+            lets us explore it.</p>
+            <!-- Agregar imágen de lattice strain-->
+            <p data-aos="fade-up;style=text-align: justify"><b>Atomic exchange</b> is more aggressive since it takes the atomic positions and species
+            of two different atoms inside the unit cell and swaps their species without changing the coordinates. This effectively 
+            creates spikes in the energy of the candidates but allows us to explore sections of the energy landscape that are impossible 
+            to reach using only Crossover or Lattice strain alone.</p>
+            <!-- agregar imagen de atomic exchange -->
+            <h3 data-aos="fade-up" id="theory">Relaxation and Selection of structures</h3>
             <p data-aos="fade-up;style=text-align: justify">Now, in nature, children&apos;s traits are tested against the environment to see if the inherited characteristics 
                 worked or not. Fit individuals are able to reproduce while inadequate traits are discarded. To check for fitness in theoretical 
                 chemistry, it is necessary to know if the child can lower the energy of its parents. This is achieved via local optimization, a 
@@ -192,7 +288,7 @@
                 candidates “compete” between them for the right to pass on their traits, but instead of fighting to the death, they are selected 
                 randomly, giving structures with higher values of fitness the greatest probability to be chosen. This has the effect of 
                 preferring adequate traits in new generations but keeping the mix rich in diversity.</p>
-        <h3 data-aos="fade-up" id="theory">Results</h3>
+            <h3 data-aos="fade-up" id="theory">Results</h3>
             <p data-aos="fade-up;style=text-align: justify">Finally, the whole process of generating candidates, relaxing them, and passing on their traits is repeated a 
                 given number of times. The final result is, hopefully, a putative Global Minimum, and a set of low-energy structures. Notice that 
                 we used the word putative next to global minimum, this is because it is near-impossible to evaluate all possible atomic 
@@ -201,15 +297,15 @@
                 about?</p>
         </div>
 
-        <!-- Todo lo correspondiente a la sección Solids in the Web-->
+        <!-- web-->
         <div class="Solids-Web" id="Solids-Web">
-            <h1 data-aos="fade-up" id="Solids-Web"><b>Solids in the Web</b></h1>
+            <h1 data-aos="fade-up" id="Solids-Web"><b>Using Solids in the Web</b></h1>
             <p data-aos="fade-up;style=text-align: justify">One of the main advantages of Solids and its integration with the Atomic Simulation Environment (<a href="https://ase-lib.org">ASE</a>) 
                 is the ability to run explorations on external servers. We illustrate this using the Google Colab platform, 
                 which offer free access and strong performance designed for collaborative coding. We highly recommend 
                 performing initial tests of Solids using these platforms</p>
             <!-- Installing -->   
-            <h2 data-aos="fade-up" id="installing">Installing Dependencies</h2>
+            <h2 data-aos="fade-up" id="installing">Installation in the cloud</h2>
             <p data-aos="fade-up;style=text-align: justify">For this test, open a notebook in Google Colab and install the external dependencies and the 
                 main code by typing:</p>
                 
@@ -391,67 +487,24 @@
 
         </div>
 
-        <!-- Todo lo correspondiente a la sección Solids in Local-->
-
+        <!-- local-->
         <div class="Solids-Local" id="Solids-Local">
-            <h1 data-aos="fade-up" id="Solids-Local"><b>Solids in Local</b></h1>
-            <!-- Installing -->   
-            <h2 data-aos="fade-up" id="installing-local">Installing Solids</h2>         
-            <p data-aos="fade-up;style=text-align: justify">In linux-based systems you can install Solids by simply openingn a terminal and typing:</p>
-
-            <div class="code-container" data-aos="fade-up">
-            <div class="code-header">
-                <div class="buttons">
-                <div class="button red"></div>
-                <div class="button yellow"></div>
-                <div class="button green"></div>
-                </div>
-                <div class="copy-code" onclick="copyCode(this)">
-                <ion-icon name="copy-outline"></ion-icon>
-                <span>Copy</span>
-                </div>
-            </div>
-            <pre><code class="language-python">
-            pip install solids==0.3.1
-            </code></pre>
-            </div>
-
-            <p data-aos="fade-up;style=text-align: justify">If you are more into installing things on your own, you can make a copy of the source code using:</p>
-
-            <div class="code-container" data-aos="fade-up">
-            <div class="code-header">
-                <div class="buttons">
-                <div class="button red"></div>
-                <div class="button yellow"></div>
-                <div class="button green"></div>
-                </div>
-                <div class="copy-code" onclick="copyCode(this)">
-                <ion-icon name="copy-outline"></ion-icon>
-                <span>Copy</span>
-                </div>
-            </div>
-            <pre><code class="language-python">
-            git clone https://github.com/Carloast0790/SolidASE_0.0.git
-            </code></pre>
-            </div>
-
-            <p data-aos="fade-up;style=text-align: justify">Notice that during manual installation it is necessary to update your PYTHONPATH to the 
-            desired working folder. In UNIX systems—such as Linux and macOS— this is done by editing the .bashrc file and 
-            updating the PYTHONPATH variable. For example, if your working directory is /home/solids/ then the variable 
-            should look something like this: export PYTHONPATH=/home/solids:$PYTHONPATH. For more information clik <a href="https://www.geeksforgeeks.org/python/pythonpath-environment-variable-in-python">here</a>.</p>
-
+            <h1 data-aos="fade-up" id="Solids-Local"><b>Using Solids in local</b></h1>
             <!-- launching -->
-            <h2 data-aos="fade-up" id="launching">Launching Solids</h2>
-            <p data-aos="fade-up;style=text-align: justify">Once installed, in the working directory you will find the folder named Solids1.0/ and 
-            within it, the next executables:</p>
+            <h2 data-aos="fade-up" id="launching">Running Solids</h2>
+            <p data-aos="fade-up;style=text-align: justify">The first step is to install the code. Please refer to the <b>Installing Solids</b> 
+            section. After succesfull installation, the working directory will contain a folder named <b>Solids1.0/</b> 
+            and within it, the next group of files:</p>
             <ul>
-                <li>run_solids_emt.py</li>
-                <li>run_solids_gulp.py</li>
-                <li>run_solids_vasp.py</li>
+                <li>INPUT_emt.txt</li>
+                <li>INPUT_gulp.txt</li>
+                <li>INPUT_vasp.txt</li>
+                <li>run_solids.py</li>
+                <li>/solids</li>
             </ul>
-            <p data-aos="fade-up;style=text-align: justify">Each of these codes contains the basic input required to run a search using a specific 
-            calculator—as written in the name of the code. We recommend first running a search using the default values 
-            for the EMT calculator. This is done by simply typing:</p>
+            <p data-aos="fade-up;style=text-align: justify">Each of the INPUT files contains the required basic flags to run a calculation 
+            using a specific relaxation software -as specified after the underscore of the file. We recommend to carry preliminary tests 
+            using the EMT calculator. To run the code and store its output in a file named out.txt simply typ:</p>
 
             <div class="code-container" data-aos="fade-up">
             <div class="code-header">
@@ -466,93 +519,21 @@
                 </div>
             </div>
             <pre><code class="language-python">
-            ./run_solids_emt.py 
+            ./run_solids_emt.py INPUT_emt.txt > out.txt
             </code></pre>
             </div>
 
-            <p data-aos="fade-up;style=text-align: justify">Calculations using EMT are extremely cheap, and can be carried out locally with fairly accurate 
-            results (as long as one uses the elements in which the potentials were trained, namely Al, Cu, Ag, Au, Ni, Pd and Pt). 
-            If you desire to personalize the values of the flags used in the search, just edit the information of the input_text 
-            located at the top of the run_solids_emt.py file using any desired/available text editor. A complete description of the 
-            flags used can be found in the section The Stochastich Method and EMT. This procedure is standard to all runs: edit the 
-            input_txt section inside the run_solids file that has the extension of the desired calculator, and execute them.</p>
+            <p data-aos="fade-up;style=text-align: justify">
+            You can personalize the search to your needs by changing the values of the flags in the INPUT.txt file using any 
+            desired/available text editor. </p>
+            <p data-aos="fade-up;style=text-align: justify">
+            A complete description of the flags used in each file can be found in the next sections. 
+            </p>
 
-            <!-- output -->
-            <h2 data-aos="fade-up" id="output-local">Understanding the Output</h2>
-            <p data-aos="fade-up;style=text-align: justify">The output of every search is shown on the screen and it is divided into four categories: Generation 
-            of Candidates, Niching, Generation Summary and Global Summary. The information displayed in these sections will vary 
-            when using the different algorithms available in Solids (Stochastic and Evolutive), but their format is the same.</p>
-
-            <h3 data-aos="fade-up" id="output-local">Generation of candidates</h3>
-            <p data-aos="fade-up;style=text-align: justify">When using the Stochastic algorithm (SA), candidate structures are constructed only one time 
-            whereas when using the Evolutive algorithm (EA), this is an iterative process. Therefore, when using SA a list 
-            displaying all generated structures is shown:</p>
-            
-            <!-- Agregar imagen population generation -->
-
-            <p data-aos="fade-up;style=text-align: justify">In contrast, when using EA, this section looks like this:</p>
-
-            <!-- Agregar imagen population generation GA -->
-
-            <p data-aos="fade-up;style=text-align: justify">Notice that there is a zero (0) after GENERATION. This is because this is the first set of 
-            structures to be created. However, the value next to GENERATION is updated in each iteration.</p>
-
-            <p data-aos="fade-up;style=text-align: justify">Below this section, you can find descriptions of the point group used to build the structure 
-            and the assigned ID number. In EA,descriptions include the type of operator used to create the new structures 
-            (mating and mutant). Of course, this image will differ from the one in your output because of the stochastic 
-            nature of the algorithms. The number of structures generated obeys the values assigned to nof_initpop, nof_matings, 
-            nof_strains, and nof_xchange values.</p>
-
-            <h3 data-aos="fade-up" id="output-local">Niching</h3>
-            <p data-aos="fade-up;style=text-align: justify">The niching process eliminates duplicate structural information by comparing MBTR descriptors 
-            of the candidates and eliminating those that are too alike. The parameter controlling the tolerance for similarity 
-            is tol_similarity. Also, Solids implements an energy cutoff that removes solutions whose energy difference, compared 
-            with the best solution so-far-located, exceeds a given threshold (cutoff_energy).</p>
-
-            <p data-aos="fade-up;style=text-align: justify">In EA, niching is implemented in two ways: Elements of a generation compared with their peers, 
-            and elements of the Pool compared with the generation. The first comparison removes redundancies in the generation, 
-            and the second one prevents redundancies in the pool of structures. Notice that energy-based niching is also carried out.</p>
-
-            <!-- Agregar imagen Niching 1 -->
-
-            <p data-aos="fade-up;style=text-align: justify">In SA, there are only generation and energy comparisons.</p>
-
-            <!-- Agregar imagen Niching 2 -->
-
-            <h3 data-aos="fade-up" id="output-local">Generation Summary</h3>
-            <p data-aos="fade-up;style=text-align: justify">The entire compendium of structures found in the run, along with their energies and energy 
-            differences relative to the lowest-energy structure, is displayed in the GEN. SUMMARY section. The resulting set 
-            of structures will consist of those unique candidates that possess adequate levels of energy. The display varies 
-            when using SA and EA, but the format is very similar. When using SA, the generation summary is displayed in stages. 
-            The first row is the number of candidates, followed by the ID of the candidate, its energy and the energy difference 
-            with respect to the local minimum. Notice that the ID contains information regarding the stage of the process and the 
-            number of candidates, e.g., stage_002_0001 corresponds to the best structure located in the second stage of the process.</p>
-
-            <!-- Agregar Imagen Output 1 -->
-
-            <p data-aos="fade-up;style=text-align: justify">Similarly, when using EA, the information is displayed by generation. Here, the ID contains information 
-            of the type of operator applied in the construction of the candidate, the generation it was built, and the number of structure, 
-            e.g., mutant_002_0003 implies that this candidate was built using mutation in the second generation and was the 3rd mutant created 
-            in that generation.</p>
-
-            <!-- Agregar imagen Output 2 -->
-
-            <h3 data-aos="fade-up" id="output-local">Global Summary</h3>
-            <p data-aos="fade-up;style=text-align: justify">Finally, the GLOBAL SUMMARY section displays the best structures found through the entire run. The 
-            cutoff_population flag controls the number of structures presented in this list. When using EA, the structures listed are used to 
-            generate the next set of candidates, and are sorted by energy, with the lowest-energy candidates first in the list. Their energy 
-            difference relative to the lowest-energy structure found and their aptitude are presented in the last two rows.</p>
-
-            <!-- Agregar imagen output3 -->
-
-            <p data-aos="fade-up;style=text-align: justify">When using SA, the global summary is presented per stage:</p>
-
-            <!-- Agregar imagen output4 -->
-
-            <!-- exploration -->
-            <h2 data-aos="fade-up" id="exploration">Explorations using Solids</h2>
-            <h3 data-aos="fade-up" id="exploration">Solids and EMT, Al<sub>10</sub> case</h3>
-            <h4 data-aos="fade-up" id="exploration">Editing the input</h4>
+            <!-- emt -->
+            <h2 data-aos="fade-up" id="explorationEMT">Solids and EMT</h2>
+            <h3 data-aos="fade-up">The Al<sub>10</sub> case</h3>
+            <h4 data-aos="fade-up">Editing the input</h4>
             <p data-aos="fade-up;style=text-align: justify">Before running any exploration, you need to edit the <i>running_solids_emt.py</i> file, which contains the default 
             values for all required flags. This default input is set up to explore 3D Al<sub>10</sub> crystals using the Stochastic Algorithm, which 
             generates 50 random initial candidates and performs a two-stage relaxation process with EMT. However, you can modify any of 
@@ -604,37 +585,19 @@
             </div>
             <p data-aos="fade-up;style=text-align: justify">You may have noticed that some flags include the labels Stochastic and Evolutionary at the top. 
             These flags control the specific parameters required by each algorithm. If no label is specified, it means that both 
-            algorithms use the same flags. If you don’t mind the extra lines, you can keep all flags in the input file—Solids is 
+            algorithms use the same flags. If you don&apos;t mind the extra lines, you can keep all flags in the input file—Solids is 
             designed to read only the case-sensitive flags relevant to the selected algorithm. To switch between algorithms, simply 
-            modify the value of the algorithm flag (and any associated ones), then run the code!</p>
+            modify the value of the algorithm flag (and any associated ones), then run the code!
+            </p>
 
-            <h4 data-aos="fade-up" id="exploration">Running Solids</h4>
-            <p data-aos="fade-up;style=text-align: justify">To run Solids and store the output in a file named “log.txt”simply type in:</p>
-
-            <div class="code-container" data-aos="fade-up">
-            <div class="code-header">
-            <div class="buttons">
-            <div class="button red"></div>
-            <div class="button yellow"></div>
-            <div class="button green"></div>
-            </div>
-            <div class="copy-code" onclick="copyCode(this)">
-            <ion-icon name="copy-outline"></ion-icon>
-            <span>Copy</span>
-            </div>
-            </div>
-            <pre><code class="language-python">
-                ./run_solids_emt.py > log.txt
-            </code></pre>
-            </div>
-
-            <h4 data-aos="fade-up" id="exploration">Expected results</h4>
+            <h4 data-aos="fade-up">Expected results</h4>
             <p data-aos="fade-up;style=text-align: justify">The resulting structure is a Copper-structured crystal with the cubic Fm̅3m space group. Al is bonded 
             to twelve equivalent Al atoms to form a mixture of corner, edge, and face-sharing AlAl<sub>12</sub> cuboctahedra. All Al-Al bond lengths 
             should be around 2.86 Å. The resulting structure is shown in the figure.</p>
 
-            <!-- Agregar imagen Al 1 -->
-
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/resultadoEMT_Al20.png" alt="Resulting Aluminium structure" class="Images" loading="lazy">
+            </div>
 
             <p data-aos="fade-up;style=text-align: justify">Since we used the Stochastich Algorithm for this search, this structure along with the rest found during 
             the run are stored in the stage.vasp file. Since this is a two-stage run there will be a stage1.vasp and a stage2.vasp file, 
@@ -642,8 +605,8 @@
             energy-structures are on top. Similarly, when using the Evolutive Algorithm, the resulting structures are stored in the 
             summary.vasp file.
 
-            <h3 data-aos="fade-up" id="exploration">Solids and GULP, the TiO<sub>2</sub> case</h3>
-            <h4 data-aos="fade-up" id="exploration">Editing the input</h4>
+            <h3 data-aos="fade-up" id="explorationGULP">Solids and GULP, the TiO<sub>2</sub> case</h3>
+            <h4 data-aos="fade-up">Editing the input</h4>
             <p data-aos="fade-up;style=text-align: justify">Before running any exploration, you need to edit the <i>running_solids_gulp.py</i> file, which contains the default 
             values for all required flags. This default input is set up to explore 3D TiO<sub>2</sub> crystals using the Evolutive Algorithm, which 
             generates 10 random initial candidates, and improves upon them through 10 generations, each composed by 20 matings and 12 mutants. 
@@ -716,135 +679,23 @@
             designed to read only the case-sensitive flags relevant to the selected algorithm. To switch between algorithms, simply 
             modify the value of the algorithm flag (and any associated ones), then run the code!</p>
 
-            <h4 data-aos="fade-up" id="exploration">Running Solids</h4>
-            <p data-aos="fade-up;style=text-align: justify">To run Solids and store the output in a file named “log.txt”simply type in:</p>
-
-            <div class="code-container" data-aos="fade-up">
-                <div class="code-header">
-                    <div class="buttons">
-                        <div class="button red"></div>
-                        <div class="button yellow"></div>
-                        <div class="button green"></div>
-                    </div>
-                    <div class="copy-code" onclick="copyCode(this)">
-                        <ion-icon name="copy-outline"></ion-icon>
-                        <span>Copy</span>
-                    </div>
-                </div>
-                <pre><code class="language-python">
-                    ./run_solids_gulp.py > log.txt
-                </code></pre>
-            </div>
-
-            <h4 data-aos="fade-up" id="exploration">Expected results</h4>
+            <h4 data-aos="fade-up">Expected results</h4>
             <p data-aos="fade-up;style=text-align: justify">The resulting structure is the well-known rutile phase with the tetragonal P4₂/mnm space group where 
             the Ti<sup>4+</sup> (blue) is bonded to six equivalent O<sup>2-</sup>(red) atoms to form a mixture of corner and 
             edge-sharing TiO<sub>6</sub> octahedra. There are four shorter (1.95 Å) and two longer (1.98 Å) Ti-O bond lengths. 
             The resulting structure is shown in the figure.</p>
 
-            <!-- Agregar imagen TiO 1 -->
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/resultadoGULP_TiO2.png" alt="Diagrama de funcionamiento" class="Images" loading="lazy">
+            </div>
 
             <p data-aos="fade-up;style=text-align: justify">Since the exploration uses the Evolutive algorithm, the best structures are stored in the 
             summary.vasp file along with the higher energy structures located during the run. In the figure, we can see the 
             Anatase phase (A) and the Rutile phase (B) since it is very likely that, depending on the initial population size, 
             the anatase phase is also present in the higher-energy allotropes list.</p>
-
-            <h3 data-aos="fade-up" id="exploration">Solids and VASP, the C<sub>8</sub> case</h3>
-            <h4 data-aos="fade-up" id="exploration">Editing the input</h4>
-            <p data-aos="fade-up;style=text-align: justify">Before running any exploration, you need to edit the <i>running_solids_vasp.py</i> file, which contains the default 
-            values for all required flags. This default input is set up to explore 3D C<sub>8</sub> crystals using the Evolutive Algorithm, which 
-            generates 10 random initial candidates, and improves upon them through 10 generations, each composed by 20 matings and 6 mutants. 
-            The relaxation code is GULP. You can modify any of these parameters by using your preferred text editor. The default values are:</p>
-
-            <div class="code-container" data-aos="fade-up">
-                <div class="code-header">
-                    <div class="buttons">
-                        <div class="button red"></div>
-                        <div class="button yellow"></div>
-                        <div class="button green"></div>
-                    </div>
-                    <div class="copy-code" onclick="copyCode(this)">
-                        <ion-icon name="copy-outline"></ion-icon>
-                        <span>Copy</span>
-                    </div>
-                </div>
-                <pre><code class="language-python">
-                #Construction of the initial population
-                #This composition is used to build all structures
-                ---COMPOSITION---
-                C    8
-                ---COMPOSITION---
-                formula_units 1 #Atoms in composition are multiplied by this number
-                dimension 3 #Solids can handle 2- and 3-dimensional crystals
-                volume_factor 1.0 #The volume factor of the unit cell
-                tol_atomic_overlap 0.95 #The tolerances provided to allow atomic overlap
-                nof_initpop 10 #The size of the initial population
-                algorithm evolutive # Choose between stochastic / evolutive
-                #Niching process
-                tol_similarity 0.97 #Tolerance threshold for similarity
-                cutoff_energy 5.0 #Energy Cut-off in eV
-                cutoff_population 10 #Number of final candidates
-                #Calculator
-                calculator VASP #Available calculators: EMT, VASP, GULP
-                nof_processes 10 #Number of parallel local opts
-                #Evolutive algorithm parameters
-                nof_matings 20 #Number of matings
-                nof_strains 6 #Number of strains
-                nof_xchange 0 #Number of atom exchanges
-                #Halting criterion parameters
-                #Stochastic algorithm
-                nof_stages 2 #Number of Optimization Stages
-                #Evolutive algorithm
-                nof_repeats 10 #Stops if the best solutions are found 5 consecutive times
-                nof_stagnant 5 #Controls the number of best solutions of nof_stagnant
-                nof_generations 10 #Number of generations
-                ---VASP---
-                ---VASP---
-                </code></pre>
-            </div>
-            <p data-aos="fade-up;style=text-align: justify">The ---VASP--- section comprises all the required flags to run a calculation using VASP. 
-            However, VASP installations are highly case-sensitive and this input will vary from system to system. Therefore 
-            we highly recommend that you contact your IT department or cluster administrator. On the other hand, you 
-            may have noticed that some flags include the labels Stochastic and Evolutionary at the top. These flags control the 
-            specific parameters required by each algorithm. If no label is specified, it means that both 
-            algorithms use the same flags. If you don&apos;t mind the extra lines, you can keep all flags in the input file —Solids is 
-            designed to read only the case-sensitive flags relevant to the selected algorithm. To switch between algorithms, simply 
-            modify the value of the algorithm flag (and any associated ones), then run the code!</p>
-
-            <h4 data-aos="fade-up" id="exploration">Running Solids</h4>
-            <p data-aos="fade-up;style=text-align: justify">To run Solids and store the output in a file named “log.txt” simply type in:</p>
-
-            <div class="code-container" data-aos="fade-up">
-                <div class="code-header">
-                    <div class="buttons">
-                        <div class="button red"></div>
-                        <div class="button yellow"></div>
-                        <div class="button green"></div>
-                    </div>
-                    <div class="copy-code" onclick="copyCode(this)">
-                        <ion-icon name="copy-outline"></ion-icon>
-                        <span>Copy</span>
-                    </div>
-                </div>
-                <pre><code class="language-python">
-                    nohup ./run_solids_vasp.py > log.txt &
-                </code></pre>
-            </div>
-
-            <h4 data-aos="fade-up" id="exploration">Expected results</h4>
-            <p data-aos="fade-up;style=text-align: justify">The best structure found by the algorithm was composed of graphite layers in 
-            AB-stacking with an average C-C distance of 1.42 Å  within the 6-carbon ring. Moreover, amongst the 
-            high-energy allotropes, it is also found the diamond phase with its characteristic face centered cubic 
-            lattice and Fd3m space group.</p>
-
-            <!-- Agregar imagen C8 1 -->
-
-            <p data-aos="fade-up;style=text-align: justify">Since the exploration uses the Evolutive algorithm, the best structures are stored in the 
-            summary.vasp file along with the higher energy structures located during the run. In the figure we can see the 
-            Diamond phase (A) and the layers of Graphite (B) both structures are present in the higher-energy allotropes list. </p>
-
-            <h3 data-aos="fade-up" id="exploration">Explorations under pressure, the MgAl<sub>2</sub>O<sub>4</sub> case</h3>
-            <h4 data-aos="fade-up" id="exploration">Editing the input</h4>
+        
+            <h3 data-aos="fade-up" id="explorationPressure">Explorations under pressure, the MgAl<sub>2</sub>O<sub>4</sub> case</h3>
+            <h4 data-aos="fade-up">Editing the input</h4>
             <p data-aos="fade-up;style=text-align: justify">Solids can harvest the capacities of external relaxation codes to carry explorations under pressure. 
             To exemplify this, we present you with the example to carry out the exploration of MgAl<sub>2</sub>O<sub>4</sub> under 100 GPa of external 
             pressure, using a super cell of 28 atoms (4 formula units), and the Evolutive Algorithm.</p>
@@ -928,27 +779,7 @@
             of the crystal, this section must change as well. Sudopotentials are highly case-sensitive and are not 
             interchangeable.</p>
 
-            <h4 data-aos="fade-up" id="exploration">Running Solids</h4>
-            <p data-aos="fade-up;style=text-align: justify">To run Solids and store the output in a file named “log.txt” simply type in:</p>
-
-            <div class="code-container" data-aos="fade-up">
-                <div class="code-header">
-                    <div class="buttons">
-                        <div class="button red"></div>
-                        <div class="button yellow"></div>
-                        <div class="button green"></div>
-                    </div>
-                    <div class="copy-code" onclick="copyCode(this)">
-                        <ion-icon name="copy-outline"></ion-icon>
-                        <span>Copy</span>
-                    </div>
-                </div>
-                <pre><code class="language-python">
-                    ./run_solids_gulp.py > log.txt &
-                </code></pre>
-            </div>
-
-            <h4 data-aos="fade-up" id="exploration">Expected results</h4>
+            <h4 data-aos="fade-up">Expected results</h4>
             <p data-aos="fade-up;style=text-align: justify">The resulting structure is a face-centered densely packed cubic lattice with a Fd3m 
             space group. Internally, a sublattice composed of Mg2+ ions in an O-tetrahedral environment coexists with 
             an octahedral environment formed by  Al<sup>3+</sup>. Notice that MgO<sub>4</sub> tetrahedra share corners 
@@ -956,17 +787,19 @@
             reported ones (MP-ID: mp-3536) with Mg-O bond lengths of 2.02 Å, displaying an RPD of 2% with the reported 
             1.94 Å. Also, every Al-O bond length matches perfectly with 1.92 Å.</p>
 
-            <!-- Agregar imagen MgAl2O4 1 -->
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/resultadoGULP_MgAl2O4.png" alt="Diagrama de funcionamiento" class="Images" loading="lazy">
+            </div>
 
             <p data-aos="fade-up;style=text-align: justify">Since the exploration uses the Evolutive algorithm, the best structures are stored in 
             the summary.vasp file along with the higher energy structures located during the run. </p>
 
 
-            <h3 data-aos="fade-up" id="exploration">Explorations guided by constrictions, the MgSiO<sub>3</sub> case</h3>
-            <h4 data-aos="fade-up" id="exploration">Editing the input</h4>
+            <h3 data-aos="fade-up" id="explorationConstriction">Explorations guided by constrictions, the MgSiO<sub>3</sub> case</h3>
+            <h4 data-aos="fade-up">Editing the input</h4>
             <p data-aos="fade-up;style=text-align: justify">A great example of the importance of crystal structure prediction is the identification 
             by <a href="https://uspex-team.org/en">USPEX</a> of the post-perovskite phase of the MgSiO<sub>3</sub>, one of 
-            the main components of earth’s lower mantle. USPEX detected that this phase is only stable under extreme conditions 
+            the main components of earth&apos;s lower mantle. USPEX detected that this phase is only stable under extreme conditions 
             of pressure and temperature. They also provided a GULP-usable sudopotential that can be used in the pursuit of 
             such structure. Therefore, in Solids we applied the sudopotential and the a priori information of the unit cell 
             available in USPEX&apos;s  examples to show the usage of Solids using constrictions. Constrictions are used to 
@@ -1058,8 +891,25 @@
             need of extra flags in the GULP block. NOTE: If you change the composition of the crystal, this section must 
             change as well. Sudopotentials are highly case-sensitive and are not interchangeable.</p>
 
-            <h4 data-aos="fade-up" id="exploration">Running Solids</h4>
-            <p data-aos="fade-up;style=text-align: justify">To run Solids and store the output in a file named “log.txt” simply type in:</p>
+            <h4 data-aos="fade-up">Expected results</h4>
+            <p data-aos="fade-up;style=text-align: justify">The structure of the post-perovskite phase of MgSiO<sub>3</sub> (corresponding to 
+            the one calculated at 120 GPa) is shown with blue octahedra of SiO<sub>6</sub> and orange spheres 
+            representing the Mg atoms. This structure shows similarities with known structures for Fe<sub>2</sub>O<sub>3</sub>,
+            and CaIrO<sub>3</sub> to mention a few.</p>
+
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/resultadoGULP_MgSiO3.png" alt="Diagrama de funcionamiento" class="Images" loading="lazy">
+            </div>
+
+            <p data-aos="fade-up;style=text-align: justify">Since the exploration uses the Evolutive algorithm, the best structures are stored in 
+            the summary.vasp file along with the higher energy structures located during the run. </p>
+            
+            <h3 data-aos="fade-up" id="explorationVASP">Solids and VASP, the C<sub>8</sub> case</h3>
+            <h4 data-aos="fade-up">Editing the input</h4>
+            <p data-aos="fade-up;style=text-align: justify">Before running any exploration, you need to edit the <i>running_solids_vasp.py</i> file, which contains the default 
+            values for all required flags. This default input is set up to explore 3D C<sub>8</sub> crystals using the Evolutive Algorithm, which 
+            generates 10 random initial candidates, and improves upon them through 10 generations, each composed by 20 matings and 6 mutants. 
+            The relaxation code is GULP. You can modify any of these parameters by using your preferred text editor. The default values are:</p>
 
             <div class="code-container" data-aos="fade-up">
                 <div class="code-header">
@@ -1074,25 +924,146 @@
                     </div>
                 </div>
                 <pre><code class="language-python">
-                    ./run_solids_gulp.py > log.txt &
+                #Construction of the initial population
+                #This composition is used to build all structures
+                ---COMPOSITION---
+                C    8
+                ---COMPOSITION---
+                formula_units 1 #Atoms in composition are multiplied by this number
+                dimension 3 #Solids can handle 2- and 3-dimensional crystals
+                volume_factor 1.0 #The volume factor of the unit cell
+                tol_atomic_overlap 0.95 #The tolerances provided to allow atomic overlap
+                nof_initpop 10 #The size of the initial population
+                algorithm evolutive # Choose between stochastic / evolutive
+                #Niching process
+                tol_similarity 0.97 #Tolerance threshold for similarity
+                cutoff_energy 5.0 #Energy Cut-off in eV
+                cutoff_population 10 #Number of final candidates
+                #Calculator
+                calculator VASP #Available calculators: EMT, VASP, GULP
+                nof_processes 10 #Number of parallel local opts
+                #Evolutive algorithm parameters
+                nof_matings 20 #Number of matings
+                nof_strains 6 #Number of strains
+                nof_xchange 0 #Number of atom exchanges
+                #Halting criterion parameters
+                #Stochastic algorithm
+                nof_stages 2 #Number of Optimization Stages
+                #Evolutive algorithm
+                nof_repeats 10 #Stops if the best solutions are found 5 consecutive times
+                nof_stagnant 5 #Controls the number of best solutions of nof_stagnant
+                nof_generations 10 #Number of generations
+                ---VASP---
+                ---VASP---
                 </code></pre>
             </div>
+            <p data-aos="fade-up;style=text-align: justify">The ---VASP--- section comprises all the required flags to run a calculation using VASP. 
+            However, VASP installations are highly case-sensitive and this input will vary from system to system. Therefore 
+            we highly recommend that you contact your IT department or cluster administrator. On the other hand, you 
+            may have noticed that some flags include the labels Stochastic and Evolutionary at the top. These flags control the 
+            specific parameters required by each algorithm. If no label is specified, it means that both 
+            algorithms use the same flags. If you don&apos;t mind the extra lines, you can keep all flags in the input file —Solids is 
+            designed to read only the case-sensitive flags relevant to the selected algorithm. To switch between algorithms, simply 
+            modify the value of the algorithm flag (and any associated ones), then run the code!</p>
 
-            <h4 data-aos="fade-up" id="exploration">Expected results</h4>
-            <p data-aos="fade-up;style=text-align: justify">The structure of the post-perovskite phase of MgSiO<sub>3</sub> (corresponding to 
-            the one calculated at 120 GPa) is shown with blue octahedra of SiO<sub>6</sub> and orange spheres 
-            representing the Mg atoms. This structure shows similarities with known structures for Fe<sub>2</sub>O<sub>3</sub>,
-            and CaIrO<sub>3</sub> to mention a few.</p>
+            <h4 data-aos="fade-up">Expected results</h4>
+            <p data-aos="fade-up;style=text-align: justify">The best structure found by the algorithm was composed of graphite layers in 
+            AB-stacking with an average C-C distance of 1.42 Å  within the 6-carbon ring. Moreover, amongst the 
+            high-energy allotropes, it is also found the diamond phase with its characteristic face centered cubic 
+            lattice and Fd3m space group.</p>
 
-            <!-- Agregar imagen MgSiO3 1 -->
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/resultadoVASP_C8.png" alt="Diagrama de funcionamiento" class="Images" loading="lazy">
+            </div>
 
-            <p data-aos="fade-up;style=text-align: justify">Since the exploration uses the Evolutive algorithm, the best structures are stored in 
-            the summary.vasp file along with the higher energy structures located during the run. </p>            
+            <p data-aos="fade-up;style=text-align: justify">Since the exploration uses the Evolutive algorithm, the best structures are stored in the 
+            summary.vasp file along with the higher energy structures located during the run. In the figure we can see the 
+            Diamond phase (A) and the layers of Graphite (B) both structures are present in the higher-energy allotropes list. </p>
 
 
+            <!-- output -->
+            <h2 data-aos="fade-up" id="output-local">Understanding the Output</h2>
+            <p data-aos="fade-up;style=text-align: justify">The output of every search is shown on the screen and it is divided into four 
+            categories: <b>Generation of Candidates</b> , <b>Niching</b>, <b>Generation Summary</b> and <b>Global Summary</b>. The 
+            information displayed in these sections varies according the algorithms at hand (Stochastic and Evolutive), 
+            but the format is very similar.</p>
+
+            <h3 data-aos="fade-up">Generation of candidates</h3>
+            <p data-aos="fade-up;style=text-align: justify">When using the Stochastic algorithm (SA), random initial candidate structures 
+            are built only one time, whereas when using the Evolutive algorithm (EA) this is an iterative process. The output for SA look
+            like this:</p>
+            
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaSA_genStruct.png" alt="Output for SA generation of structures" class="Images" loading="lazy">
+            </div>
+
+            <p data-aos="fade-up;style=text-align: justify">In contrast, when using EA, this section looks like this:</p>
+
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaEA_genStruct.png" alt="Output for EA generation of structures" class="Images" loading="lazy">
+            </div>
+
+            <p data-aos="fade-up;style=text-align: justify">Notice that there is a zero (0) after GENERATION. This is because this is the first set of 
+            structures to be created. However, the value next to GENERATION is updated in each iteration.</p>
+
+            <p data-aos="fade-up;style=text-align: justify">Below this section, you can find descriptions of the point group used to build the structure 
+            and the assigned ID number. In EA,descriptions include the type of operator used to create the new structures 
+            (mating and mutant). Of course, this image will differ from the one in your output because of the stochastic 
+            nature of the algorithms. The number of structures generated obeys the values assigned to nof_initpop, nof_matings, 
+            nof_strains, and nof_xchange values.</p>
+
+            <h3 data-aos="fade-up">Niching</h3>
+            <p data-aos="fade-up;style=text-align: justify">The niching process eliminates duplicate structural information by 
+            comparing MBTR descriptors of the candidates and eliminating those that are too alike. The parameter controlling 
+            the tolerance for similarity is tol_similarity. Also, Solids implements an energy cutoff that removes solutions whose energy difference, compared 
+            with the best solution so-far-located, exceeds a given threshold (cutoff_energy).</p>
+
+            <p data-aos="fade-up;style=text-align: justify">In EA, niching is implemented in two ways: Elements of each generation compared 
+            with themselves (GENvsGEN), and the resulting unique elements compared with those of the Pool (GENvsPOOL). 
+            The first comparison removes structural redundancies in the generation, and the second one prevents redundancies 
+            when transfering genes to new generations. Notice that energy-based niching is also carried out (EnergyComp). 
+            In SA, there are only GENvsGEN and EnergyComp.</p>
+
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaNiching_EA.png" alt="Output for EA generation of structures" class="Images" loading="lazy">
+            </div>
+
+            <h3 data-aos="fade-up">Generation Summary</h3>
+            <p data-aos="fade-up;style=text-align: justify">The entire compendium of structures found in the run, along with their energies 
+            and energy differences relative to the lowest-energy structure, is displayed in the <b>SUMMARY</b> section. Consisting in a
+            list of unique structures, ordered by energy (lowest first) that possess adequate levels of energy. 
+            
+            When using SA, the generation summary is displayed in stages of relaxation. The first column displays the number of 
+            the candidate, followed by its ID, energy (in eV), and the energy difference with respect to the local minimum.
+
+            Notice the ID contains information about the stage at hand and its position in the list, 
+            e.g., stage_002_0001 corresponds to the best structure located in the second stage of the process.</p>
+
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaSummary_SA.png" alt="Output for SA generation summary" class="Images" loading="lazy">
+            </div>
+
+            <p data-aos="fade-up;style=text-align: justify">Similarly, when using EA, the information is displayed by generation. Here, the ID contains information 
+            of the type of operator applied in the construction of the candidate, the generation it was built, and the number of structure, 
+            e.g., mutant_002_0003 implies that this candidate was built using mutation in the second generation and was the 3rd mutant created 
+            in that generation.</p>
+
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaSummary_EA.png" alt="Output for EA generation summary" class="Images" loading="lazy">
+            </div>
+
+            <h3 data-aos="fade-up">Global Summary</h3>
+            <p data-aos="fade-up;style=text-align: justify">Finally, the <b>GLOBAL SUMMARY</b> section displays the best structures found 
+            through the entire run. When using EA, the structures listed in this section are used to create the next set of candidates. 
+            As well as in the previous summary, candidates are sorted by energy with the lowest-energy candidates first in the list. 
+            </p>
+
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaGlobalSummary.png" alt="Output for global summary" class="Images" loading="lazy">
+            </div>
         </div>
 
-        <!-- Sección About the Developer -->
+        <!-- developer -->
         <div class="Developer-Info" id="developer-info">
             <h1 data-aos="fade-up" id="developer-info"><b>About the Developer</b></h1>
             <!-- contact, información obtenida de ChatGPT-->
