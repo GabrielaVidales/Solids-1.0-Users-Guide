@@ -109,11 +109,11 @@
                 and compare their structural features using morphological descriptors.
             <ul data-aos="fade-up"> 
                 <li>It is available in the official <a href="https://pypi.org">Python Package Index</a> repository and can be easily installed 
-                using pip.</li>
+                using <code class="highLine">pip</code>.</li>
                 <li>It can be run directly in cloud computing environments, such as Google Colab or Kaggle</li>
                 <li>It is compatible with UNIX systems—such as Linux and macOS</li>
                 <li>It offers full integration with <a href="https://gulp.curtin.edu.au">GULP</a>, <a href="https://www.vasp.at">VASP</a>, 
-                and ASE's EMT </li>
+                and ASE's <a href="https://ase-lib.org/ase/calculators/emt.html">EMT</a></li>
                 <li>It can run as a Python library within resource management systems such as PBS or SLURM, making it well-suited for use 
                     on computing clusters.</li>
             </ul> 
@@ -126,7 +126,7 @@
                 <li><b>The Stochastic Algorithm</b> allows for effective pree-screening of the energy landscape by performing 
                     relaxation in stages, meaning that the level of theory can be adjusted or changed mid-run.</li>
                 <li><b>The Evolutionary Algorithm</b> builds on SA by creating new generations using evolutive operators such as 
-                    crossover and mutation to deepend the exploration of the potential energy surface.</li>
+                    crossover and mutation to widen the exploration of the potential energy surface.</li>
             </ul>
             <div class="image-container" data-aos="fade-up">
                 <img src="images\DiagramasDeFlujo.png" alt="Diagrama de funcionamiento" class="Images" loading="lazy">
@@ -134,8 +134,10 @@
 
             <!-- -- installation -- -->
             <h2 data-aos="fade-up" id="install">Installing Solids</h2>         
-            <p data-aos="fade-up;style=text-align: justify">In Unix-based systems such as Linux and MacOS you can install Solids by simply 
-            opening a terminal and typing:</p>
+            <p data-aos="fade-up;style=text-align: justify">In Unix-based systems such as Linux and MacOS you can install Solids using <code class="highLine">pip</code>, as shown bellow, 
+                or, if you are more into installing things on your own, you can clone the <a href="https://github.com/Carloast0790/SolidASE_0.0.git">GitHub 
+                repository</a>. Feel free to edit it and add your own touch to the code!
+            </p>
 
             <div class="code-container" data-aos="fade-up">
             <div class="code-header">
@@ -154,12 +156,9 @@
             </code></pre>
             </div>
 
-            <p data-aos="fade-up;style=text-align: justify">If you are more into installing things on your own, you can clone 
-            the <a href="https://github.com/Carloast0790/SolidASE_0.0.git">GitHub repository</a>. Feel free to edit it and add 
-            your own touch to the code! Notice however that during manual installation it is necessary to update your 
-            PYTHONPATH to the working folder where Solids will be installed. In UNIX systems this is done by editing the .bashrc file and 
-            updating the PYTHONPATH variable. For example, if your working directory is /home/solids/ then the variable 
-            should look something like this:</p>
+            <p data-aos="fade-up;style=text-align: justify"> <b>NOTE:</b> During manual installation it is necessary to update your 
+            <code class="highLine">PYTHONPATH</code>. For more information on how to modify your path clik <a href="https://www.geeksforgeeks.org/python/pythonpath-environment-variable-in-python">here</a>.
+            For example, if your working directory is /home/solids/ then the path should look something like this:</p>
 
             <div class="code-container" data-aos="fade-up">
             <div class="code-header">
@@ -177,22 +176,22 @@
             export PYTHONPATH=/home/solids:$PYTHONPATH
             </code></pre>
             </div>
-            <p data-aos="fade-up;style=text-align: justify">For more information on how to modify your path clik <a href="https://www.geeksforgeeks.org/python/pythonpath-environment-variable-in-python">here</a></p> 
+            <p data-aos="fade-up;style=text-align: justify"></p> 
             
             <!-- running -->
             <h2 data-aos="fade-up" id="runningSolids">Running Solids</h2>
-            <p data-aos="fade-up;style=text-align: justify">After succesfull installation, the working directory will contain a folder named <b>Solids1.0/</b> 
-            and within it, the next group of files:</p>
-            <ul>
-                <li>INPUT_emt.txt</li>
-                <li>INPUT_gulp.txt</li>
-                <li>INPUT_vasp.txt</li>
+            <p data-aos="fade-up;style=text-align: justify">After successful installation, the directory will contain an executable 
+            (extension <code class="highLine">.py</code>) and the source code:</p>
+            <ul data-aos="fade-up;style=text-align: justify">
                 <li>run_solids.py</li>
                 <li>/solids</li>
             </ul>
-            <p data-aos="fade-up;style=text-align: justify">Each of the INPUT files contains the required basic flags to run a calculation 
-            using a specific relaxation software -as specified after the underscore of the file. We recommend to carry preliminary tests 
-            using the EMT calculator. To run the code and store its output in a file named out.txt simply type:</p>
+            <p data-aos="fade-up;style=text-align: justify">Next, the work flow only requires that you provide an inputFile, and 
+                Solids is pre-programmed to give you examples with default values for both algorithms (stochastic and evolutive) using all 
+                interfaced calculators. Currently, Solids is interfaced with ASE&apos;s EMT ( <b>inp_emt</b>), VASP 
+                ( <b>inp_vasp</b>), and GULP ( <b>inp_gulp</b>). To create your first input simply 
+                type the next code, modifying the extension of the <b>inp</b> command to match 
+                the calculator of your preference.</p>
 
             <div class="code-container" data-aos="fade-up">
             <div class="code-header">
@@ -207,94 +206,242 @@
                 </div>
             </div>
             <pre><code class="language-python">
-            ./run_solids_emt.py INPUT_emt.txt > out.txt
+            ./run_solids.py inp_emt
+            ./run_solids.py inp_vasp
+            ./run_solids.py inp_gulp            
             </code></pre>
             </div>
 
             <p data-aos="fade-up;style=text-align: justify">
-            You can personalize the search to your needs by changing the values of the flags in the INPUT.txt file using any 
-            desired/available text editor. </p>
+            Each of the input files generated contains all the flags with default values to run a calculation using a specific calculator. However, feel 
+            free to personalize the provided values to your needs and desires (we recommend carrying preliminary tests using the EMT calculator). You can 
+            find more details about the meaning of each flag in the comments of the input file or in the next table:</p>
+
+            <table>
+            <thead>
+                <tr>
+                <th>Flag name</th>
+                <th>Meaning</th>
+                <th>Format and default value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td>---COMPOSITION---</td>
+                <td>Crystal&apos;s Chemical composition</td>
+                <td>ChemSym NumOfAtoms, Default: <code class="highLine">Null</code></td>
+                </tr>
+                <tr>
+                <td>formula_units</td>
+                <td>NumOfAtoms in COMPOSITION is multiplied by this number</td>
+                <td>(int) Default: <code class="highLine">2</code></td>
+                </tr>
+                <tr>
+                <td>dimension</td>
+                <td>Dimension of the crystal, suported 2- and 3-dimensions</td>
+                <td>(int) Default: <code class="highLine">3</code></td>
+                </tr>
+                <tr>
+                <td>volume_factor</td>
+                <td>Controls the volume factor of the unit cell</td>
+                <td>(float) Default: <code class="highLine">1.0</code></td>
+                </tr>
+                <tr>
+                <td>tol_atomic_overlap</td>
+                <td>Tolerance value to allow atomic overlap</td>
+                <td>(float) Default: <code class="highLine">0.97</code></td>
+                </tr>
+                <tr>
+                <td>nof_initpop</td>
+                <td>Size of the initial population</td>
+                <td>(int) Default: <code class="highLine">50</code></td>
+                </tr>
+                <tr>
+                <td>algorithm</td>
+                <td>Choose between stochastic / evolutive</td>
+                <td>(str) Default: <code class="highLine">evolutive</code></td>
+                </tr>
+                <tr>
+                <td>tol_similarity</td>
+                <td>Tolerance threshold for similarity</td>
+                <td>(float) Default: <code class="highLine">0.97</code></td>
+                </tr>
+                <tr>
+                <td>cutoff_energy</td>
+                <td>Energy Cut-off in <i>eV</i></td>
+                <td>(float) Default: <code class="highLine">2.0</code></td>
+                </tr>
+                <tr>
+                <td>cutoff_population</td>
+                <td>Number of final candidates</td>
+                <td>(int) Default: <code class="highLine">10</code></td>
+                </tr>
+                <tr>
+                <td>calculator</td>
+                <td>Available calculators: EMT, VASP, GULP</td>
+                <td>(str) Default: <code class="highLine">EMT</code></td>
+                </tr>
+                <tr>
+                <td>nof_processes</td>
+                <td>Number of parallel local opts</td>
+                <td>(int) Default: <code class="highLine">5</code></td>
+                </tr>
+                <tr>
+                <td>nof_matings</td>
+                <td>Number of matings</td>
+                <td>(int) Default: <code class="highLine">20</code></td>
+                </tr>
+                <tr>
+                <td>nof_strains</td>
+                <td>Number of strain-mutants</td>
+                <td>(int) Default: <code class="highLine">6</code></td>
+                </tr>
+                <tr>
+                <td>nof_xchange</td>
+                <td>Number of atomExchange-mutants</td>
+                <td>(int) Default: <code class="highLine">6</code></td>
+                </tr>
+                <tr>
+                <td>nof_stages</td>
+                <td>Number of Optimization Stages</td>
+                <td>(int) Default: <code class="highLine">2</code></td>
+                </tr>
+                <tr>
+                <td>nof_repeats and nof_stagnant</td>
+                <td>Stop the whole process if the best “nof_stagnant” solutions are found “nof_repeats” consecutive times</td>
+                <td>(int) Default: <code class="highLine">5</code> and <code class="highLine">10</code> respectively</td>
+                </tr>
+                <tr>
+                <td>nof_generations</td>
+                <td>Number of generations</td>
+                <td>(int) Default: <code class="highLine">20</code></td>
+                </tr>
+                <tr>
+            </tbody>
+            </table>
+
             <p data-aos="fade-up;style=text-align: justify">
-            A complete description of the flags used can be found in the section Explorations using EMT. 
+                Once you got the input tuned to your needs, run the code specifying the input and output using:
             </p>
+
+            <div class="code-container" data-aos="fade-up">
+            <div class="code-header">
+                <div class="buttons">
+                <div class="button red"></div>
+                <div class="button yellow"></div>
+                <div class="button green"></div>
+                </div>
+                <div class="copy-code" onclick="copyCode(this)">
+                <ion-icon name="copy-outline"></ion-icon>
+                <span>Copy</span>
+                </div>
+            </div>
+            <pre><code class="language-python">
+            ./run_solids.py inputFileEMT > outputFile.txt
+            </code></pre>
+            </div>
 
             <!-- theory -->
             <h2 data-aos="fade-up" id="theory">A little bit of theory</h2>
-            <h3 data-aos="fade-up" id="theory">Crystalline Structures and their Relationship with Energy</h3>
-            <p data-aos="fade-up;style=text-align: justify">It is no secret that using modern first principle calculations and the knowledge of the atomic 
-                arrangement of a system, we can estimate and even predict its properties. Also, we know that theoretical low-energy 
-                structures have the highest probabilities of being found in nature. Therefore, locating the nuclear positions of a 
-                chemical system when it is lowest in energy, i.e., the ground state equilibrium geometry, is incredibly important to 
-                modern chemists. If we add to this argument that such theoretical investigations allow one to analyze structures under 
-                extreme conditions of pressure and temperature, this makes them an excellent ally to cumbersome studies.</p>
-            <p data-aos="fade-up;style=text-align: justify">However, in order to locate the structural geometry lowest in energy, the so-called Global Minimum 
-                (GM), is not a trivial task. Any algorithm tasked with the finding of a GM is faced with two major challenges: The 
-                first one is of mathematical nature since the dimension of the abstract construct —known as the Potential Energy 
-                Surface (PES)— where we plot each possible atomic configuration vs its energy, depends on the degrees of freedom of 
-                the system (3N-6 for a non-linear molecule with N atoms). This means that the PES is exceedingly multidimensional!</p>
-            <p data-aos="fade-up;style=text-align: justify">The second challenge is of statistical nature, since there is an almost infinite number of possible
-                arrangements for a given set of atoms. Actually, it is estimated that the number of possible configurations for a 
-                periodic system with a cubic cell volume of 10 Å<sup>3</sup> containing only 10 atoms of compound AB, is of the order 
-                of 10<sup>14</sup>. If we increase the number of atoms inside the unit cell up to 30, possible configurations increase
-                up to a staggering 10<sup>47</sup>. Imagine having to evaluate the energy of all these configurations, compare them,
-                and then locate the one with the lowest energy of them all. This is, to say it mildly, a really impractical approach</p>
-            <p data-aos="fade-up;style=text-align: justify">So, if we wish to locate the atomic configuration with the lowest possible energy, a.k.a the GM, of 
-                a chemical composition, we need a way to intelligently explore some of the most promising configurations that the 
-                complicated PES has to offer. Our tool has to be capable of locating with reasonable accuracy, in reasonable time, 
-                and using reasonable resources, the GM of any given chemical composition, under any condition of pressure and 
+            <h3 data-aos="fade-up">The relation between crystal structures and energy</h3>
+
+            <p data-aos="fade-up;style=text-align: justify">It is no secret that, by using modern first-principle calculations and the knowledge of the 
+                atomic arrangement of a system, we can estimate and even predict its properties. Furthermore, we know that theoretical low-energy structures 
+                have the highest probabilities of being found in nature. Therefore, locating the nuclear positions of a chemical system when it is at its 
+                lowest energy, i.e., the ground state equilibrium geometry, is incredibly important to modern chemists. Additionally, such theoretical 
+                investigations allow one to analyze structures under extreme conditions of pressure and temperature, making them an excellent ally to 
+                experimentally challenging studies.</p>
+
+            <p data-aos="fade-up;style=text-align: justify">However, locating the structural geometry lowest in energy, the so-called <b>Global Minimum (GM)</b>, 
+                is not a trivial task. Any algorithm tasked with finding a GM is faced with two major challenges: The first one is of mathematical 
+                nature since the dimension of the abstract construct known as the <b>Potential Energy Surface (PES)</b>, where we plot each possible atomic 
+                configuration vs. its energy, depends on the degrees of freedom of the system (3N-6 for a non-linear molecule with N atoms). This means 
+                that the PES is exceedingly multidimensional!</p>
+
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/ilustracionPES.png" alt="Crossover diagram" class="Images" loading="lazy">
+            </div>
+
+
+            <p data-aos="fade-up;style=text-align: justify">The second challenge is purely statistical: There is an almost infinite number of possible arrangements 
+                for a given set of atoms! For instance, it is estimated that the number of possible configurations for a periodic system with a cubic cell volume 
+                of 10 Å<sup>3</sup> containing only 10 atoms of compound AB is of the order of 10 <sup>14</sup>. If we increase the number of atoms inside the 
+                unit cell to 30, the possible configurations increase to a staggering 10<sup>47</sup>. Imagine having to evaluate the energy of all these 
+                configurations, compare them, and then locate the one with the lowest energy of them all. This is, to say it mildly, a highly impractical approach.</p>
+
+            <p data-aos="fade-up;style=text-align: justify">In conclusion, if we wish to locate the GM of a chemical composition, along with other low-energy 
+                configurations, we need a way to intelligently explore the most promising sections of the intricate PES. The tool should be capable of locating—with 
+                reasonable accuracy, in reasonable time, and using reasonable resources—the GM of any given chemical composition under any condition of pressure and 
                 temperature. Seems impossible?</p>
 
-            <h3 data-aos="fade-up" id="theory">Evolutive Algorithms to the Rescue</h3>
-            <p data-aos="fade-up;style=text-align: justify">There are many proposals as to how to efficiently explore the PES and locate GMs for all  kinds of 
-                chemical compositions. However, there is a specific set of algorithms —whose official title is Evolutive Algorithms, 
-                or EAs— that generate a collection of random initial candidates and refine their characteristics, minimizing the energy 
-                associated with their atomic arrangement through a combination of local optimization means and evolutive operators. EAs 
-                mimic the evolution of biological species where desirable traits are passed on through generations until an optimal set 
-                of individuals are created.</p>
-            <h4 data-aos="fade-up" id="theory">Crossover</h4>
-            <p data-aos="fade-up;style=text-align: justify">In the context of crystalline structures, we refer to “desirable traits” to energetically stable 
-                motifs of the crystal. These chracteristics have to be inherited to new structures aiming to reduce the enegy. To do
-                so, one selects two low-energy “parents” and “cuts” them across the same unit cell vector. Then, one matches the two
-                parent-slices to create a “child” that retains their structural information. The idea is that, across time, the good 
-                characteristics of the structures are refined. The process in charge of this is known as Crossover and a graphic 
-                representation is found in the image below. Notice that both parents pass on only a segment of their atomic 
-                arrangement to the child which, in turn, “looks” like its parents.</p>
-                <!-- Agregar imagen de crossover -->
-            <h4 data-aos="fade-up" id="theory">Mutation</h4>
-            <p data-aos="fade-up;style=text-align: justify">Despite Crossover&apos;s best efforts, its usage alone does not maintain enough diversity in the pool of 
-            structures. Therefore, a very important set of candidates are introduced: <b>the mutants</b>. In <i>Solids</i> the two 
-            mutations implemented are known as <b>lattice strain</b>, and <b>atomic exchange</b>.</p>
+            <h3 data-aos="fade-up" id="evolutiveAlgorithm">Evolutionary Algorithms to the Rescue</h3>
+            <p data-aos="fade-up;style=text-align: justify">There are many proposals on how to efficiently explore the PES and locate GMs for all kinds of chemical 
+                compositions. However, there is a specific set of algorithms, known as Evolutionary Algorithms (EAs), that are highly adaptable, efficient, and 
+                reliable. EAs generate a collection of random initial candidates and refine their characteristics to minimize the energy associated with their atomic
+                 arrangement. They achieve this by mimicking the biological evolution of species, where desirable traits are passed down through generations until an 
+                 optimal population is created. In the context of crystalline structures, suitable candidates are created using a combination of local optimization 
+                 techniques and evolutionary operators such as crossover and mutation.</p>
+
+            <h4 data-aos="fade-up" id="crossover">Crossover</h4>
+            <p data-aos="fade-up;style=text-align: justify">When talking of crystalline structures, "desirable traits" refers to energetically stable motifs within 
+                the crystal. These structural traits are inherited to new structures by selecting two low-energy "precursors" and "cutting" them along a specific 
+                unit cell vector. Then, the two parent-slices are combined to create a "child" that retains their structural information. The idea is that, over 
+                time and relaxation, the structural advantages are refined.The whole process is known as Crossover and in the graphic representation below, 
+                you can see how both precursors pass on only a segment of their atomic arrangement to the child, which, in turn, inherits the best of its "ancestry."
+            </p>
+
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/cruzas.png" alt="Crossover diagram" class="Images" loading="lazy">
+            </div>                
+
+            <h4 data-aos="fade-up" id="mutation">Mutation</h4>
+            <p data-aos="fade-up;style=text-align: justify">Despite the efficiency of Crossover, using it alone does not maintain enough diversity within 
+                generations. This threatens the algorithm to get “stuck” in local minima. To prevent this, a crucial set of candidates is introduced: 
+                <b>the mutants</b>. In Solids, the two primary mutations implemented are <b>lattice strain</b> and <b>atomic exchange</b>.
+            </p>
+
             <p data-aos="fade-up;style=text-align: justify"> 
-            In <b>lattice strain</b>, the unit cell is deformed by applying a strain matrix to the cell&apos;s vectors and potentially 
-            modifying the interatomic distances of the candidate. This operator explores the energetic vicinity of the candidate and 
-            lets us explore it.</p>
-            <!-- Agregar imágen de lattice strain-->
-            <p data-aos="fade-up;style=text-align: justify"><b>Atomic exchange</b> is more aggressive since it takes the atomic positions and species
-            of two different atoms inside the unit cell and swaps their species without changing the coordinates. This effectively 
-            creates spikes in the energy of the candidates but allows us to explore sections of the energy landscape that are impossible 
-            to reach using only Crossover or Lattice strain alone.</p>
-            <!-- agregar imagen de atomic exchange -->
+            <b>Lattice strain</b>: The unit cell is deformed by applying a strain matrix to the cell&apos;s vectors, modifying the interatomic distances of the candidate. 
+            This operator allows us to explore the immediate energetic vicinity of a structure.</p>
+
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/latticeStrainMutantes.png" alt="Lattice strain diagram" class="Images" loading="lazy">
+            </div>    
+
+            <p data-aos="fade-up;style=text-align: justify"><b>Atomic exchange</b>: This is a more "aggressive" operator. It swaps the positions of two different 
+                atomic species within the unit cell without changing the coordinates. While this effectively creates "spikes" in the energy of the candidates, 
+                it allows the algorithm to leap across the energy landscape, reaching sections that would be impossible to access using Crossover or Lattice 
+                Strain alone.</p>
+
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/atomExchangeMutantes.png" alt="Atom exchange diagram" class="Images" loading="lazy">
+            </div> 
+
             <h3 data-aos="fade-up" id="theory">Relaxation and Selection of structures</h3>
-            <p data-aos="fade-up;style=text-align: justify">Now, in nature, children&apos;s traits are tested against the environment to see if the inherited characteristics 
-                worked or not. Fit individuals are able to reproduce while inadequate traits are discarded. To check for fitness in theoretical 
-                chemistry, it is necessary to know if the child can lower the energy of its parents. This is achieved via local optimization, a 
-                process where theoretical calculations are used to modify certain parameters of the structure, such as unit cell and interatomic 
-                distances, to locate the most relaxed configuration of the child, i.e., the one with the lowest energy. Local optimization is 
-                achieved using external relaxation codes like VASP, Quantum Espresso, GULP and many others. Solids is interfaced with VASP, GULP 
-                and ASE&apos;s EMT. The image below displays a child&apos;s atomic arrangement before and after relaxation.</p>
+            <p data-aos="fade-up;style=text-align: justify">In nature, offspring traits are tested against the environment to determine their viability. "Fit" 
+                individuals are more likely to reproduce, while inadequate ones are gradually discarded. In theoretical chemistry, we assess this "<b>fitness</b>" by 
+                first computing the lowest possible energy a candidate can reach through a process known as <b>local optimization</b>. Obtaining these energetic values, 
+                along with the optimized unit cell dimensions and interatomic distances, requires the use of external relaxation engines. For this reason, Solids 
+                is interfaced with reliable and popular software such as <b>VASP</b>, <b>EMT</b>, and <b>GULP</b>. Furthermore, our modular architecture allows 
+                for seamless integration of new codes upon request.</p>
+
                 <!-- agregar imagen de structure relaxation -->
-            <p data-aos="fade-up;style=text-align: justify">The resulting set of structures are ranked by energy and a fitness value is assigned to them. The value of the 
-                fitness is inversely proportional to the structure&apos;s energy, i.e., the lower the energy, the higher the fitness. Later, the 
-                candidates “compete” between them for the right to pass on their traits, but instead of fighting to the death, they are selected 
-                randomly, giving structures with higher values of fitness the greatest probability to be chosen. This has the effect of 
-                preferring adequate traits in new generations but keeping the mix rich in diversity.</p>
-            <h3 data-aos="fade-up" id="theory">Results</h3>
-            <p data-aos="fade-up;style=text-align: justify">Finally, the whole process of generating candidates, relaxing them, and passing on their traits is repeated a 
-                given number of times. The final result is, hopefully, a putative Global Minimum, and a set of low-energy structures. Notice that 
-                we used the word putative next to global minimum, this is because it is near-impossible to evaluate all possible atomic 
-                configurations and there will always be a little possibility of finding a structure with lower energy. Although this might 
-                sound discouraging, it only means that no matter what, there is always room for improvement, and isn&apos;t that what science is all 
-                about?</p>
+
+            <p data-aos="fade-up;style=text-align: justify">Once relaxed, the structures are ranked by energy and a fitness value, inversely proportional to the 
+                structure's energy, is assigned to them. Candidates will then "compete" for the right to pass on their traits to the next generation. However, 
+                rather than a "fight to the death," the selection process is stochastic, where every structure has a chance to be chosen, but those with higher 
+                fitness values have greater odds in being selected. This mechanism ensures that the algorithm prioritizes superior traits while maintaining the 
+                diversity necessary to avoid getting trapped in local minima.</p>
+
+            <h3 data-aos="fade-up" id="theory">Convergence and the Putative Global Minimum</h3>
+            <p data-aos="fade-up;style=text-align: justify">Finally, the entire cycle of generating candidates, relaxing them, and passing on their traits is 
+                repeated for a set number of generations. The final result is, ideally, a <b>putative Global Minimum</b> and a diverse set of low-energy structures.
+            </p>
+            
+            <p data-aos="fade-up;style=text-align: justify">Notice that we use the word "putative" alongside Global Minimum; this is because it is virtually 
+                impossible to evaluate every single atomic configuration. Consequently, there will always be a marginal possibility that a structure with 
+                even lower energy exists. While this might sound discouraging, it simply means that there is always room for discovery, and isn't that what 
+                science is all about?</p>
         </div>
 
         <!-- web-->
