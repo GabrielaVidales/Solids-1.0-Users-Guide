@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -19,7 +18,7 @@
 <body>
 <header>
     <nav>
-        <a href="#"><img src="images/Solids-Menu.jpg" id="Solids-Menu"></a>
+        <a href="#Introduction"><img src="images/Solids-Menu.jpg" id="Solids-Menu"></a>
         <div class="search">
             <div class="barra">
                 <div><span class="material-symbols-outlined" id="lupa">search</span></div>
@@ -38,6 +37,7 @@
                         <li><a href="#install">Installing Solids</a></li>
                         <li><a href="#runningSolids">Running Solids</a></li>
                         <li><a href="#theory">A little bit of theory</a></li>
+                        <li><a href="#results">Results</a></li>
                     </ul>
                 </li>
                 <li class="Solids-Web">
@@ -45,8 +45,10 @@
                     <ul class="second-list">
                         <li><a href="#installing">Installing the code</a></li>
                         <li><a href="#input">Adding the Input</a></li>
-                        <li><a href="#output">Understanding the Output </a></li>
-                        <li><a href="#results">Visualizing the Results</a></li>
+                        <li><a href="#output">Understanding the output </a></li>
+                        <li><a href="#generation-summary">Generation summary </a></li>
+                        <li><a href="#global-summary">Global Summary</a></li>
+                        <li><a href="#vi_results">Visualizing the results</a></li>
                     </ul>
                 </li>
                 <li class="Solids-Local">
@@ -54,11 +56,13 @@
                     <ul class="second-list">
                         <li><a href="#launching">Running Solids</a></li>
                         <li><a href="#explorationEMT">Explorations using EMT</a></li>
-                        <li><a href="#explorationGULP">Explorations using GULP</a></li>
-                        <ul>
+                        <li class="has-third">
+                        <a href="#explorationGULP">Explorations using GULP</a>
+                        <ul class="tirth-list">
                             <li><a href="#explorationPressure">Explorations under pressure</a></li>
                             <li><a href="#explorationConstriction">Explorations guided by constrictions</a></li>
                         </ul>
+                        </li>
                         <li><a href="#explorationVASP">Explorations using VASP</a></li>
                         <li><a href="#output-local">Understanding the Output </a></li>
                     </ul>
@@ -88,12 +92,13 @@
     <!-- top -->
     <div class="top-bar">
         <div class="left-content">
-            <a href="#" class="home-link" id="top-bar"><span class="material-symbols-outlined home-icon">home</span></a>
+            <a href="#" class="home-link" id="top-bar" title="Home"><span class="material-symbols-outlined home-icon">home</span></a>
             <span class="separator">/</span>
             <a href="#" class="page-title"><span>Introduction</span></a>
         </div>
         <div class="right-content">
             <a href="https://www.theochemmerida.org/publications" class="view-more" target="_blank"><p>View more</p></a>
+            <a href="#" class="settings-link" id="settings-btn" title="Settings"><span class="material-symbols-outlined settings-icon">settings</span></a>
         </div>
     </div>
     <hr class="divider">
@@ -103,16 +108,16 @@
         <div class="Introduction" id="Introduction">
             <h1 data-aos="fade-up" id="what-is"><b>SOLIDS</b></h1>
             <p data-aos="fade-up;style=text-align: justify"> <i>Solids</i> is a robust, open-source Python package for crystal structure prediction. 
-                It natively integrates with the Atomic Simulation Environment (<a href="https://ase-lib.org">ASE</a>) and uses 
-                <a href="https://pyxtal.readthedocs.io/en/latest/#">PyXtal</a> 
-                and <a href="https://singroup.github.io/dscribe/latest/#">DScribe</a> to generate symmetry-based random structures 
+                It natively integrates with the Atomic Simulation Environment (<a href="https://ase-lib.org" target="_blank">ASE</a>) and uses 
+                <a href="https://pyxtal.readthedocs.io/en/latest/#" target="_blank">PyXtal</a> 
+                and <a href="https://singroup.github.io/dscribe/latest/#" target="_blank">DScribe</a> to generate symmetry-based random structures 
                 and compare their structural features using morphological descriptors.
             <ul data-aos="fade-up"> 
-                <li>It is available in the official <a href="https://pypi.org">Python Package Index</a> repository and can be easily installed 
+                <li>It is available in the official <a href="https://pypi.org" target="_blank">Python Package Index</a> repository and can be easily installed 
                 using pip.</li>
                 <li>It can be run directly in cloud computing environments, such as Google Colab or Kaggle</li>
                 <li>It is compatible with UNIX systems—such as Linux and macOS</li>
-                <li>It offers full integration with <a href="https://gulp.curtin.edu.au">GULP</a>, <a href="https://www.vasp.at">VASP</a>, 
+                <li>It offers full integration with <a href="https://gulp.curtin.edu.au" target="_blank">GULP</a>, <a href="https://www.vasp.at" target="_blank">VASP</a>, 
                 and ASE's EMT </li>
                 <li>It can run as a Python library within resource management systems such as PBS or SLURM, making it well-suited for use 
                     on computing clusters.</li>
@@ -121,8 +126,8 @@
            
             <!-- workflow -->
             <h2 data-aos="fade-up" id="workflow">Solids&apos; Workflow</h2>
-            <p data-aos="fade-up;style=text-align: justify"><i>Solids</i> performs energy landscape exploration through two main algorithms:</p>
-            <ul data-aos="fade-up">
+            <p><i>Solids</i> performs energy landscape exploration through two main algorithms:</p>
+            <ul>
                 <li><b>The Stochastic Algorithm</b> allows for effective pree-screening of the energy landscape by performing 
                     relaxation in stages, meaning that the level of theory can be adjusted or changed mid-run.</li>
                 <li><b>The Evolutionary Algorithm</b> builds on SA by creating new generations using evolutive operators such as 
@@ -155,13 +160,13 @@
             </div>
 
             <p data-aos="fade-up;style=text-align: justify">If you are more into installing things on your own, you can clone 
-            the <a href="https://github.com/Carloast0790/SolidASE_0.0.git">GitHub repository</a>. Feel free to edit it and add 
+            the <a href="https://github.com/Carloast0790/SolidASE_0.0.git" target="_blank">GitHub repository</a>. Feel free to edit it and add 
             your own touch to the code! Notice however that during manual installation it is necessary to update your 
             PYTHONPATH to the working folder where Solids will be installed. In UNIX systems this is done by editing the .bashrc file and 
             updating the PYTHONPATH variable. For example, if your working directory is /home/solids/ then the variable 
             should look something like this:</p>
 
-            <div class="code-container" data-aos="fade-up">
+            <div class="code-container" data-aos="fade-up;style=text-align: justify">
             <div class="code-header">
                 <div class="buttons">
                 <div class="button red"></div>
@@ -177,7 +182,7 @@
             export PYTHONPATH=/home/solids:$PYTHONPATH
             </code></pre>
             </div>
-            <p data-aos="fade-up;style=text-align: justify">For more information on how to modify your path clik <a href="https://www.geeksforgeeks.org/python/pythonpath-environment-variable-in-python">here</a></p> 
+            <p data-aos="fade-up;style=text-align: justify">For more information on how to modify your path clik <a href="https://www.geeksforgeeks.org/python/pythonpath-environment-variable-in-python" target="_blank">here</a></p> 
             
             <!-- running -->
             <h2 data-aos="fade-up" id="runningSolids">Running Solids</h2>
@@ -220,7 +225,8 @@
 
             <!-- theory -->
             <h2 data-aos="fade-up" id="theory">A little bit of theory</h2>
-            <h3 data-aos="fade-up" id="theory">Crystalline Structures and their Relationship with Energy</h3>
+
+            <h3 data-aos="fade-up">Crystalline Structures and their Relationship with Energy</h3>
             <p data-aos="fade-up;style=text-align: justify">It is no secret that using modern first principle calculations and the knowledge of the atomic 
                 arrangement of a system, we can estimate and even predict its properties. Also, we know that theoretical low-energy 
                 structures have the highest probabilities of being found in nature. Therefore, locating the nuclear positions of a 
@@ -244,14 +250,15 @@
                 and using reasonable resources, the GM of any given chemical composition, under any condition of pressure and 
                 temperature. Seems impossible?</p>
 
-            <h3 data-aos="fade-up" id="theory">Evolutive Algorithms to the Rescue</h3>
+            <h3 data-aos="fade-up">Evolutive Algorithms to the Rescue</h3>
             <p data-aos="fade-up;style=text-align: justify">There are many proposals as to how to efficiently explore the PES and locate GMs for all  kinds of 
                 chemical compositions. However, there is a specific set of algorithms —whose official title is Evolutive Algorithms, 
                 or EAs— that generate a collection of random initial candidates and refine their characteristics, minimizing the energy 
                 associated with their atomic arrangement through a combination of local optimization means and evolutive operators. EAs 
                 mimic the evolution of biological species where desirable traits are passed on through generations until an optimal set 
                 of individuals are created.</p>
-            <h4 data-aos="fade-up" id="theory">Crossover</h4>
+
+            <h4 data-aos="fade-up">Crossover</h4>
             <p data-aos="fade-up;style=text-align: justify">In the context of crystalline structures, we refer to “desirable traits” to energetically stable 
                 motifs of the crystal. These chracteristics have to be inherited to new structures aiming to reduce the enegy. To do
                 so, one selects two low-energy “parents” and “cuts” them across the same unit cell vector. Then, one matches the two
@@ -260,7 +267,8 @@
                 representation is found in the image below. Notice that both parents pass on only a segment of their atomic 
                 arrangement to the child which, in turn, “looks” like its parents.</p>
                 <!-- Agregar imagen de crossover -->
-            <h4 data-aos="fade-up" id="theory">Mutation</h4>
+
+            <h4 data-aos="fade-up">Mutation</h4>
             <p data-aos="fade-up;style=text-align: justify">Despite Crossover&apos;s best efforts, its usage alone does not maintain enough diversity in the pool of 
             structures. Therefore, a very important set of candidates are introduced: <b>the mutants</b>. In <i>Solids</i> the two 
             mutations implemented are known as <b>lattice strain</b>, and <b>atomic exchange</b>.</p>
@@ -274,7 +282,8 @@
             creates spikes in the energy of the candidates but allows us to explore sections of the energy landscape that are impossible 
             to reach using only Crossover or Lattice strain alone.</p>
             <!-- agregar imagen de atomic exchange -->
-            <h3 data-aos="fade-up" id="theory">Relaxation and Selection of structures</h3>
+
+            <h4 data-aos="fade-up">Relaxation and Selection of structures</h4>
             <p data-aos="fade-up;style=text-align: justify">Now, in nature, children&apos;s traits are tested against the environment to see if the inherited characteristics 
                 worked or not. Fit individuals are able to reproduce while inadequate traits are discarded. To check for fitness in theoretical 
                 chemistry, it is necessary to know if the child can lower the energy of its parents. This is achieved via local optimization, a 
@@ -288,7 +297,8 @@
                 candidates “compete” between them for the right to pass on their traits, but instead of fighting to the death, they are selected 
                 randomly, giving structures with higher values of fitness the greatest probability to be chosen. This has the effect of 
                 preferring adequate traits in new generations but keeping the mix rich in diversity.</p>
-            <h3 data-aos="fade-up" id="theory">Results</h3>
+            
+            <h2 data-aos="fade-up" id="results">Results</h2>
             <p data-aos="fade-up;style=text-align: justify">Finally, the whole process of generating candidates, relaxing them, and passing on their traits is repeated a 
                 given number of times. The final result is, hopefully, a putative Global Minimum, and a set of low-energy structures. Notice that 
                 we used the word putative next to global minimum, this is because it is near-impossible to evaluate all possible atomic 
@@ -300,7 +310,7 @@
         <!-- web-->
         <div class="Solids-Web" id="Solids-Web">
             <h1 data-aos="fade-up" id="Solids-Web"><b>Using Solids in the Web</b></h1>
-            <p data-aos="fade-up;style=text-align: justify">One of the main advantages of Solids and its integration with the Atomic Simulation Environment (<a href="https://ase-lib.org">ASE</a>) 
+            <p data-aos="fade-up;style=text-align: justify">One of the main advantages of Solids and its integration with the Atomic Simulation Environment (<a href="https://ase-lib.org" target="_blank">ASE</a>) 
                 is the ability to run explorations on external servers. We illustrate this using the Google Colab platform, 
                 which offer free access and strong performance designed for collaborative coding. We highly recommend 
                 performing initial tests of Solids using these platforms</p>
@@ -421,7 +431,7 @@
 
             <h3 data-aos="fade-up">Niching</h3>
             <p data-aos="fade-up;style=text-align: justify">The niching process removes duplicate structural information by characterizing all individuals in a 
-            generation using MBTR descriptors. This is accomplished through Python&apos;s <a href="https://singroup.github.io/dscribe/latest/#">DScribe</a> library, 
+            generation using MBTR descriptors. This is accomplished through Python&apos;s <a href="https://singroup.github.io/dscribe/latest/#" target="_blank">DScribe</a> library, 
             which computes the descriptors for each candidate. These fingerprints are then compared to one another, and any structures 
             whose similarity exceeds a defined threshold are discarded. The flag controlling the similarity threshold tolerance is 
             tol_similarity.</p>
@@ -438,7 +448,7 @@
 
             <!-- agregar imagen output2 -->
 
-            <h2 data-aos="fade-up" id="generation summary">Generation Summary</h2>
+            <h2 data-aos="fade-up" id="generation-summary">Generation Summary</h2>
             <p data-aos="fade-up;style=text-align: justify">The entire compendium of structures found in the generation is displayed in the GEN. SUMMARY 
                 section. Here, you will find (in order from left-to-right) the ranking, ID, computed energy (in eV), energy 
                 difference relative to the lowest-energy structure found, and the fitness of each candidate. The fitness correlates 
@@ -447,7 +457,7 @@
             
             <!-- agregar imagen output3 -->
             
-            <h2 data-aos="fade-up" id="global summary">Global Summary</h2>
+            <h2 data-aos="fade-up" id="global-summary">Global Summary</h2>
             <p data-aos="fade-up;style=text-align: justify">Finally, the GLOBAL SUMMARY section displays the best structures found so far through the entire run. 
                 The cutoff_population flag controls the number of structures presented in this list, and the candidates listed here 
                 compete to create the next set of crossover and mutants. Here, you will find (in order from left-to-right) the ranking, 
@@ -455,7 +465,7 @@
                 candidate. The fitness correlates with the probability of being chosen to participate in the inheritance process, and 
                 the structures are sorted by energy.</p>
 
-            <h2 data-aos="fade-up" id="results">Visualizing the Results</h2>
+            <h2 data-aos="fade-up" id="vi_results">Visualizing the Results</h2>
             <p data-aos="fade-up;style=text-align: justify">Solids uses the visualization tool implemented in Aegon to present you with an embedded iterative 
                 image of the resulting candidate. To use it, simply run the next code:</p>
             
@@ -798,7 +808,7 @@
             <h3 data-aos="fade-up" id="explorationConstriction">Explorations guided by constrictions, the MgSiO<sub>3</sub> case</h3>
             <h4 data-aos="fade-up">Editing the input</h4>
             <p data-aos="fade-up;style=text-align: justify">A great example of the importance of crystal structure prediction is the identification 
-            by <a href="https://uspex-team.org/en">USPEX</a> of the post-perovskite phase of the MgSiO<sub>3</sub>, one of 
+            by <a href="https://uspex-team.org/en" target="_blank">USPEX</a> of the post-perovskite phase of the MgSiO<sub>3</sub>, one of 
             the main components of earth&apos;s lower mantle. USPEX detected that this phase is only stable under extreme conditions 
             of pressure and temperature. They also provided a GULP-usable sudopotential that can be used in the pursuit of 
             such structure. Therefore, in Solids we applied the sudopotential and the a priori information of the unit cell 
@@ -1090,6 +1100,10 @@
             <p data-aos="fade-up;style=text-align: justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
         </div>
 </section>
+
+<button id="scrollTopBtn" aria-label="Scroll to top">
+  ↑
+</button>
 
 <footer>
     <div class="version">
