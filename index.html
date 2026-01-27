@@ -180,18 +180,14 @@
             
             <!-- running -->
             <h2 data-aos="fade-up" id="runningSolids">Running Solids</h2>
-            <p data-aos="fade-up;style=text-align: justify">After successful installation, the directory will contain an executable 
-            (extension <code class="highLine">.py</code>) and the source code:</p>
-            <ul data-aos="fade-up;style=text-align: justify">
-                <li>run_solids.py</li>
-                <li>/solids</li>
-            </ul>
-            <p data-aos="fade-up;style=text-align: justify">Next, the work flow only requires that you provide an inputFile, and 
+            <p data-aos="fade-up;style=text-align: justify">After successful installation, the package is ready to be used as
+                a library (<code class="highLine">import solids</code>) or through the command line interface (CLI), using 
+                the command <code class="highLine">x-solids</code>. </p>
+            <p data-aos="fade-up;style=text-align: justify">Using the CLI, the work flow only requires that you provide an inputFile, and 
                 Solids is pre-programmed to give you examples with default values for both algorithms (stochastic and evolutive) using all 
-                interfaced calculators. Currently, Solids is interfaced with ASE&apos;s EMT ( <b>inp_emt</b>), VASP 
-                ( <b>inp_vasp</b>), and GULP ( <b>inp_gulp</b>). To create your first input simply 
-                type the next code, modifying the extension of the <b>inp</b> command to match 
-                the calculator of your preference.</p>
+                interfaced calculators. Currently, Solids is interfaced with ASE&apos;s EMT ( <b>input_emt</b>), VASP 
+                ( <b>input_vasp</b>), and GULP ( <b>input_gulp</b>). To create your first input simply write in the terminal one of the next 
+                lines and hit enter. <b>NOTE:</b> the extension of the input command determines the calculator to be used.</p>
 
             <div class="code-container" data-aos="fade-up">
             <div class="code-header">
@@ -206,9 +202,9 @@
                 </div>
             </div>
             <pre><code class="language-python">
-            ./run_solids.py inp_emt
-            ./run_solids.py inp_vasp
-            ./run_solids.py inp_gulp            
+            x-solids input_emt
+            x-solids input_vasp
+            x-solids input_gulp            
             </code></pre>
             </div>
 
@@ -321,7 +317,8 @@
             </table>
 
             <p data-aos="fade-up;style=text-align: justify">
-                Once you got the input tuned to your needs, run the code specifying the input and output using:
+                Once you got the input tuned to your needs, run the code using the <code class="highLine">x-solids</code> command
+                followed by yout input and output using:
             </p>
 
             <div class="code-container" data-aos="fade-up">
@@ -337,7 +334,7 @@
                 </div>
             </div>
             <pre><code class="language-python">
-            ./run_solids.py inputFileEMT > outputFile.txt
+            x-solids inputFileEMT > outputFile.txt
             </code></pre>
             </div>
 
