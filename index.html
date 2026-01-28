@@ -41,7 +41,7 @@
                     </ul>
                 </li>
                 <li class="Solids-Local">
-                    <a href="#Solids-Local">Using Solids in Local</a>
+                    <a href="#Solids-Local">Usage in Local</a>
                     <ul class="second-list">
                         <li><a href="#explorationEMT">Solids and EMT</a></li>
                         <li><a href="#explorationGULP">Solids and GULP</a></li>
@@ -54,7 +54,7 @@
                     </ul>
                 </li>
                 <li class="Solids-Web">
-                    <a href="#Solids-Web">Using Solids in the Web</a>
+                    <a href="#Solids-Web">Usage in the Web</a>
                     <ul class="second-list">
                         <li><a href="#installing">Installing the code</a></li>
                         <li><a href="#input">Adding the Input</a></li>
@@ -381,7 +381,7 @@
                  optimal population is created. In the context of crystalline structures, suitable candidates are created using a combination of local optimization 
                  techniques and evolutionary operators such as crossover and mutation.</p>
 
-            <h4 data-aos="fade-up" id="crossover">Crossover</h4>
+            <h3 data-aos="fade-up" id="crossover">Crossover</h3>
             <p data-aos="fade-up;style=text-align: justify">When talking of crystalline structures, "desirable traits" refers to energetically stable motifs within 
                 the crystal. These structural traits are inherited to new structures by selecting two low-energy "precursors" and "cutting" them along a specific 
                 unit cell vector. Then, the two parent-slices are combined to create a "child" that retains their structural information. The idea is that, over 
@@ -393,7 +393,7 @@
                 <img src="images/cruzas.png" alt="Crossover diagram" class="Images" loading="lazy">
             </div>                
 
-            <h4 data-aos="fade-up" id="mutation">Mutation</h4>
+            <h3 data-aos="fade-up" id="mutation">Mutation</h3>
             <p data-aos="fade-up;style=text-align: justify">Despite the efficiency of Crossover, using it alone does not maintain enough diversity within 
                 generations. This threatens the algorithm to get “stuck” in local minima. To prevent this, a crucial set of candidates is introduced: 
                 <b>the mutants</b>. In Solids, the two primary mutations implemented are <b>lattice strain</b> and <b>atomic exchange</b>.
@@ -665,73 +665,7 @@ lib /Gulp/Libraries/matsui-akaogi.lib
                 </ul> 
             </p>
 
-            <h4 data-aos="fade-up">Expected results</h4>
-            <p data-aos="fade-up;style=text-align: justify">The resulting structure is the well-known rutile phase with the tetragonal P4₂/mnm 
-                space group where the Ti<sup>4+</sup> (blue) is bonded to six equivalent O<sup>2-</sup>(red) atoms to form a mixture of corner and 
-                edge-sharing TiO<sub>6</sub> octahedra. There are four shorter (1.95 Å) and two longer (1.98 Å) Ti-O bond lengths. Also, it is very
-                likely that the other phases of TiO<sub>2</sub>, namely Anatase (A) and Brookite (C) are also listed amongst the higher-enery 
-                allotropes, as shown in the next figure:
-            </p>
-
-            <div class="image-container" data-aos="fade-up">
-                <img src="images/resultadoGULP_TiO2.png" alt="Diagrama de funcionamiento" class="Images" loading="lazy">
-            </div>
-
-            <p data-aos="fade-up;style=text-align: justify">
-                The structures are also stored in different files when using the Evolutive or Stochastic algorithm.
-                <ul data-aos="fade-up"> 
-                    <li>If using <code class="highLine">algorithm evolutive</code>: The structures are stored in the <b>summary.vasp</b> file.</li>
-                    <li>If using <code class="highLine">algorithm stochastic</code>: The structures are stored in a <b>stageN.vasp</b> file, 
-                        where N will correspond to the stage of relaxation that took place. 
-                    </li>
-                </ul> 
-                Structural information is stored in POSCAR format and sorted by energy, with lower energy-structures are on top.
-            </p>
-<!-- GULP PRESS REF -->
-
-            <p data-aos="fade-up;style=text-align: justify">GULP uses a combination of  Buckingham and Lennard–Jones potentials to describe 
-                the interactions of TiO<sub>2</sub>. These parameters are specific for the the system and are not interchangeable. Solids 
-                reads them from the <b>---GULP---</b> block in the input, where the flags LATTICEVECTORS and COORDINATES are automatically replaced 
-                to match those of each structure. On the other hand, the potentials for TiO<sub>2</sub> are located in GULP&apos;s library 
-                Matsui-Akaogi, and it is necessary to update the <code class="highLine">lib /Gulp/Libraries/matsui-akaogi.lib</code> path 
-                to the one of your computer. To locate it, go to your installation folder of GULP and look for the <b>Libraries</b> folder within it.
-            </p>
-
-            <p data-aos="fade-up;style=text-align: justify">
-                Once you have the input, run the code and store its output using: 
-            </p>
-
-            <div class="code-container" data-aos="fade-up">
-            <div class="code-header">
-                <div class="buttons">
-                    <div class="button red"></div>
-                    <div class="button yellow"></div>
-                    <div class="button green"></div>
-                </div>
-                <div class="copy-code" onclick="copyCode(this)">
-                    <ion-icon name="copy-outline"></ion-icon>
-                    <span>Copy</span>
-                </div>
-            </div>
-            <pre><code class="language-python">
-                x-solids inputFileGULP > outPutFile.txt 
-            </code></pre>
-            </div>
-            
-            <p data-aos="fade-up;style=text-align: justify">
-                The flags used will tell Solids to explore the energy landscape of 4 formula units of 3D TiO<sub>2</sub> crystals using 
-                either the Evolutive or the Stochastic Algorithm (as dictated by the flag <code class="highLine">algorithm</code>).
-                <b>NOTE:</b> There are extra flags that allow you to carry explorations with any algorithm. To switch, simply change 
-                <code class="highLine">algorithm</code>. 
-                You don't need to remove the extra flags since Solids is programmed to recognize and use only the case-sensitive flags.
-                <ul data-aos="fade-up"> 
-                    <li>If using <code class="highLine">algorithm evolutive</code>: The algorithm uses 30 random initial candidates, 20 generations, each 
-                    consisting of 25 crossover, 6 atomExchange, and 6 latticeStrain mutants.</li>
-                    <li>If using <code class="highLine">algorithm stochastic</code>: The algorithm uses 30 random initial candidates, relaxed through 2 stages.</li>
-                </ul> 
-            </p>
-
-            <h4 data-aos="fade-up">Expected results</h4>
+            <h3 data-aos="fade-up">Expected results</h3>
             <p data-aos="fade-up;style=text-align: justify">The resulting structure is the well-known rutile phase with the tetragonal P4₂/mnm 
                 space group where the Ti<sup>4+</sup> (blue) is bonded to six equivalent O<sup>2-</sup>(red) atoms to form a mixture of corner and 
                 edge-sharing TiO<sub>6</sub> octahedra. There are four shorter (1.95 Å) and two longer (1.98 Å) Ti-O bond lengths. Also, it is very
@@ -795,7 +729,7 @@ calculator         GULP #Available calculators: EMT, VASP, GULP
 nof_processes      5    #Number of parallel local opts
 path_exe           /home/bin/gulp #Path to the executable of GULP
 #Evolutive algorithm parameters
-nof_matings        20   #Number of matings
+nof_matings        25   #Number of matings
 nof_strains         6   #Number of strains
 nof_xchange         6   #Number of atom exchanges
 #Halting criterion parameters
@@ -804,7 +738,7 @@ nof_stages          2   #Number of Optimization Stages
 #Evolutive algorithm
 nof_repeats         10  #Stops if the best solutions are found 5 consecutive times
 nof_stagnant        5   #Controls the number of best solutions of nof_stagnant
-nof_generations     10  #Number of generations
+nof_generations     30  #Number of generations
 ---GULP---
 opti conjugate nosymmetry conp
 switch_minimiser bfgs gnorm 0.01
@@ -835,19 +769,47 @@ switch rfo 0.010
 ---GULP--- 
             </code></pre>
             </div>
-            <h4 data-aos="fade-up">Editing the input</h4>
-            <p data-aos="fade-up;style=text-align: justify">Solids can harvest the capacities of external relaxation codes to carry explorations under pressure. 
-            To exemplify this, we present you with the example to carry out the exploration of MgAl<sub>2</sub>O<sub>4</sub> under 100 GPa of external 
-            pressure, using a super cell of 28 atoms (4 formula units), and the Evolutive Algorithm.</p>
+            <p data-aos="fade-up;style=text-align: justify">GULP uses a combination of  Buckingham and Lennard–Jones potentials to describe 
+                the interactions of MgAl<sub>2</sub>O<sub>4</sub>. These parameters are specific for the the system and are not interchangeable. Solids 
+                reads them from the <b>---GULP---</b> block in the input, where the flags LATTICEVECTORS and COORDINATES are automatically replaced 
+                to match those of each structure. Notice the flag <b>pressure</b> in the block, this is to indicate the magnitud of this quantity in GPa.
+            </p>
 
-            <p data-aos="fade-up;style=text-align: justify">This ---GULP--- section comprises all the required flags to run a calculation using GULP 
-            and the sudo potentials for the MgAl<sub>2</sub>O<sub>3</sub>. The flags LATTICEVECTORS and COORDINATES are 
-            automatically replaced by Solids to match the ones of the structure at hand. GULP handles the pressure using 
-            the flag pressure and it can manage several units, in this case, it is GPa. NOTE: If you change the composition 
-            of the crystal, this section must change as well. Sudopotentials are highly case-sensitive and are not 
-            interchangeable.</p>
+            <p data-aos="fade-up;style=text-align: justify">
+                Once you have the input, run the code and store its output using: 
+            </p>
 
-            <h4 data-aos="fade-up">Expected results</h4>
+            <div class="code-container" data-aos="fade-up">
+            <div class="code-header">
+                <div class="buttons">
+                    <div class="button red"></div>
+                    <div class="button yellow"></div>
+                    <div class="button green"></div>
+                </div>
+                <div class="copy-code" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                </div>
+            </div>
+            <pre><code class="language-python">
+                x-solids inputFileGULPress > outPutFile.txt 
+            </code></pre>
+            </div>
+
+            <p data-aos="fade-up;style=text-align: justify">
+                The flags used will tell Solids to explore the energy landscape of 4 formula units of 3D MgAl<sub>2</sub>O<sub>4</sub> crystals using 
+                either the Evolutive or the Stochastic Algorithm (as dictated by the flag <code class="highLine">algorithm</code>).
+                <b>NOTE:</b> There are extra flags that allow you to carry explorations with any algorithm. To switch, simply change 
+                <code class="highLine">algorithm</code>. 
+                You don't need to remove the extra flags since Solids is programmed to recognize and use only the case-sensitive flags.
+                <ul data-aos="fade-up"> 
+                    <li>If using <code class="highLine">algorithm evolutive</code>: The algorithm uses 30 random initial candidates, 30 generations, each 
+                    consisting of 25 crossover, 6 atomExchange, and 6 latticeStrain mutants.</li>
+                    <li>If using <code class="highLine">algorithm stochastic</code>: The algorithm uses 30 random initial candidates, relaxed through 2 stages.</li>
+                </ul> 
+            </p>
+
+            <h3 data-aos="fade-up">Expected results</h3>
             <p data-aos="fade-up;style=text-align: justify">The resulting structure is a face-centered densely packed cubic lattice with a Fd3m 
             space group. Internally, a sublattice composed of Mg2+ ions in an O-tetrahedral environment coexists with 
             an octahedral environment formed by  Al<sup>3+</sup>. Notice that MgO<sub>4</sub> tetrahedra share corners 
@@ -859,197 +821,288 @@ switch rfo 0.010
                 <img src="images/resultadoGULP_MgAl2O4.png" alt="Diagrama de funcionamiento" class="Images" loading="lazy">
             </div>
 
-            <p data-aos="fade-up;style=text-align: justify">Since the exploration uses the Evolutive algorithm, the best structures are stored in 
-            the summary.vasp file along with the higher energy structures located during the run. </p>
+            <p data-aos="fade-up;style=text-align: justify">
+                The structures are also stored in different files when using the Evolutive or Stochastic algorithm.
+                <ul data-aos="fade-up"> 
+                    <li>If using <code class="highLine">algorithm evolutive</code>: The structures are stored in the <b>summary.vasp</b> file.</li>
+                    <li>If using <code class="highLine">algorithm stochastic</code>: The structures are stored in a <b>stageN.vasp</b> file, 
+                        where N will correspond to the stage of relaxation that took place. 
+                    </li>
+                </ul> 
+                Structural information is stored in POSCAR format and sorted by energy, with lower energy-structures are on top.
+            </p>
 
-
+<!-- GULP Constrictions -->
             <h3 data-aos="fade-up" id="explorationConstriction">Explorations guided by constrictions, the MgSiO<sub>3</sub> case</h3>
-            <h4 data-aos="fade-up">Editing the input</h4>
             <p data-aos="fade-up;style=text-align: justify">A great example of the importance of crystal structure prediction is the identification 
-            by <a href="https://uspex-team.org/en">USPEX</a> of the post-perovskite phase of the MgSiO<sub>3</sub>, one of 
+            by <b><a href="https://uspex-team.org/en">USPEX</a></b> of the post-perovskite phase of the MgSiO<sub>3</sub>, one of 
             the main components of earth&apos;s lower mantle. USPEX detected that this phase is only stable under extreme conditions 
-            of pressure and temperature. They also provided a GULP-usable sudopotential that can be used in the pursuit of 
-            such structure. Therefore, in Solids we applied the sudopotential and the a priori information of the unit cell 
-            available in USPEX&apos;s  examples to show the usage of Solids using constrictions. Constrictions are used to 
-            reduce the search space and direct the search. For the case of MgSiO<sub>3</sub> the possible space groups are 
-            limited to numbers 16-74, and the unit cell dimensions are restricted to cells that comply with sizes (in Å) of 
+            of pressure and temperature. They also provided a GULP-usable sudopotential as well as the a priori information of the unit cell 
+            (available in USPEX&apos;s  examples). Therefore, we use this values to demonstrate how to use Solids when using constrictions to 
+            reduce the search space and direct the search. For the case of MgSiO<sub>3</sub> the possible selection of space groups are 
+            limited to numbers 16-74, while the unit cell is restricted to comply with the next parameters: <br> 
             a = 2.474, b = 8.121, c = 6.138, and angles of (in degrees) ∝= 90.0, β = 90.0, ɤ = 90.0.</p>
 
-            <div class="code-container" data-aos="fade-up">
-                <div class="code-header">
-                    <div class="buttons">
-                        <div class="button red"></div>
-                        <div class="button yellow"></div>
-                        <div class="button green"></div>
-                    </div>
-                    <div class="copy-code" onclick="copyCode(this)">
-                        <ion-icon name="copy-outline"></ion-icon>
-                        <span>Copy</span>
-                    </div>
-                </div>
-                <pre><code class="language-python">
-                    #Construction of the initial population
-                    #This composition is used to build all structures
-                    ---COMPOSITION---
-                    Mg    1
-                    Si    1
-                    O     3
-                    ---COMPOSITION---
-                    formula_units 4 #Atoms in composition are multiplied by this number
-                    dimension 3 #Solids can handle 2- and 3-dimensional crystals
-                    volume_factor 1.0 #The volume factor of the unit cell
-                    symmetries 16-74 #Restriction of space groups
-                    fixed_lattice 2.474 8.121 6.138 90.0 90.0 90.0 #Restrictions on unit cell 
-                    tol_atomic_overlap 0.90 #The tolerances provided to allow atomic overlap
-                    nof_initpop 10 #The size of the initial population
-                    algorithm evolutive # Choose between stochastic / evolutive
-                    #Niching process
-                    tol_similarity 0.97 #Tolerance threshold for similarity
-                    cutoff_energy 10.0 #Energy Cut-off in eV
-                    cutoff_population 15 #Number of final candidates
-                    #Calculator
-                    calculator GULP #Available calculators: EMT, VASP, GULP
-                    nof_processes 10 #Number of parallel local opts
-                    path_exe /installdir/gulp #Path to the executable of GULP
-                    #Evolutive algorithm parameters
-                    nof_matings 20 #Number of matings
-                    nof_strains 6 #Number of strains
-                    nof_xchange 6 #Number of atom exchanges
-                    #Halting criterion parameters
-                    nof_repeats 10 #Stops if the best solutions are found 5 consecutive times
-                    nof_stagnant 5 #Controls the number of best solutions of nof_stagnant
-                    nof_generations 20 #Number of generations
-                    ---GULP---
-                    opti conjugate nosymmetry conv
-                    switch_minimiser bfgs gnorm 0.01
-                    vectors
-                    LATTICEVECTORS
-                    frac
-                    COORDINATES
-                    space
-                    1
-                    species
-                    Mg 1.8
-                    Si 2.4
-                    O -1.4
-                    lennard 12 6
-                    Mg O  2.5 0.0 0.0 6.0
-                    Mg Si 1.5 0.0 0.0 6.0
-                    Si O  1.5 0.0 0.0 6.0
-                    Mg Mg 1.5 0.0 0.0 6.0
-                    Si O  1.5 0.0 0.0 6.0
-                    O  O  2.5 0.0 0.0 6.0
-                    buck
-                    Mg O   806.915 0.291 2.346 0.0 10.0
-                    Si O  1122.392 0.256 0.000 0.0 10.0
-                    O O    792.329 0.362 31.58 0.0 10.0
-                    Mg Mg  900.343 0.220 0.174 0.0 10.0
-                    Mg Si 1536.282 0.185 0.000 0.0 10.0
-                    Si Si 3516.558 0.150 0.000 0.0 10.0
-                    maxcyc
-                    400
-                    switch rfo cycle 300
-                    ---GULP---
-                </code></pre>
-            </div>
-            <p data-aos="fade-up;style=text-align: justify">This ---GULP--- section comprises all the required flags to run a calculation using GULP 
-            and the sudo potentials for the MgSiO<sub>3</sub>. The flags LATTICEVECTORS and COORDINATES are 
-            automatically replaced by Solids to match the ones of the structure at hand. Although this structure is located
-            at amazingly large values of pressure and temperature, the potential provided accounts for this and there is no 
-            need of extra flags in the GULP block. NOTE: If you change the composition of the crystal, this section must 
-            change as well. Sudopotentials are highly case-sensitive and are not interchangeable.</p>
+            <h3 data-aos="fade-up">Creating the input</h3>
+            <p data-aos="fade-up;style=text-align: justify">First create a predefined input typing <b>x-solids input_gulpConst</b> in the terminal, 
+                or copy the next lines into a file of your choosing: 
+            </p>
 
-            <h4 data-aos="fade-up">Expected results</h4>
+            <div class="code-container" data-aos="fade-up">
+            <div class="code-header">
+                <div class="buttons">
+                    <div class="button red"></div>
+                    <div class="button yellow"></div>
+                    <div class="button green"></div>
+                </div>
+                <div class="copy-code" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                </div>
+            </div>
+            <pre><code class="language-python">#Construction of the initial population
+#This composition is used to build all structures
+---COMPOSITION---
+Mg    1
+Si    1
+O     3
+---COMPOSITION---
+formula_units      4    #Atoms in composition are multiplied by this number
+symmetries         16-74 #Restriction of space groups
+fixed_lattice      2.474 8.121 6.138 90.0 90.0 90.0 #Restrictions on unit cell
+dimension          3    #Solids can handle 2- and 3-dimensional crystals
+volume_factor      1.0  #The volume factor of the unit cell
+tol_atomic_overlap 0.95 #The tolerances provided to allow atomic overlap
+nof_initpop        30   #The size of the initial population
+algorithm          evolutive # Choose between stochastic / evolutive
+#Niching process
+tol_similarity     0.98 #Tolerance threshold for similarity
+cutoff_energy      10.0  #Energy Cut-off in eV
+cutoff_population  20   #Number of final candidates
+#Calculator
+calculator         GULP #Available calculators: EMT, VASP, GULP
+nof_processes      5    #Number of parallel local opts
+path_exe           /home/bin/gulp #Path to the executable of GULP
+#Evolutive algorithm parameters
+nof_matings        25   #Number of matings
+nof_strains         6   #Number of strains
+nof_xchange         6   #Number of atom exchanges
+#Halting criterion parameters
+#Stochastic algorithm
+nof_stages          2   #Number of Optimization Stages
+#Evolutive algorithm
+nof_repeats         10  #Stops if the best solutions are found 5 consecutive times
+nof_stagnant        5   #Controls the number of best solutions of nof_stagnant
+nof_generations     30  #Number of generations
+---GULP---
+opti conjugate nosymmetry conv
+switch_minimiser bfgs gnorm 0.01
+vectors
+LATTICEVECTORS
+frac
+COORDINATES
+space
+1
+species
+Mg 1.8
+Si 2.4
+O -1.4
+lennard 12 6
+Mg O  2.5 0.0 0.0 6.0
+Mg Si 1.5 0.0 0.0 6.0
+Si O  1.5 0.0 0.0 6.0
+Mg Mg 1.5 0.0 0.0 6.0
+Si O  1.5 0.0 0.0 6.0
+O  O  2.5 0.0 0.0 6.0
+buck
+Mg O   806.915 0.291 2.346 0.0 10.0
+Si O  1122.392 0.256 0.000 0.0 10.0
+O O    792.329 0.362 31.58 0.0 10.0
+Mg Mg  900.343 0.220 0.174 0.0 10.0
+Mg Si 1536.282 0.185 0.000 0.0 10.0
+Si Si 3516.558 0.150 0.000 0.0 10.0
+maxcyc
+400
+switch rfo cycle 300
+---GULP--- 
+            </code></pre>
+            </div>
+            <p data-aos="fade-up;style=text-align: justify">GULP uses a combination of  Buckingham and Lennard–Jones potentials to describe 
+                the interactions of MgSiO<sub>3</sub>. These parameters are specific for the the system and are not interchangeable. Solids 
+                reads them from the <b>---GULP---</b> block in the input, where the flags LATTICEVECTORS and COORDINATES are automatically replaced 
+                to match those of each structure. Notice the flag <b>pressure</b> in the block, this is to indicate the magnitud of this quantity in GPa.
+            </p>
+
+            <p data-aos="fade-up;style=text-align: justify">
+                Once you have the input, run the code and store its output using: 
+            </p>
+
+            <div class="code-container" data-aos="fade-up">
+            <div class="code-header">
+                <div class="buttons">
+                    <div class="button red"></div>
+                    <div class="button yellow"></div>
+                    <div class="button green"></div>
+                </div>
+                <div class="copy-code" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                </div>
+            </div>
+            <pre><code class="language-python">
+                x-solids inputFileGULConst > outPutFile.txt 
+            </code></pre>
+            </div>
+
+            <p data-aos="fade-up;style=text-align: justify">
+                The flags used will tell Solids to explore the energy landscape of 4 formula units of 3D MgSiO<sub>3</sub> crystals using 
+                either the Evolutive or the Stochastic Algorithm (as dictated by the flag <code class="highLine">algorithm</code>). However,
+                special <b>constrictions</b> are applied to the unit cell. This constrictions are controlled by the flags <b>symmetries</b>
+                and <b>fixed_lattice</b>, that control the symmetries used to build the intial candidates, and the lattice vectors, accordingly. 
+                <b>NOTE:</b> There are extra flags that allow you to carry explorations with any algorithm. To switch, simply change 
+                <code class="highLine">algorithm</code>. 
+                You don't need to remove the extra flags since Solids is programmed to recognize and use only the case-sensitive flags.
+                <ul data-aos="fade-up"> 
+                    <li>If using <code class="highLine">algorithm evolutive</code>: The algorithm uses 30 random initial candidates, 30 generations, each 
+                    consisting of 25 crossover, 6 atomExchange, and 6 latticeStrain mutants.</li>
+                    <li>If using <code class="highLine">algorithm stochastic</code>: The algorithm uses 30 random initial candidates, relaxed through 2 stages.</li>
+                </ul> 
+            </p>
+
+            <h3 data-aos="fade-up">Expected results</h3>
             <p data-aos="fade-up;style=text-align: justify">The structure of the post-perovskite phase of MgSiO<sub>3</sub> (corresponding to 
-            the one calculated at 120 GPa) is shown with blue octahedra of SiO<sub>6</sub> and orange spheres 
-            representing the Mg atoms. This structure shows similarities with known structures for Fe<sub>2</sub>O<sub>3</sub>,
-            and CaIrO<sub>3</sub> to mention a few.</p>
+            the one calculated at 120 GPa) is shown with blue octahedra of SiO<sub>6</sub> and orange spheres representing the Mg atoms. This 
+            structure shows similarities with known structures for Fe<sub>2</sub>O<sub>3</sub>, and CaIrO<sub>3</sub> to mention a few.</p>
 
             <div class="image-container" data-aos="fade-up">
                 <img src="images/resultadoGULP_MgSiO3.png" alt="Diagrama de funcionamiento" class="Images" loading="lazy">
             </div>
 
-            <p data-aos="fade-up;style=text-align: justify">Since the exploration uses the Evolutive algorithm, the best structures are stored in 
-            the summary.vasp file along with the higher energy structures located during the run. </p>
-            
-            <h3 data-aos="fade-up" id="explorationVASP">Solids and VASP, the C<sub>8</sub> case</h3>
-            <h4 data-aos="fade-up">Editing the input</h4>
-            <p data-aos="fade-up;style=text-align: justify">Before running any exploration, you need to edit the <i>running_solids_vasp.py</i> file, which contains the default 
-            values for all required flags. This default input is set up to explore 3D C<sub>8</sub> crystals using the Evolutive Algorithm, which 
-            generates 10 random initial candidates, and improves upon them through 10 generations, each composed by 20 matings and 6 mutants. 
-            The relaxation code is GULP. You can modify any of these parameters by using your preferred text editor. The default values are:</p>
+            <p data-aos="fade-up;style=text-align: justify">
+                The resulting structures are stored in different files when using the Evolutive or Stochastic algorithm.
+                <ul data-aos="fade-up"> 
+                    <li>If using <code class="highLine">algorithm evolutive</code>: The structures are stored in the <b>summary.vasp</b> file.</li>
+                    <li>If using <code class="highLine">algorithm stochastic</code>: The structures are stored in a <b>stageN.vasp</b> file, 
+                        where N will correspond to the stage of relaxation that took place. 
+                    </li>
+                </ul> 
+                Structural information is stored in POSCAR format and sorted by energy, with lower energy-structures are on top.
+            </p>
+
+<!-- VASP -->
+            <h2 data-aos="fade-up" id="explorationVASP">Solids and VASP, the C<sub>8</sub> case</h2>
+            <h3 data-aos="fade-up">Creating the input</h3>
+            <p data-aos="fade-up;style=text-align: justify">First create a predefined input typing <b>x-solids input_vasp</b> in the terminal, 
+                or copy the next lines into a file of your choosing: 
+            </p>
 
             <div class="code-container" data-aos="fade-up">
-                <div class="code-header">
-                    <div class="buttons">
-                        <div class="button red"></div>
-                        <div class="button yellow"></div>
-                        <div class="button green"></div>
-                    </div>
-                    <div class="copy-code" onclick="copyCode(this)">
-                        <ion-icon name="copy-outline"></ion-icon>
-                        <span>Copy</span>
-                    </div>
+            <div class="code-header">
+                <div class="buttons">
+                    <div class="button red"></div>
+                    <div class="button yellow"></div>
+                    <div class="button green"></div>
                 </div>
-                <pre><code class="language-python">
-                #Construction of the initial population
-                #This composition is used to build all structures
-                ---COMPOSITION---
-                C    8
-                ---COMPOSITION---
-                formula_units 1 #Atoms in composition are multiplied by this number
-                dimension 3 #Solids can handle 2- and 3-dimensional crystals
-                volume_factor 1.0 #The volume factor of the unit cell
-                tol_atomic_overlap 0.95 #The tolerances provided to allow atomic overlap
-                nof_initpop 10 #The size of the initial population
-                algorithm evolutive # Choose between stochastic / evolutive
-                #Niching process
-                tol_similarity 0.97 #Tolerance threshold for similarity
-                cutoff_energy 5.0 #Energy Cut-off in eV
-                cutoff_population 10 #Number of final candidates
-                #Calculator
-                calculator VASP #Available calculators: EMT, VASP, GULP
-                nof_processes 10 #Number of parallel local opts
-                #Evolutive algorithm parameters
-                nof_matings 20 #Number of matings
-                nof_strains 6 #Number of strains
-                nof_xchange 0 #Number of atom exchanges
-                #Halting criterion parameters
-                #Stochastic algorithm
-                nof_stages 2 #Number of Optimization Stages
-                #Evolutive algorithm
-                nof_repeats 10 #Stops if the best solutions are found 5 consecutive times
-                nof_stagnant 5 #Controls the number of best solutions of nof_stagnant
-                nof_generations 10 #Number of generations
-                ---VASP---
-                ---VASP---
-                </code></pre>
+                <div class="copy-code" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                </div>
             </div>
-            <p data-aos="fade-up;style=text-align: justify">The ---VASP--- section comprises all the required flags to run a calculation using VASP. 
-            However, VASP installations are highly case-sensitive and this input will vary from system to system. Therefore 
-            we highly recommend that you contact your IT department or cluster administrator. On the other hand, you 
-            may have noticed that some flags include the labels Stochastic and Evolutionary at the top. These flags control the 
-            specific parameters required by each algorithm. If no label is specified, it means that both 
-            algorithms use the same flags. If you don&apos;t mind the extra lines, you can keep all flags in the input file —Solids is 
-            designed to read only the case-sensitive flags relevant to the selected algorithm. To switch between algorithms, simply 
-            modify the value of the algorithm flag (and any associated ones), then run the code!</p>
+            <pre><code class="language-python">#Construction of the initial population
+#This composition is used to build all structures
+---COMPOSITION---
+C    8
+---COMPOSITION---
+formula_units      4    #Atoms in composition are multiplied by this number
+dimension          3    #Solids can handle 2- and 3-dimensional crystals
+volume_factor      1.0  #The volume factor of the unit cell
+tol_atomic_overlap 0.98 #The tolerances provided to allow atomic overlap
+nof_initpop        30   #The size of the initial population
+algorithm          evolutive # Choose between stochastic / evolutive
+#Niching process
+tol_similarity     0.98 #Tolerance threshold for similarity
+cutoff_energy      5.0  #Energy Cut-off in eV
+cutoff_population  20   #Number of final candidates
+#Calculator
+calculator         VASP #Available calculators: EMT, VASP, GULP
+nof_processes      5    #Number of parallel local opts
+#Evolutive algorithm parameters
+nof_matings        25   #Number of matings
+nof_strains         6   #Number of strains
+nof_xchange         6   #Number of atom exchanges
+#Halting criterion parameters
+#Stochastic algorithm
+nof_stages          2   #Number of Optimization Stages
+#Evolutive algorithm
+nof_repeats         10  #Stops if the best solutions are found 5 consecutive times
+nof_stagnant        5   #Controls the number of best solutions of nof_stagnant
+nof_generations     10  #Number of generations
+---VASP---
 
-            <h4 data-aos="fade-up">Expected results</h4>
-            <p data-aos="fade-up;style=text-align: justify">The best structure found by the algorithm was composed of graphite layers in 
-            AB-stacking with an average C-C distance of 1.42 Å  within the 6-carbon ring. Moreover, amongst the 
-            high-energy allotropes, it is also found the diamond phase with its characteristic face centered cubic 
-            lattice and Fd3m space group.</p>
+---VASP---
+            </code></pre>
+            </div>
+            <p data-aos="fade-up;style=text-align: justify">The <b>---VASP---</b> block should contains all the required information to run a 
+                calculation using VASP. However, VASP installations are highly case-sensitive and this input will vary from system to system. 
+                Therefore we highly recommend that you contact your IT department or cluster administrator to fill in this section.
+            </p>
+
+            <p data-aos="fade-up;style=text-align: justify">
+                Once you have the input, run the code and store its output using: 
+            </p>
+
+            <div class="code-container" data-aos="fade-up">
+            <div class="code-header">
+                <div class="buttons">
+                    <div class="button red"></div>
+                    <div class="button yellow"></div>
+                    <div class="button green"></div>
+                </div>
+                <div class="copy-code" onclick="copyCode(this)">
+                    <ion-icon name="copy-outline"></ion-icon>
+                    <span>Copy</span>
+                </div>
+            </div>
+            <pre><code class="language-python">
+                nohup x-solids inputFileVASP > outPutFile.txt & log &
+            </code></pre>
+            </div>
+
+            <p data-aos="fade-up;style=text-align: justify">
+                The flags used will tell Solids to explore the energy landscape of of 3D C<sub>8</sub> crystals using 
+                either the Evolutive or the Stochastic Algorithm (as dictated by the flag <code class="highLine">algorithm</code>). 
+                <b>NOTE:</b> There are extra flags that allow you to carry explorations with any algorithm. To switch, simply change 
+                <code class="highLine">algorithm</code>. 
+                You don't need to remove the extra flags since Solids is programmed to recognize and use only the case-sensitive flags.
+                <ul data-aos="fade-up"> 
+                    <li>If using <code class="highLine">algorithm evolutive</code>: The algorithm uses 30 random initial candidates, 30 generations, each 
+                    consisting of 25 crossover, 6 atomExchange, and 6 latticeStrain mutants.</li>
+                    <li>If using <code class="highLine">algorithm stochastic</code>: The algorithm uses 30 random initial candidates, relaxed through 2 stages.</li>
+                </ul> 
+            </p>
+
+            <h3 data-aos="fade-up">Expected results</h3>
+            <p data-aos="fade-up;style=text-align: justify">One of the lowest energy structures found will be composed of graphite layers in 
+            AB-stacking with an average C-C distance of 1.42 Å within the 6-carbon ring as shown in the next figure (B). Moreover, amongst the 
+            high-energy allotropes, the diamond phase will also be present, with its characteristic face centered cubic lattice and Fd3m space group 
+            (B).</p>
 
             <div class="image-container" data-aos="fade-up">
                 <img src="images/resultadoVASP_C8.png" alt="Diagrama de funcionamiento" class="Images" loading="lazy">
             </div>
 
-            <p data-aos="fade-up;style=text-align: justify">Since the exploration uses the Evolutive algorithm, the best structures are stored in the 
-            summary.vasp file along with the higher energy structures located during the run. In the figure we can see the 
-            Diamond phase (A) and the layers of Graphite (B) both structures are present in the higher-energy allotropes list. </p>
+            <p data-aos="fade-up;style=text-align: justify">
+                The resulting structures are stored in different files when using the Evolutive or Stochastic algorithm.
+                <ul data-aos="fade-up"> 
+                    <li>If using <code class="highLine">algorithm evolutive</code>: The structures are stored in the <b>summary.vasp</b> file.</li>
+                    <li>If using <code class="highLine">algorithm stochastic</code>: The structures are stored in a <b>stageN.vasp</b> file, 
+                        where N will correspond to the stage of relaxation that took place. 
+                    </li>
+                </ul> 
+                Structural information is stored in POSCAR format and sorted by energy, with lower energy-structures are on top.
+            </p>
 
-
-            <!-- output -->
+<!-- output -->
             <h2 data-aos="fade-up" id="output-local">Understanding the Output</h2>
             <p data-aos="fade-up;style=text-align: justify">The output of every search is shown on the screen and it is divided into four 
             categories: <b>Generation of Candidates</b> , <b>Niching</b>, <b>Generation Summary</b> and <b>Global Summary</b>. The 
