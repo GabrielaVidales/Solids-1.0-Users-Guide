@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -45,9 +46,8 @@
                     <ul class="second-list">
                         <li><a href="#installing">Installing the code</a></li>
                         <li><a href="#input">Adding the Input</a></li>
-                        <li><a href="#output">Understanding the output </a></li>
-                        <li><a href="#generation-summary">Generation summary </a></li>
-                        <li><a href="#global-summary">Global Summary</a></li>
+                        <li><a href="#output">Understanding the output</a></li>
+                        <li><a href="#summary">Summary</a></li>
                         <li><a href="#vi_results">Visualizing the results</a></li>
                     </ul>
                 </li>
@@ -92,7 +92,7 @@
     <!-- top -->
     <div class="top-bar">
         <div class="left-content">
-            <a href="#" class="home-link" id="top-bar" title="Home"><span class="material-symbols-outlined home-icon">home</span></a>
+            <a href="#Introduction" class="home-link" id="home-btn" title="Home"><span class="material-symbols-outlined home-icon">home</span></a>
             <span class="separator">/</span>
             <a href="#" class="page-title"><span>Introduction</span></a>
         </div>
@@ -447,8 +447,8 @@
             energy difference exceeds the threshold defined by the cutoff_energy flag are discarded.</p>
 
             <!-- agregar imagen output2 -->
-
-            <h2 data-aos="fade-up" id="generation-summary">Generation Summary</h2>
+            <h2 data-aos="fade-up" id="summary">Summary</h2>
+            <h3 data-aos="fade-up">Generation Summary</h3>
             <p data-aos="fade-up;style=text-align: justify">The entire compendium of structures found in the generation is displayed in the GEN. SUMMARY 
                 section. Here, you will find (in order from left-to-right) the ranking, ID, computed energy (in eV), energy 
                 difference relative to the lowest-energy structure found, and the fitness of each candidate. The fitness correlates 
@@ -457,7 +457,7 @@
             
             <!-- agregar imagen output3 -->
             
-            <h2 data-aos="fade-up" id="global-summary">Global Summary</h2>
+            <h3 data-aos="fade-up">Global Summary</h3>
             <p data-aos="fade-up;style=text-align: justify">Finally, the GLOBAL SUMMARY section displays the best structures found so far through the entire run. 
                 The cutoff_population flag controls the number of structures presented in this list, and the candidates listed here 
                 compete to create the next set of crossover and mutants. Here, you will find (in order from left-to-right) the ranking, 
@@ -1095,6 +1095,45 @@
             <!-- download -->
             <h2 data-aos="fade-up" id="download">Download PDF Version</h2>
             <p data-aos="fade-up;style=text-align: justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
+            <!-- PDF button -->
+            <div class="pdf-actions" data-aos="fade-up">
+            <button class="btn-pdf" id="openPdfBtn" type="button">
+                Download PDF
+            </button>
+            </div>
+
+            <!-- PDF Modal -->
+            <div class="pdf-modal" id="pdfModal" aria-hidden="true">
+            <div class="pdf-modal__backdrop" id="pdfBackdrop"></div>
+
+            <div class="pdf-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="pdfModalTitle">
+                <div class="pdf-modal__header">
+                <h3 id="pdfModalTitle">Solid's user Manual PDF</h3>
+
+                <div class="pdf-modal__header-actions">
+                    <button class="btn-close" id="closePdfBtn" type="button" aria-label="Close PDF modal">
+                    ✕
+                    </button>
+                </div>
+                </div>
+
+                <div class="pdf-modal__body">
+                <!-- Puedes usar iframe u object; iframe suele funcionar muy bien -->
+                <iframe
+                    class="pdf-frame"
+                    src="H11D1.pdf"
+                    title="H11D1 PDF preview"
+                ></iframe>
+
+                <!-- Fallback si el navegador bloquea embebido -->
+                <p class="pdf-fallback">
+                    If the PDF preview does not load, you can
+                    <a href="H11D1.pdf" download>download it here</a>.
+                </p>
+                </div>
+            </div>
+            </div>
+
             <!-- acknowledgments -->
             <h2 data-aos="fade-up" id="acknowledgments">Acknowledgments</h2>
             <p data-aos="fade-up;style=text-align: justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
@@ -1116,6 +1155,5 @@
 <script src="app.js"></script>
 </body>
 </html>
-
 
 
