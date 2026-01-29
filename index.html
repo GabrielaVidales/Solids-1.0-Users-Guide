@@ -50,7 +50,6 @@
                             <li><a href="#explorationConstriction">- Guided by constrictions</a></li>
                         </ul>
                         <li><a href="#explorationVASP">Solids an VASP</a></li>
-                        <li><a href="#output-local">Understanding the Output </a></li>
                     </ul>
                 </li>
                 <li class="Solids-Web">
@@ -58,8 +57,16 @@
                     <ul class="second-list">
                         <li><a href="#installing">Installing the code</a></li>
                         <li><a href="#input">Adding the Input</a></li>
-                        <li><a href="#output">Understanding the Output </a></li>
                         <li><a href="#results">Visualizing the Results</a></li>
+                    </ul>
+                </li>
+                <li class="Output">
+                    <a href="#Results">Understanding the output</a>
+                    <ul class="second-list">
+                        <li><a href="#initialCandidates">Generation of initial candidates</a></li>
+                        <li><a href="#niching">Niching and energy-based filtering</a></li>
+                        <li><a href="#genSummary">Generation Summary</a></li>
+                        <li><a href="#globSummary">Global summary</a></li>
                     </ul>
                 </li>
                 <li class="Developer-Info">
@@ -1101,100 +1108,18 @@ nof_generations     10  #Number of generations
                 </ul> 
                 Structural information is stored in POSCAR format and sorted by energy, with lower energy-structures are on top.
             </p>
-
-<!-- output -->
-            <h2 data-aos="fade-up" id="output-local">Understanding the Output</h2>
-            <p data-aos="fade-up;style=text-align: justify">The output of every search is shown on the screen and it is divided into four 
-            categories: <b>Generation of Candidates</b> , <b>Niching</b>, <b>Generation Summary</b> and <b>Global Summary</b>. The 
-            information displayed in these sections varies according the algorithms at hand (Stochastic and Evolutive), 
-            but the format is very similar.</p>
-
-            <h3 data-aos="fade-up">Generation of candidates</h3>
-            <p data-aos="fade-up;style=text-align: justify">When using the Stochastic algorithm (SA), random initial candidate structures 
-            are built only one time, whereas when using the Evolutive algorithm (EA) this is an iterative process. The output for SA look
-            like this:</p>
-            
-            <div class="image-container" data-aos="fade-up">
-                <img src="images/salidaSA_genStruct.png" alt="Output for SA generation of structures" class="Images" loading="lazy">
-            </div>
-
-            <p data-aos="fade-up;style=text-align: justify">In contrast, when using EA, this section looks like this:</p>
-
-            <div class="image-container" data-aos="fade-up">
-                <img src="images/salidaEA_genStruct.png" alt="Output for EA generation of structures" class="Images" loading="lazy">
-            </div>
-
-            <p data-aos="fade-up;style=text-align: justify">Notice that there is a zero (0) after GENERATION. This is because this is the first set of 
-            structures to be created. However, the value next to GENERATION is updated in each iteration.</p>
-
-            <p data-aos="fade-up;style=text-align: justify">Below this section, you can find descriptions of the point group used to build the structure 
-            and the assigned ID number. In EA,descriptions include the type of operator used to create the new structures 
-            (mating and mutant). Of course, this image will differ from the one in your output because of the stochastic 
-            nature of the algorithms. The number of structures generated obeys the values assigned to nof_initpop, nof_matings, 
-            nof_strains, and nof_xchange values.</p>
-
-            <h3 data-aos="fade-up">Niching</h3>
-            <p data-aos="fade-up;style=text-align: justify">The niching process eliminates duplicate structural information by 
-            comparing MBTR descriptors of the candidates and eliminating those that are too alike. The parameter controlling 
-            the tolerance for similarity is tol_similarity. Also, Solids implements an energy cutoff that removes solutions whose energy difference, compared 
-            with the best solution so-far-located, exceeds a given threshold (cutoff_energy).</p>
-
-            <p data-aos="fade-up;style=text-align: justify">In EA, niching is implemented in two ways: Elements of each generation compared 
-            with themselves (GENvsGEN), and the resulting unique elements compared with those of the Pool (GENvsPOOL). 
-            The first comparison removes structural redundancies in the generation, and the second one prevents redundancies 
-            when transfering genes to new generations. Notice that energy-based niching is also carried out (EnergyComp). 
-            In SA, there are only GENvsGEN and EnergyComp.</p>
-
-            <div class="image-container" data-aos="fade-up">
-                <img src="images/salidaNiching_EA.png" alt="Output for EA generation of structures" class="Images" loading="lazy">
-            </div>
-
-            <h3 data-aos="fade-up">Generation Summary</h3>
-            <p data-aos="fade-up;style=text-align: justify">The entire compendium of structures found in the run, along with their energies 
-            and energy differences relative to the lowest-energy structure, is displayed in the <b>SUMMARY</b> section. Consisting in a
-            list of unique structures, ordered by energy (lowest first) that possess adequate levels of energy. 
-            
-            When using SA, the generation summary is displayed in stages of relaxation. The first column displays the number of 
-            the candidate, followed by its ID, energy (in eV), and the energy difference with respect to the local minimum.
-
-            Notice the ID contains information about the stage at hand and its position in the list, 
-            e.g., stage_002_0001 corresponds to the best structure located in the second stage of the process.</p>
-
-            <div class="image-container" data-aos="fade-up">
-                <img src="images/salidaSummary_SA.png" alt="Output for SA generation summary" class="Images" loading="lazy">
-            </div>
-
-            <p data-aos="fade-up;style=text-align: justify">Similarly, when using EA, the information is displayed by generation. Here, the ID contains information 
-            of the type of operator applied in the construction of the candidate, the generation it was built, and the number of structure, 
-            e.g., mutant_002_0003 implies that this candidate was built using mutation in the second generation and was the 3rd mutant created 
-            in that generation.</p>
-
-            <div class="image-container" data-aos="fade-up">
-                <img src="images/salidaSummary_EA.png" alt="Output for EA generation summary" class="Images" loading="lazy">
-            </div>
-
-            <h3 data-aos="fade-up">Global Summary</h3>
-            <p data-aos="fade-up;style=text-align: justify">Finally, the <b>GLOBAL SUMMARY</b> section displays the best structures found 
-            through the entire run. When using EA, the structures listed in this section are used to create the next set of candidates. 
-            As well as in the previous summary, candidates are sorted by energy with the lowest-energy candidates first in the list. 
-            </p>
-
-            <div class="image-container" data-aos="fade-up">
-                <img src="images/salidaGlobalSummary.png" alt="Output for global summary" class="Images" loading="lazy">
-            </div>
         </div>
 
         <!-- web-->
         <div class="Solids-Web" id="Solids-Web">
-            <h1 data-aos="fade-up" id="Solids-Web"><b>Using Solids in the Web</b></h1>
-            <p data-aos="fade-up;style=text-align: justify">One of the main advantages of Solids and its integration with the Atomic Simulation Environment (<a href="https://ase-lib.org">ASE</a>) 
-                is the ability to run explorations on external servers. We illustrate this using the Google Colab platform, 
-                which offer free access and strong performance designed for collaborative coding. We highly recommend 
-                performing initial tests of Solids using these platforms</p>
+            <h1 data-aos="fade-up" id="Solids-Web"><b>Solids and Google Colab</b></h1>
+            <p data-aos="fade-up;style=text-align: justify">One of the main advantages of <strong>Solids</strong> and its integration with the Atomic Simulation 
+                Environment (<a href="https://ase-lib.org">ASE</a>) is the ability to run explorations on external servers. We illustrate this 
+                using the <b>Google Colab</b> platform, which offer free access and strong performance designed for collaborative coding. We highly 
+                recommend performing initial tests of Solids using this platform.</p>
             <!-- Installing -->   
-            <h2 data-aos="fade-up" id="installing">Installation in the cloud</h2>
-            <p data-aos="fade-up;style=text-align: justify">For this test, open a notebook in Google Colab and install the external dependencies and the 
-                main code by typing:</p>
+            <h2 data-aos="fade-up" id="installing">Installing the code</h2>
+            <p data-aos="fade-up;style=text-align: justify">For this test, open a notebook in Google Colab and install the main code by typing:</p>
                 
             <div class="code-container" data-aos="fade-up">
             <div class="code-header">
@@ -1209,21 +1134,24 @@ nof_generations     10  #Number of generations
                 </div>
             </div>
             <pre><code class="language-python">
-                !pip install solids==0.3.1
+                !pip install solids
             </code></pre>
             </div>
 
-
             <!-- input -->
-            <h2 data-aos="fade-up" id="input">Adding the Input</h2>
-            <p data-aos="fade-up;style=text-align: justify">The following lines show the input required for Solids to explore 3D Al10 crystals using the Effective 
-            Medium Theory (EMT) relaxation method implemented in ASE and the Evolutive Algorithm provided by Solids as the exploration 
-            engine. The input includes all the flags needed to run calculations with both available algorithms (Stochastic and 
-            Evolutionary). To switch between them, simply update the “algorithm” flag. Solids is designed to recognize case-sensitive 
-            flags, allowing you to easily change schemes by editing the corresponding parameter. If you&apos;d like to explore the code and 
-            its features, feel free to modify the lines below, add them to the notebook, and let the code do its thing!</p>
-            <!-- output -->
-            <!-- Ejemplo de cómo colocar un código en la página -->
+            <h2 data-aos="fade-up" id="input">Creating the Input</h2>
+            <p data-aos="fade-up;style=text-align: justify">The following lines show the input required for <strong>Solids</strong> to explore 3D 
+                Al<sub>10</sub> crystals using the Effective Medium Theory (EMT) relaxation method implemented in ASE, and the <b>Evolutionary 
+                Algorithm</b> provided by Solids as the exploration engine. The input includes all the flags needed to run calculations with both 
+                available algorithms (Stochastic and Evolutionary). To switch between them, simply update the <b>algorithm</b> flag. Solids is 
+                designed to recognize case-sensitive flags, allowing you to easily change schemes by editing the corresponding parameter.  
+            </p>
+            <p data-aos="fade-up;style=text-align: justify">
+                On the other hand, the output is rather simple to read, but if you would like to dive into more details, we recommend you to
+                visit the <a href="#Results">Understanding the output</a> section. Finally, you're all set! To explore the code and its features, 
+                add the next lines to the notebook, modify it to your likings, and run it!
+            </p>
+
             <div class="code-container" data-aos="fade-up">
             <div class="code-header">
                 <div class="buttons">
@@ -1236,115 +1164,54 @@ nof_generations     10  #Number of generations
                 <span>Copiar</span>
                 </div>
             </div>
-            <pre><code class="language-python">
-            input_text = """
-            ---COMPOSITION---
-            Al 10
-            ---COMPOSITION---
-            formula_units        1          #The number of atoms in composition are multiplied by this number
-            dimension            3          #Solids can handle 2- and 3-dimensional crystals
-            volume_factor        1.0        #The volume factor of the unit cell
-            tol_atomic_overlap   0.95       #The minimum distance between atoms is 95% the sum of their radii
+            <pre><code class="language-python">input_text = """
+---COMPOSITION---
+Al 10
+---COMPOSITION---
+formula_units        1          #The number of atoms in composition are multiplied by this number
+dimension            3          #Solids can handle 2- and 3-dimensional crystals
+volume_factor        1.0        #The volume factor of the unit cell
+tol_atomic_overlap   0.95       #The minimum distance between atoms is 95% the sum of their radii
 
-            #ALGORITHM PARAMETERS:
-            algorithm            evolutive  #Stochastic -> Stochastic algorithm, evolutive-> Evolutive Algorithm
-            nof_initpop          10         #Size of the initial population of crystals
+#ALGORITHM PARAMETERS:
+algorithm            evolutive  #Stochastic -> Stochastic algorithm, evolutive-> Evolutive Algorithm
+nof_initpop          10         #Size of the initial population of crystals
 
-            #Evolutive:
-            nof_matings          15         #Number of matings
-            nof_strains          10         #Number of strains
-            nof_xchange          5          #Number of atom exchanges
+#Evolutive:
+nof_matings          15         #Number of matings
+nof_strains          10         #Number of strains
+nof_xchange          5          #Number of atom exchanges
 
-            #NICHING PARAMETERS:
-            tol_similarity       0.97       #Tol for similarity
-            cutoff_energy        5.0        #Energy Cut-off
-            cutoff_population    10         #Number of final candidates
+#NICHING PARAMETERS:
+tol_similarity       0.97       #Tol for similarity
+cutoff_energy        5.0        #Energy Cut-off
+cutoff_population    10         #Number of final candidates
 
-            #HALT CRITERION:
-            #Stochastic:
-            nof_stages            2       #Number of Optimization Stages in the Stochastich algorithm
+#HALT CRITERION:
+#Stochastic:
+nof_stages            2       #Number of Optimization Stages in the Stochastich algorithm
 
-            #STOP CRITERION:
-            nof_generations         20   #Max generations
-            nof_repeats             5    #Number of repeated polymorphs
-            nof_stagnant            7    #Max stagnant cycles
+#STOP CRITERION:
+nof_generations         20   #Max generations
+nof_repeats             5    #Number of repeated polymorphs
+nof_stagnant            7    #Max stagnant cycles
 
-            #THEORY LEVEL:
-            calculator            EMT     #Available calculators: EMT, VASP, GULP
-            nof_processes         10      #Number of parallel local opts
-            """
-            #Execution of main code
-            inputfile = 'INPUT.txt'
-            with open(inputfile, "w") as f: f.write(input_text)
-                if __name__ == "__main__":
-            from solids.heuristic  import mainAlgorithm
-            xopt_sort=mainAlgorithm(inputfile)
+#THEORY LEVEL:
+calculator            EMT     #Available calculators: EMT, VASP, GULP
+nof_processes         10      #Number of parallel local opts
+"""
+#Execution of main code
+inputfile = 'INPUT.txt'
+with open(inputfile, "w") as f: f.write(input_text)
+if __name__ == "__main__":
+    from solids.heuristic  import mainAlgorithm
+    xopt_sort=mainAlgorithm(inputfile)
             </code></pre>
             </div>
             
-            <h2 data-aos="fade-up" id="output">Understanding the Output</h2>
-            <p data-aos="fade-up;style=text-align: justify">The output of every search is divided into four categories: <b>Generation of initial candidates</b>,
-            <b>Niching</b>, <b>Generation summary</b>, and <b>Global summary</b> wich are detailed in the next sections.</p>
-
-            <h3 data-aos="fade-up" id="initial_candidates">Generation of initial candidates</h3>
-
-            <p data-aos="fade-up;style=text-align: justify">Since we&apos;re using the Evolutionary Algorithm, there is a zero (0) after GENERATION. This indicates 
-            that this is the first set of structures being created. As the search progresses, the value next to GENERATION increases 
-            to match the current iteration.</p>
-            <!-- agregar imagen output1 -->
-            
-            <p data-aos="fade-up;style=text-align: justify">Below this section, the ID of each candidate describes how the structure was generated (random / crossover / mutant), 
-            the generation under study (e.g., _000_), and the structure number (e.g., _001_). Therefore, the fifth candidate created by 
-            crossover in generation 10 will have the ID crossover_010_005.</p>
-
-            <p data-aos="fade-up;style=text-align: justify">Next to the ID, you&apos;ll find the space group used to generate the structure (SG_). The numbering 
-            follows the Hermann–Mauguin convention, which classifies 3D space groups as triclinic (1–2), monoclinic (3–15), orthorhombic 
-            (16–74), tetragonal (75–142), trigonal–hexagonal (143–194), and cubic (195–230).</p>
-
-            <p data-aos="fade-up;style=text-align: justify">Naturally, the reference image will differ from yours due to the stochastic nature of the algorithm. 
-            However, you can control the number and type of structures generated by modifying the values of the flags nof_initpop 
-            (controls the initial population), nof_matings (controls the number of matings created), nof_strains (controls the number 
-            of mutants created by lattice strain), and nof_xchange (controls the number of mutants created by atomic exchange).</p>
-
-            <h3 data-aos="fade-up">Niching</h3>
-            <p data-aos="fade-up;style=text-align: justify">The niching process removes duplicate structural information by characterizing all individuals in a 
-            generation using MBTR descriptors. This is accomplished through Python&apos;s <a href="https://singroup.github.io/dscribe/latest/#">DScribe</a> library, 
-            which computes the descriptors for each candidate. These fingerprints are then compared to one another, and any structures 
-            whose similarity exceeds a defined threshold are discarded. The flag controlling the similarity threshold tolerance is 
-            tol_similarity.</p>
-            
-            <p data-aos="fade-up;style=text-align: justify">In the Evolutionary Algorithm, niching is applied in two stages: first, a comparison among elements 
-            within the current generation; and second, a comparison between the unique elements of that generation and all previously 
-            found structures (the Pool elements). Since structural relaxation may converge to the same minima, the first comparison 
-            removes redundant information within a given generation after optimization, while the second eliminates duplicates from 
-            the overall structure pool.</p>
-
-            <p data-aos="fade-up;style=text-align: justify">Finally, notice that there is an energy-based niching technique for the curated list of candidates. 
-            The energy of each structure in the set is compared to that of the lowest-energy candidate, and any candidates whose 
-            energy difference exceeds the threshold defined by the cutoff_energy flag are discarded.</p>
-
-            <!-- agregar imagen output2 -->
-
-            <h2 data-aos="fade-up" id="generation summary">Generation Summary</h2>
-            <p data-aos="fade-up;style=text-align: justify">The entire compendium of structures found in the generation is displayed in the GEN. SUMMARY 
-                section. Here, you will find (in order from left-to-right) the ranking, ID, computed energy (in eV), energy 
-                difference relative to the lowest-energy structure found, and the fitness of each candidate. The fitness correlates 
-                with the probability of being chosen to participate in the inheritance process, and the structures are sorted by 
-                energy.</p>
-            
-            <!-- agregar imagen output3 -->
-            
-            <h2 data-aos="fade-up" id="global summary">Global Summary</h2>
-            <p data-aos="fade-up;style=text-align: justify">Finally, the GLOBAL SUMMARY section displays the best structures found so far through the entire run. 
-                The cutoff_population flag controls the number of structures presented in this list, and the candidates listed here 
-                compete to create the next set of crossover and mutants. Here, you will find (in order from left-to-right) the ranking, 
-                ID, computed energy (in eV), energy difference relative to the lowest-energy structure found, and the fitness of each 
-                candidate. The fitness correlates with the probability of being chosen to participate in the inheritance process, and 
-                the structures are sorted by energy.</p>
-
             <h2 data-aos="fade-up" id="results">Visualizing the Results</h2>
-            <p data-aos="fade-up;style=text-align: justify">Solids uses the visualization tool implemented in Aegon to present you with an embedded iterative 
-                image of the resulting candidate. To use it, simply run the next code:</p>
+            <p data-aos="fade-up;style=text-align: justify">Solids uses the visualization tool implemented in Python&apos;s Library <b>Aegon</b> to 
+                present you with an embedded iterative image of the resulting candidate. To use it, simply run the next code:</p>
             
             <div class="code-container" data-aos="fade-up">
             <div class="code-header">
@@ -1369,10 +1236,123 @@ nof_generations     10  #Number of generations
             <p data-aos="fade-up;style=text-align: justify">If you wish to modify the size of the presented cell, just change the final number 
                 in the viewmol_ASE function to any desired value. Right now, this code shows the unit cell expanded by 
                 110% in all three directions.</p>
-
-            <!-- Agregar imagen output4 -->
-
         </div>
+
+        <!-- output -->
+        <div class="Results" id="Results">
+            <h1 data-aos="fade-up" id="output-local">Understanding the Output</h1>
+            <p data-aos="fade-up;style=text-align: justify">The output of every search is divided into four sections: <b>1.- Generation of 
+                Initial Candidates</b>, <b>2.- Niching</b>, <b>3.- Generation Summary</b>, and <b>4.- Global Summary</b>. Each of these sections narrate, 
+                correspondingly, the procedure followed to create each set of candidates (random, crossover, or mutation), the structural 
+                comparison between them, and the summary of the relaxation process. All sections are detailed in the next sections.
+            </p>
+
+            <h2 data-aos="fade-up" id="initialCandidates">Generation of initial candidates</h2>
+            <p data-aos="fade-up;style=text-align: justify">If you used the default settings, the exploration was performed using the <b>Evolutionary 
+                Algorithm</b>. Consequently, the header of this section reads <b>---GENERATION 0---</b>, indicating the first set of created structures. 
+                As the search progresses, this number will increase, denoting the current iteration of the algorithm. 
+            </p>
+
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaEA_genStruct.png" alt="Output for EA generation of structures" class="Images" loading="lazy">
+            </div>
+
+            <p data-aos="fade-up;style=text-align: justify">If you carried the exploration using the <b>Stochastic Algorithm</b>, then the header will 
+                read <b>---POPULATION GENERATOR---</b>.
+            </p>
+            
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaSA_genStruct.png" alt="Output for SA generation of structures" class="Images" loading="lazy">
+            </div>
+
+            <p data-aos="fade-up;style=text-align: justify">Below the respective header, you will find the ID of each candidate. This ID includes a 
+                prefix describing how the structure was generated (random, mating, or mutant), the generation it belongs to (e.g., _010_), and the 
+                specific structure number (e.g., _005_). <b>For example</b>: <code class="highLine">mating_010_005</code> refers to the 5th candidate 
+                created via crossover (mating) in generation 10.
+            </p>
+
+            <p data-aos="fade-up;style=text-align: justify">Next to the ID, you will find the space group used to generate the structure 
+                <code class="highLine">SG</code>. The numbering follows the Hermann-Mauguin convention, which classifies the 230 space groups 
+                (for 3D) into seven crystal systems:
+                <ul data-aos="fade-up"> 
+                    <li>Triclinic: 1-2</li>
+                    <li>Monoclinic: 3-15</li>
+                    <li>Orthorhombic: 16-74</li>
+                    <li>Tetragonal: 75-142</li>
+                    <li>Trigonal / Hexagonal: 143-194</li>
+                    <li>Cubic: 195-230</li>
+                </ul>
+                You control the number of candidates generated using the flags <b>nof_initpop</b> (number of initial population), 
+                <b>nof_matings</b> (number of crossover), <b>nof_strains</b> (number of lattice strain mutants), and <b>nof_xchange</b> 
+                (number of atomic exchange mutants). 
+            </p>
+
+            <h2 data-aos="fade-up" id="niching">Niching and Energy-Based Filtering</h2>
+            <p data-aos="fade-up;style=text-align: justify">The niching process removes duplicate structural information by characterizing all 
+                individuals in a generation using MBTR (Many-Body Tensor Representation) descriptors. This is accomplished by computing unique 
+                fingerprints for each candidate, comparing them to one another, and descarding any structures whose similarity exceeds a defined 
+                threshold. The flag controlling this tolerance is <b>tol_similarity</b>.When using the <b>Evolutionary Algorithm</b>, niching is 
+                applied in two critical stages:
+                <ul data-aos="fade-up"> 
+                    <li><b>GENvsGEN</b> comparison: A comparison among elements within the current generation. This step removes redundant 
+                        information immediately after optimization.</li>
+                    <li><b>GENvsPOOL</b> comparison: A comparison between the unique elements of the current generation and all previously 
+                        discovered structures. This step ensures that the global set of structures (pool) remains diverse and free of duplicates.</li>
+                </ul>
+                When using the <b>Stochastic Algorithm</b>, niching is only applied in its <b>GENvsGEN</b> form.                
+            </p>
+
+            <p data-aos="fade-up;style=text-align: justify">Finally, there is an energy-based niching technique applied to the curated list of 
+                candidates (regardless the algorithm used). The energy of each structure in the set is compared to that of the lowest-energy 
+                candidate. Any candidates whose energy difference exceeds the threshold defined by the <b>cutoff_energy</b> flag are discarded. This 
+                allows the algorithm to focus its resources on the most promising regions of the PES, keeping the population within a relevant 
+                energy window.</p>
+
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaNiching_EA.png" alt="Output for EA generation of structures" class="Images" loading="lazy">
+            </div>
+
+            <h2 data-aos="fade-up" id="genSummary">Generation Summary</h2>
+            <p data-aos="fade-up;style=text-align: justify">If you're using the <b>Evolutionary Algorithm</b>, the complete compendium of 
+                structures identified within a specific generation is displayed in the <b>---GEN. SUMMARY---</b> section. The structures are 
+                sorted by energy, and for each candidate, the following data is provided (from left to right):
+                <ul data-aos="fade-up"> 
+                    <li><b>Ranking</b> : The position of the structure within the current generation.</li>
+                    <li><b>ID</b> : The unique identifier (e.g., mating_010_005).</li>
+                    <li><b>Energy</b> : The computed energy of the relaxed structure, reported in eV.</li>
+                    <li><b>Relative Energy (&Delta;E)</b>: The energy difference relative to the lowest-energy structure found in that generation.</li>
+                    <li><b>Fitness</b>: A value that correlates with the probability of the structure being selected to participate in the 
+                        inheritance process (Crossover or Mutation).</li>
+                </ul>
+            </p>
+
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaSummary_EA.png" alt="Output for EA generation summary" class="Images" loading="lazy">
+            </div>
+
+            <p data-aos="fade-up;style=text-align: justify">
+                In contrast, the <b>Stochastic Algorithm</b> displays this summary after every stage of relaxation under the 
+                <b>---STAGE N SUMMARY---</b>, where N is replaced to match the stage at hand.
+            </p>
+
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaSummary_SA.png" alt="Output for SA generation summary" class="Images" loading="lazy">
+            </div>
+
+            <h2 data-aos="fade-up" id="globSummary">Global Summary</h2>
+            <p data-aos="fade-up;style=text-align: justify">The <b>---GLOBAL SUMMARY---</b> section 
+                displays the "elite" structures, i.e., the best candidates found across the entire run so far. The number of structures presented in 
+                this list is controlled by the <b>cutoff_population</b> flag.The candidates listed here are of vital importance, as they are the ones 
+                that will "compete" to produce the next set of children through crossover and mutation. This list is sorted by energy and includes 
+                the Ranking, ID, Energy (eV), Relative Energy, and Fitness. By maintaining this global pool of high-fitness individuals, the algorithm 
+                ensures that the search stays focused on the most promising regions of the Potential Energy Surface while moving toward the Global 
+                Minimum. 
+            </p>
+
+            <div class="image-container" data-aos="fade-up">
+                <img src="images/salidaGlobalSummary.png" alt="Output for global summary" class="Images" loading="lazy">
+            </div>
+        </div>        
 
         <!-- developer -->
         <div class="Developer-Info" id="developer-info">
@@ -1380,25 +1360,21 @@ nof_generations     10  #Number of generations
             <!-- contact, información obtenida de ChatGPT-->
             <h2 data-aos="fade-up" id="contact">Contact Information</h2>
             <p data-aos="fade-up;style=text-align: justify">
-            If you would like to collaborate, request technical support, or explore opportunities related to our scientific research feel free to reach out. We are always open to new ideas, partnerships, and interdisciplinary work.
+                If you would like to collaborate, request technical support, or explore opportunities related to our scientific research feel free to 
+                reach out. We are always open to new ideas, partnerships, and interdisciplinary work.
             </p>
-            <p data-aos="fade-up" style="margin-top: 10px;">You can contact us through the following channels, and we will get back to you as soon as possible:</p>
+            <p data-aos="fade-up" style="margin-top: 10px;">You can contact us through the following channels, and we will get back to you as soon 
+                as possible:
+            </p>
             <ul data-aos="fade-up" style="margin-top: 10px; list-style: none; padding-left: 0;">
                 <li><strong>Email:</strong> <a href="mailto:carloast0790@.outlook.com">carloast0790@outlook.com</a></li>
-                <li><strong>Phone:</strong> +52 (331) 372 6224</li>
-                <li><strong>Location:</strong> Mérida, Yucatán, México</li>
+                <li><strong>Location:</strong> Merida, Yucatan, Mexico</li>
                 <li><strong>LinkedIn:</strong> <a href="https://linkedin.com" target="_blank">linkedin.com/company/</a></li>
                 <li><strong>GitHub:</strong> <a href="https://github.com" target="_blank">github.com/</a></li>
             </ul>
             <p data-aos="fade-up" style="margin-top: 15px;">
             Whether you&apos;re a student, researcher, company, or simply curious about innovative technology, we&apos;d love to hear from you.  
             Let&apos;s build something meaningful together.</p>
-            <!-- download -->
-            <h2 data-aos="fade-up" id="download">Download PDF Version</h2>
-            <p data-aos="fade-up;style=text-align: justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
-            <!-- acknowledgments -->
-            <h2 data-aos="fade-up" id="acknowledgments">Acknowledgments</h2>
-            <p data-aos="fade-up;style=text-align: justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis, quam ac varius semper, turpis mi ultrices augue, et imperdiet est leo eu purus. In facilisis vitae ligula at commodo. In efficitur faucibus lacus, ac tempor libero ullamcorper vel. In vehicula mi sed venenatis pharetra. Nulla facilisi. Vestibulum laoreet, velit ut convallis iaculis, turpis mauris auctor ante, id ultricies odio lectus sed arcu. Quisque iaculis tristique sapien quis ultrices. Vivamus nec eros nec lectus rutrum tempor. Nunc placerat mauris justo, commodo tempus orci suscipit ac. Ut ornare accumsan ultricies. Morbi tincidunt sapien nec tincidunt pharetra. Nullam placerat, orci ut molestie venenatis, velit ligula viverra ante, nec suscipit enim est non massa. Sed bibendum nec magna et bibendum.</p>
         </div>
 </section>
 
