@@ -503,8 +503,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 .Images {
     width: 100%; 
-    max-width: 680px; 
-    max-height: 800px; 
+    max-width: 700px; 
+    height: auto; 
     border-radius: 10px; 
     box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
     box-shadow: 0 2px 2px #adb7bd;
@@ -592,6 +592,34 @@ h1, h2, h3, h4, h5, h6 {
     display: block;                    
 }
 
+code.highLine{
+    background-color: #d0e0ead5;
+    color: #da0d0d;
+    font-size: 14px;
+    padding: 0.15em 0.3em;
+    border-radius: 4px; 
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 0.5em 0.75em;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
 /* =========================
    PDF Modal (Preview + Download)
    ========================= */

@@ -236,6 +236,33 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }); 
 
+  // === ENLACES INTERNOS EN EL CONTENIDO ===
+  const contentLinks = document.querySelectorAll(".content a[href^='#']");
+  contentLinks.forEach(link => {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      const targetId = this.getAttribute("href").replace("#", "");
+      const anchor = document.getElementById(targetId);
+
+      if (!anchor) return;
+
+      // Identificar la sección padre según el enlace clicado
+      const parentSection = anchor.closest("div[id]");
+
+      if (parentSection) {
+        const sectionId = parentSection.id;
+        showSection(sectionId);  
+      }
+
+      // Hacer scroll al target con offset
+      setTimeout(() => {
+        const rect = anchor.getBoundingClientRect();
+        const offset = window.scrollY + rect.top - 120;
+        window.scrollTo({ top: offset, behavior: "smooth" });
+      }, 20);
+    });
+  });
+
   // ===============================
   //   MENÚ HAMBURGUESA
   // ===============================
