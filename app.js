@@ -6,13 +6,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const firstListItems = document.querySelectorAll(".first-list > li > a");
   const content = document.querySelector(".content");
   const sections = document.querySelectorAll(".texto > div[id]");
+  let lockedMainLi = null; 
   const sectionMap = {};
   sections.forEach(sec => {
     if (sec.id) sectionMap[sec.id] = sec;
   });
+  const pageTitleSpan = document.querySelector(".page-title span");
+  const pageTitleLink = document.querySelector(".page-title");
+  let currentRootSection = "Introduction";
 
   // 🔹 Mostrar solo una sección
-  function showSection(id) {
+  function showSection(id, behavior = "smooth") {
     if (!sectionMap[id]) {
       console.warn("No existe la sección:", id);
       return;
@@ -21,65 +25,216 @@ document.addEventListener("DOMContentLoaded", () => {
     Object.values(sectionMap).forEach(sec => {
       sec.style.display = "none";
     });
+
     // Mostrar la seleccionada
     sectionMap[id].style.display = "block";
-    // Scroll corregido
-    const rect = sectionMap[id].getBoundingClientRect();
-    const offset = window.scrollY + rect.top - 130;
-    window.scrollTo({ top: offset, behavior: "smooth" });
+
+    // Espera a que el navegador aplique el layout antes de medir
+    requestAnimationFrame(() => {
+      const rect = sectionMap[id].getBoundingClientRect();
+      const offset = window.scrollY + rect.top - 130;
+      window.scrollTo({ top: offset, behavior });
+    });
   }
 
-  // Mostrar solo INTRODUCTION al inicio
-  showSection("Introduction");
+  // Evita que el navegador “recuerde” scroll previo al refrescar
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
 
-  // ================================
-  //   CLICK DEL MENÚ LATERAL
-  // ================================
+  // ✅ Manejo correcto al cargar (refresh / entrada directa)
+  window.addEventListener("load", () => {
+    const hash = window.location.hash.replace("#", "").trim();
+
+    // referencia al inicio del panel de contenido (donde está la top-bar)
+    const contentTop = document.querySelector(".content");
+    const TOP_OFFSET = 160; // ajusta si lo quieres (150–170 suele quedar perfecto)
+
+    if (!hash) {
+      // Sin hash: ve a Introduction y alinea arriba del contenido
+      showSection("Introduction", "auto");
+
+      requestAnimationFrame(() => {
+        const y = contentTop.getBoundingClientRect().top + window.scrollY - TOP_OFFSET;
+        window.scrollTo({ top: y, behavior: "auto" });
+      });
+
+      return;
+    }
+
+    // Con hash:
+    if (sectionMap[hash]) {
+      // Hash es una sección principal
+      showSection(hash, "auto");
+      return;
+    }
+
+    // Hash es un subtítulo: busca su sección padre y luego baja al anchor con offset
+    const anchor = document.getElementById(hash);
+    if (anchor) {
+      const parentSection = anchor.closest("div[id]");
+      if (parentSection && sectionMap[parentSection.id]) {
+        showSection(parentSection.id, "auto");
+
+        requestAnimationFrame(() => {
+          const y = anchor.getBoundingClientRect().top + window.scrollY - TOP_OFFSET;
+          window.scrollTo({ top: y, behavior: "auto" });
+        });
+        return;
+      }
+    }
+
+    // Fallback
+    showSection("Introduction", "auto");
+  });
+
+
+  const homeBtn = document.getElementById("home-btn");
+
+  if (homeBtn) {
+    homeBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      showSection("Introduction");
+
+      requestAnimationFrame(() => {
+        const intro = document.getElementById("Introduction");
+        const y =
+          intro.getBoundingClientRect().top +
+          window.scrollY -
+          160; // 👈 header + divider
+        window.scrollTo({ top: y, behavior: "smooth" });
+      });
+    });
+  }
+
+  // ===============================
+  //   CLICK EN EL LOGO (SOLIDS)
+  // ===============================
+  const solidsLogo = document.getElementById("Solids-Menu");
+
+  if (solidsLogo) {
+    solidsLogo.addEventListener("click", (event) => {
+      event.preventDefault();           // evita el salto normal del #hash
+      showSection("Introduction");      // cambia la "pestaña" real
+      setTopBarTitle("Introduction", "Introduction");
+    });
+  }
+
+  function closeAllThirdMenus(exceptLi = null) {
+    document.querySelectorAll(".tirth-list.active").forEach(ul => {
+      const li = ul.closest("li.has-third");
+      if (exceptLi && li === exceptLi) return;
+      ul.classList.remove("active");
+      if (li) li.classList.remove("active-third");
+    });
+  }
+
   firstListItems.forEach(item => {
     item.addEventListener("click", function (event) {
       event.preventDefault();
+
       const href = this.getAttribute("href");
       if (!href) return;
       const id = href.replace("#", "");
-      // 1) Abre o cierra el submenú
+
       const parentLi = this.parentElement;
       const secondList = parentLi.querySelector(".second-list");
-      parentLi.classList.toggle("active");
-      if (secondList) secondList.classList.toggle("active");
 
-      // 2) Mostrar la sección correspondiente
+      const wasOpen = parentLi.classList.contains("active");
+
+      // 1) Cerrar TODOS los demás (primer nivel)
+      document.querySelectorAll(".first-list > li").forEach(li => {
+        if (li !== parentLi) {
+          li.classList.remove("active");
+          const sub = li.querySelector(".second-list");
+          if (sub) sub.classList.remove("active");
+        }
+      });
+
+      // Cierra terceros niveles
+      closeAllThirdMenus();
+
+      // 2) Si ya estaba abierto -> cerrar y BLOQUEAR para que el scroll-spy no lo reabra
+      if (wasOpen) {
+        parentLi.classList.remove("active");
+        if (secondList) secondList.classList.remove("active");
+
+        lockedMainLi = parentLi;   // <-- clave
+        return;                    // <-- NO showSection
+      }
+
+      // 3) Si estaba cerrado -> abrir normalmente y quitar el bloqueo
+      lockedMainLi = null;
+      parentLi.classList.add("active");
+      if (secondList) secondList.classList.add("active");
+
+      // 4) Mostrar la sección correspondiente
+      showSection(id);
+
+      const titleText = this.textContent.trim();
+      setTopBarTitle(titleText, id);
+
       showSection(id);
     });
   });
 
-    // === SUBMENÚ: mover a la sección correcta y luego al subtítulo ===
+  // ================================
+  //   SUBMENÚ (SECOND LIST) + THIRD LIST
+  // ================================
   const subLinks = document.querySelectorAll(".second-list a");
 
   subLinks.forEach(link => {
     link.addEventListener("click", function (event) {
       event.preventDefault();
 
+      // --- TERCER NIVEL: si este item tiene tirth-list, lo abre/cierra ---
+      const li2 = this.closest(".second-list > li.has-third");
+      if (li2) {
+        const thirdList = li2.querySelector(":scope > .tirth-list");
+        if (thirdList) {
+          const willOpen = !thirdList.classList.contains("active");
+
+          // Cierra otros terceros niveles antes de abrir éste
+          closeAllThirdMenus();
+
+          if (willOpen) {
+            thirdList.classList.add("active");
+            li2.classList.add("active-third");
+          } else {
+            thirdList.classList.remove("active");
+            li2.classList.remove("active-third");
+          }
+        }
+      }
+
+      // --- Navegación normal al ancla ---
       const targetId = this.getAttribute("href").replace("#", "");
       const anchor = document.getElementById(targetId);
-
       if (!anchor) return;
 
       // 1) Identificar la sección padre según el subtítulo clicado
       const parentSection = anchor.closest("div[id]");
-
       if (parentSection) {
         const sectionId = parentSection.id;
-        showSection(sectionId);  
-      }
+        showSection(sectionId);
 
-      // 2) Hacer scroll al subtítulo con offset
+        const mainLink = document.querySelector(
+          `.first-list > li > a[href="#${sectionId}"]`
+        );
+
+        if (mainLink) {
+          setTopBarTitle(mainLink.textContent.trim(), sectionId);
+        }
+      }
+      // 2) Scroll con offset
       setTimeout(() => {
         const rect = anchor.getBoundingClientRect();
         const offset = window.scrollY + rect.top - 120;
         window.scrollTo({ top: offset, behavior: "smooth" });
-      }, 20);
+      }, 10);
     });
-  });
+  }); 
 
   // === ENLACES INTERNOS EN EL CONTENIDO ===
   const contentLinks = document.querySelectorAll(".content a[href^='#']");
@@ -350,7 +505,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(() => {
         const span = element.querySelector("span");
         const original = span.textContent;
-        span.textContent = "¡Copiado!";
+        span.textContent = "¡Copied!";
         span.style.color = "#0e8168";
         setTimeout(() => {
           span.textContent = original;
@@ -362,6 +517,168 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   };
 
+  // ===============================
+  //   SCROLL-SPY PARA SUBSECCIONES (ROBUSTO)
+  // ===============================
+  const subSectionLinks = document.querySelectorAll(".second-list a");
+
+  // id -> link (ojo: si hay ids repetidos en HTML, el scroll-spy puede oscilar)
+  const subLinkMap = {};
+  subSectionLinks.forEach(link => {
+    const id = (link.getAttribute("href") || "").replace("#", "").trim();
+    if (id) subLinkMap[id] = link;
+  });
+
+  function getVisibleMainSection() {
+    // Tu showSection() deja display:none a las otras
+    const mainSections = document.querySelectorAll(".texto > div[id]");
+    for (const sec of mainSections) {
+      const st = window.getComputedStyle(sec);
+      if (st.display !== "none") return sec;
+    }
+    return null;
+  }
+
+  function setActiveSubLink(activeId) {
+    // limpia lista 2
+    subSectionLinks.forEach(a => a.classList.remove("active"));
+
+    if (!activeId || !subLinkMap[activeId]) return;
+
+    const a = subLinkMap[activeId];
+    a.classList.add("active");
+
+    // Activa y abre la sección principal correspondiente
+    const parentLi = a.closest(".first-list > li");
+    if (!parentLi) return;
+    if (lockedMainLi === parentLi) return;
+
+
+    // solo una sección principal activa a la vez
+    document.querySelectorAll(".first-list > li").forEach(li => {
+      li.classList.remove("active");
+      const sub = li.querySelector(".second-list");
+      if (sub) sub.classList.remove("active");
+    });
+    parentLi.classList.add("active");
+
+    const submenu = parentLi.querySelector(".second-list");
+    if (submenu) submenu.classList.add("active");
+  }
+
+  // throttle con rAF para que no “parpadee”
+  let spyTicking = false;
+  function runSpy() {
+    const visibleSection = getVisibleMainSection();
+    if (!visibleSection) return;
+
+    // offset similar al que usas (120-130)
+    const TOP_STICKY = 60;
+    const OFFSET = TOP_STICKY + (window.innerHeight - TOP_STICKY) / 2;
+
+    let currentId = null;
+    let bestTop = -Infinity;
+
+    // solo evalúa anchors dentro de la sección visible
+    Object.keys(subLinkMap).forEach(id => {
+      // Si en tu HTML hay IDs repetidos, querySelectorAll devuelve varios.
+      // Nos quedamos con el que esté dentro de la sección visible y más cercano al OFFSET.
+      const candidates = Array.from(document.querySelectorAll(`#${CSS.escape(id)}`))
+        .filter(el => visibleSection.contains(el));
+
+      candidates.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= OFFSET && rect.top > bestTop) {
+          bestTop = rect.top;
+          currentId = id;
+        }
+      });
+    });
+
+    setActiveSubLink(currentId);
+  }
+
+  window.addEventListener("scroll", () => {
+    if (spyTicking) return;
+    spyTicking = true;
+    requestAnimationFrame(() => {
+      runSpy();
+      spyTicking = false;
+    });
+  });
+
+  window.addEventListener("resize", () => {
+    setTimeout(runSpy, 60);
+  });
+
+  // Muy importante: cuando cambias de sección con el menú, dispara el spy
+  // (porque showSection() hace scroll programático)
+  const _oldShowSection = showSection;
+  showSection = function(id, behavior = "smooth") {
+    _oldShowSection(id, behavior);
+    setTimeout(runSpy, 60);
+  };
+
+  // corre una vez al cargar
+  setTimeout(runSpy, 60);
+
+
+  const scrollBtn = document.getElementById("scrollTopBtn");
+
+  // Mostrar u ocultar el botón
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 200) {
+      scrollBtn.classList.add("show");
+    } else {
+      scrollBtn.classList.remove("show");
+    }
+  });
+
+  // Scroll suave al top
+  scrollBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+
+  function setTopBarTitle(text, sectionId) {
+    pageTitleSpan.textContent = text;
+    currentRootSection = sectionId;
+  }
+
+    // ===============================
+    //   PDF MODAL (H11D1.pdf)
+    // ===============================
+    const openPdfBtn = document.getElementById("openPdfBtn");
+    const pdfModal = document.getElementById("pdfModal");
+    const closePdfBtn = document.getElementById("closePdfBtn");
+    const pdfBackdrop = document.getElementById("pdfBackdrop");
+
+    function openPdfModal() {
+      if (!pdfModal) return;
+      pdfModal.classList.add("is-open");
+      pdfModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden"; // evita scroll del fondo
+    }
+
+    function closePdfModal() {
+      if (!pdfModal) return;
+      pdfModal.classList.remove("is-open");
+      pdfModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = ""; // restaura scroll
+    }
+
+    if (openPdfBtn) openPdfBtn.addEventListener("click", openPdfModal);
+    if (closePdfBtn) closePdfBtn.addEventListener("click", closePdfModal);
+    if (pdfBackdrop) pdfBackdrop.addEventListener("click", closePdfModal);
+
+    // Cerrar con ESC
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && pdfModal && pdfModal.classList.contains("is-open")) {
+        closePdfModal();
+      }
+    });
 });
 
 

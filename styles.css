@@ -212,9 +212,9 @@ header nav img#Solids-Menu:hover {
 }
 
 .first-list li:hover {
-  background-color: #d3d3d3;
-  border-left: 4px solid #598aa8; /* 🔹 mantiene rectángulo */
-  box-shadow: 0 2px 2px #bbe0f7;
+  background-color: #d3d3d3 !important;
+  border-left: 4px solid #598aa8 !important; /* 🔹 mantiene rectángulo */
+  box-shadow: 0 2px 2px #bbe0f7 !important;
 }
 
 .first-list li.active {
@@ -277,16 +277,104 @@ header nav img#Solids-Menu:hover {
   transition: all 0.2s ease-in-out;
 }
 
-.second-list a:hover {
+/* === Submenú activo (scroll-spy) === */
+.second-list a.active {
   color: #0e8168;
   transform: translateX(4px);
   background-color: #e9edf8;
   border-radius: 4px;
+  font-weight: bold;
+}
+
+/* --- TERCER NIVEL (third list) --- */
+.tirth-list{
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 2px;
+  margin-left: 10px;
+  padding-left: 14px;
+  overflow: hidden;
+  max-height: 0;
+  background-color: #f5f6fb;
+  border-radius: 6px;
+  transition: all 0.25s ease-in-out;
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+.tirth-list.active{
+  display: flex;
+  max-height: 220px;
+  padding: 4px 0;
+}
+
+.tirth-list li{
+  list-style: none;
+  line-height: 20px;
+  margin: 2px 0;
+  width: 100%;
+}
+
+.tirth-list a{
+  color: #333;
+  font-size: 14px;
+  padding: 3px 0 3px 12px;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Triangulito para items de second-list que contienen third list */
+.second-list > li.has-third > a{
+  position: relative;
+  padding-right: 26px;
+}
+
+.second-list > li.has-third > a::after{
+  content: "▸";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+  font-size: 16px;
+  color: #adb7bd;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+/* Cuando se despliega el tercer nivel */
+.second-list > li.has-third.active-third > a::after{
+  transform: translateY(-50%) rotate(90deg);
+  color: #0e8168;
 }
 
 /*Menu*/
 .burger-menu {
     display: none; 
+}
+
+/* === Chevron (v) en los títulos del menú === */
+.first-list > li > a {
+  position: relative;
+  padding-right: 30px;   /* espacio para la v */
+}
+
+/* v por defecto (cerrado) */
+.first-list > li > a::after {
+  content: "▾";          /* v hacia abajo */
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+  font-size: 20px;
+  color: #adb7bd;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+/* cuando el menú está abierto */
+.first-list > li.active > a::after {
+  transform: translateY(-50%) rotate(180deg); /* v hacia arriba */
+  color: #0e8168;
 }
 
 /* Barra superior */
@@ -296,22 +384,50 @@ header nav img#Solids-Menu:hover {
     align-items: center;
     color: #333;
     font-size: 16px;
-    margin-bottom: -20px;
-    margin-top: -17px; 
+    margin-bottom: -46px;
+    margin-top: -20px; 
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #ffffff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-right: 10px; 
+    padding-right: -2px;
 }
 .left-content {
-    align-content: start;
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;      /* evita que baje a otra línea */
+    white-space: nowrap;    /* evita saltos dentro del texto */
+    flex: 1 1 auto;
+    min-width: 0; 
 }
-.home-icon {
-    margin-top: 6px;
-    color: #490734; 
-    font-size: 20px; 
+.right-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
 }
-.home-icon:hover{
+
+.right-content .view-more p {
+  margin: 0;              
+  white-space: nowrap;     
+}
+
+.home-icon,
+.settings-icon {
+    color: #490734;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    background-color: #ffffff;
+}
+.home-icon:hover,
+.settings-icon:hover {
     color: #9832a3;
-    transform: scale(1.1); 
+    transform: scale(1.1);
 }
 .separator {
     margin: 0 5px;
@@ -326,16 +442,23 @@ header nav img#Solids-Menu:hover {
 .right-content .view-more p:hover {
     transform: scale(1.1); 
 }
-.divider {
-    border-top: 1px solid #490734;
+.settings-link {
+    margin-left: 5px;            
 }
-
-
+.divider {
+    margin-top: 30px;
+    border-top: 1px solid #490734;
+    position: sticky;
+    top: 50px;
+    z-index: 100;
+    background: #ffffff;
+    margin-bottom: -10px;
+}
 /*Contenido*/
 .content {
     flex: 1;
     margin-left: 340px;   
-    margin-right: 50px;     
+    margin-right: 60px;     
     margin-top: 18px;
     padding: 20px;
     background: #ffffff;
@@ -396,7 +519,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-left: 100px;
     line-height: 20px;
 }
-
 
 /* Código python*/
 .code-container {
@@ -497,6 +619,178 @@ th {
 
 tbody tr:nth-child(even) {
   background-color: #fafafa;
+}
+/* =========================
+   PDF Modal (Preview + Download)
+   ========================= */
+
+.pdf-actions{
+  margin-top: 12px;
+  margin-bottom: 10px;
+}
+
+.btn-pdf{
+  border: none;
+  cursor: pointer;
+  background: #0e8168;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.btn-pdf:hover{
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.pdf-modal{
+  position: fixed;
+  inset: 0;
+  display: none;         /* se activa con .is-open */
+  z-index: 9999;
+}
+
+.pdf-modal.is-open{
+  display: block;
+}
+
+.pdf-modal__backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+}
+
+.pdf-modal__dialog{
+  position: relative;
+  width: min(1200px, 92vw);
+  height: min(100vh, 720px);
+  margin: 0.2vh auto 0 auto;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-modal__header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 7px;
+  border-bottom: 1px solid #e9e9ef;
+  background: #ffffff;
+}
+
+.pdf-modal__header h3{
+  margin: 0;
+  font-size: 1rem;
+  color: #110846;
+}
+
+.pdf-modal__header-actions{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-download{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: #110846;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.btn-download:hover{
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.btn-close{
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: #333;
+  font-size: 1.2rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  transition: background 0.15s ease;
+}
+
+.btn-close:hover{
+  background: #f2f2f6;
+}
+
+.pdf-modal__body{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-frame{
+  flex: 1;
+  width: 100%;
+  border: none;
+}
+
+.pdf-fallback{
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  background: #fafafe;
+  border-top: 1px solid #e9e9ef;
+}
+
+@media (max-width: 520px){
+  .pdf-modal__dialog{
+    margin-top: 6vh;
+    height: 84vh;
+  }
+}
+
+/* Botón Scroll to Top */
+#scrollTopBtn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background-color: #0e8168;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease-in-out;
+  z-index: 9999;
+}
+
+/* Mostrar botón */
+#scrollTopBtn.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  animation: floatUp 1.6s ease-in-out infinite;
+}
+
+/* Hover */
+#scrollTopBtn:hover {
+  background-color: #490734;
+  transform: scale(1.1);
 }
 
 /*Final*/
@@ -610,4 +904,26 @@ footer {
         padding: 2px 0; 
         height: 25px; 
     }
+}
+
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.9; }
+  50% { opacity: 0.5; }
+  100% { opacity: 0.9; }
 }

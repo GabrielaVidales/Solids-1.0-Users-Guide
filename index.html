@@ -19,7 +19,7 @@
 <body>
 <header>
     <nav>
-        <a href="#"><img src="images/Solids-Menu.jpg" id="Solids-Menu"></a>
+        <a href="#Introduction"><img src="images/Solids-Menu.jpg" id="Solids-Menu"></a>
         <div class="search">
             <div class="barra">
                 <div><span class="material-symbols-outlined" id="lupa">search</span></div>
@@ -38,6 +38,7 @@
                         <li><a href="#install">Installing Solids</a></li>
                         <li><a href="#runningSolids">Running Solids</a></li>
                         <li><a href="#theory">A little bit of theory</a></li>
+                        <li><a href="#results">Results</a></li>
                     </ul>
                 </li>
                 <li class="Solids-Local">
@@ -94,12 +95,13 @@
     <!-- top -->
     <div class="top-bar">
         <div class="left-content">
-            <a href="#" class="home-link" id="top-bar"><span class="material-symbols-outlined home-icon">home</span></a>
+            <a href="#Introduction" class="home-link" id="home-btn" title="Home"><span class="material-symbols-outlined home-icon">home</span></a>
             <span class="separator">/</span>
             <a href="#" class="page-title"><span>Introduction</span></a>
         </div>
         <div class="right-content">
             <a href="https://www.theochemmerida.org/publications" class="view-more" target="_blank"><p>View more</p></a>
+            <a href="#" class="settings-link" id="settings-btn" title="Settings"><span class="material-symbols-outlined settings-icon">settings</span></a>
         </div>
     </div>
     <hr class="divider">
@@ -128,8 +130,8 @@
            
             <!-- workflow -->
             <h2 data-aos="fade-up" id="workflow">Solids&apos; Workflow</h2>
-            <p data-aos="fade-up;style=text-align: justify"><i>Solids</i> performs energy landscape exploration through two main algorithms:</p>
-            <ul data-aos="fade-up">
+            <p><i>Solids</i> performs energy landscape exploration through two main algorithms:</p>
+            <ul>
                 <li><b>The Stochastic Algorithm</b> allows for effective pree-screening of the energy landscape by performing 
                     relaxation in stages, meaning that the level of theory can be adjusted or changed mid-run.</li>
                 <li><b>The Evolutionary Algorithm</b> builds on SA by creating new generations using evolutive operators such as 
@@ -169,7 +171,7 @@
                 clik <b><a href="https://www.geeksforgeeks.org/python/pythonpath-environment-variable-in-python">here</a></b>. For example, 
                 if your working directory is <code class="highLine">/home/solids/</code> then the path should look something like this:</p>
 
-            <div class="code-container" data-aos="fade-up">
+            <div class="code-container" data-aos="fade-up;style=text-align: justify">
             <div class="code-header">
                 <div class="buttons">
                 <div class="button red"></div>
@@ -1378,6 +1380,10 @@ if __name__ == "__main__":
         </div>
 </section>
 
+<button id="scrollTopBtn" aria-label="Scroll to top">
+  ↑
+</button>
+
 <footer>
     <div class="version">
         <p>&copy; Solids 1.0 User&apos;s handbook</p>
@@ -1389,6 +1395,5 @@ if __name__ == "__main__":
 <script src="app.js"></script>
 </body>
 </html>
-
 
 
