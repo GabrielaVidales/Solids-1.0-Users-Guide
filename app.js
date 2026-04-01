@@ -6,76 +6,60 @@ document.addEventListener("DOMContentLoaded", () => {
   const firstListItems = document.querySelectorAll(".first-list > li > a");
   const content = document.querySelector(".content");
   const sections = document.querySelectorAll(".texto > div[id]");
-  let lockedMainLi = null; 
+  let lockedMainLi = null;
   const sectionMap = {};
-  sections.forEach(sec => {
-    if (sec.id) sectionMap[sec.id] = sec;
-  });
+  sections.forEach(sec => { if (sec.id) sectionMap[sec.id] = sec; });
   const pageTitleSpan = document.querySelector(".page-title span");
-  const pageTitleLink = document.querySelector(".page-title");
   let currentRootSection = "Introduction";
 
-  // 🔹 Mostrar solo una sección
+  // ===============================
+  //   SHOW / HIDE SECTIONS
+  // ===============================
   function showSection(id, behavior = "smooth") {
-    if (!sectionMap[id]) {
-      console.warn("No existe la sección:", id);
-      return;
-    }
-    // Ocultar todas
-    Object.values(sectionMap).forEach(sec => {
-      sec.style.display = "none";
-    });
-
-    // Mostrar la seleccionada
+    if (!sectionMap[id]) return;
+    Object.values(sectionMap).forEach(sec => { sec.style.display = "none"; });
     sectionMap[id].style.display = "block";
-
-    // Espera a que el navegador aplique el layout antes de medir
     requestAnimationFrame(() => {
       const rect = sectionMap[id].getBoundingClientRect();
       const offset = window.scrollY + rect.top - 130;
       window.scrollTo({ top: offset, behavior });
     });
+    // Close mobile menu after navigation
+    if (window.innerWidth <= 1000) {
+      firstList.classList.remove("active");
+      listItems.forEach(item => item.classList.remove("show"));
+    }
   }
 
-  // Evita que el navegador “recuerde” scroll previo al refrescar
-  if ("scrollRestoration" in history) {
-    history.scrollRestoration = "manual";
-  }
+  // ===============================
+  //   REFRESH FIX — keep current section
+  // ===============================
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
-  // ✅ Manejo correcto al cargar (refresh / entrada directa)
   window.addEventListener("load", () => {
     const hash = window.location.hash.replace("#", "").trim();
-
-    // referencia al inicio del panel de contenido (donde está la top-bar)
+    const TOP_OFFSET = 160;
     const contentTop = document.querySelector(".content");
-    const TOP_OFFSET = 160; // ajusta si lo quieres (150–170 suele quedar perfecto)
 
     if (!hash) {
-      // Sin hash: ve a Introduction y alinea arriba del contenido
       showSection("Introduction", "auto");
-
       requestAnimationFrame(() => {
         const y = contentTop.getBoundingClientRect().top + window.scrollY - TOP_OFFSET;
         window.scrollTo({ top: y, behavior: "auto" });
       });
-
       return;
     }
-
-    // Con hash:
     if (sectionMap[hash]) {
-      // Hash es una sección principal
       showSection(hash, "auto");
+      const mainLink = document.querySelector(`.first-list > li > a[href="#${hash}"]`);
+      if (mainLink) setTopBarTitle(mainLink.textContent.trim(), hash);
       return;
     }
-
-    // Hash es un subtítulo: busca su sección padre y luego baja al anchor con offset
     const anchor = document.getElementById(hash);
     if (anchor) {
       const parentSection = anchor.closest("div[id]");
       if (parentSection && sectionMap[parentSection.id]) {
         showSection(parentSection.id, "auto");
-
         requestAnimationFrame(() => {
           const y = anchor.getBoundingClientRect().top + window.scrollY - TOP_OFFSET;
           window.scrollTo({ top: y, behavior: "auto" });
@@ -83,44 +67,36 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
     }
-
-    // Fallback
     showSection("Introduction", "auto");
   });
 
-
+  // ===============================
+  //   HOME BUTTON
+  // ===============================
   const homeBtn = document.getElementById("home-btn");
-
   if (homeBtn) {
     homeBtn.addEventListener("click", (e) => {
       e.preventDefault();
-
       showSection("Introduction");
-
-      requestAnimationFrame(() => {
-        const intro = document.getElementById("Introduction");
-        const y =
-          intro.getBoundingClientRect().top +
-          window.scrollY -
-          160; // 👈 header + divider
-        window.scrollTo({ top: y, behavior: "smooth" });
-      });
-    });
-  }
-
-  // ===============================
-  //   CLICK EN EL LOGO (SOLIDS)
-  // ===============================
-  const solidsLogo = document.getElementById("Solids-Menu");
-
-  if (solidsLogo) {
-    solidsLogo.addEventListener("click", (event) => {
-      event.preventDefault();           // evita el salto normal del #hash
-      showSection("Introduction");      // cambia la "pestaña" real
       setTopBarTitle("Introduction", "Introduction");
     });
   }
 
+  // ===============================
+  //   LOGO CLICK
+  // ===============================
+  const solidsLogo = document.getElementById("Solids-Menu");
+  if (solidsLogo) {
+    solidsLogo.addEventListener("click", (event) => {
+      event.preventDefault();
+      showSection("Introduction");
+      setTopBarTitle("Introduction", "Introduction");
+    });
+  }
+
+  // ===============================
+  //   MAIN MENU ITEMS
+  // ===============================
   function closeAllThirdMenus(exceptLi = null) {
     document.querySelectorAll(".tirth-list.active").forEach(ul => {
       const li = ul.closest("li.has-third");
@@ -133,17 +109,13 @@ document.addEventListener("DOMContentLoaded", () => {
   firstListItems.forEach(item => {
     item.addEventListener("click", function (event) {
       event.preventDefault();
-
       const href = this.getAttribute("href");
       if (!href) return;
       const id = href.replace("#", "");
-
       const parentLi = this.parentElement;
       const secondList = parentLi.querySelector(".second-list");
-
       const wasOpen = parentLi.classList.contains("active");
 
-      // 1) Cerrar TODOS los demás (primer nivel)
       document.querySelectorAll(".first-list > li").forEach(li => {
         if (li !== parentLi) {
           li.classList.remove("active");
@@ -151,110 +123,68 @@ document.addEventListener("DOMContentLoaded", () => {
           if (sub) sub.classList.remove("active");
         }
       });
-
-      // Cierra terceros niveles
       closeAllThirdMenus();
 
-      // 2) Si ya estaba abierto -> cerrar y BLOQUEAR para que el scroll-spy no lo reabra
       if (wasOpen) {
         parentLi.classList.remove("active");
         if (secondList) secondList.classList.remove("active");
-
-        lockedMainLi = parentLi;   // <-- clave
-        return;                    // <-- NO showSection
+        lockedMainLi = parentLi;
+        return;
       }
-
-      // 3) Si estaba cerrado -> abrir normalmente y quitar el bloqueo
       lockedMainLi = null;
       parentLi.classList.add("active");
       if (secondList) secondList.classList.add("active");
-
-      // 4) Mostrar la sección correspondiente
       showSection(id);
-
-      const titleText = this.textContent.trim();
-      setTopBarTitle(titleText, id);
-
-      showSection(id);
+      setTopBarTitle(this.textContent.trim(), id);
     });
   });
 
-  // ================================
-  //   SUBMENÚ (SECOND LIST) + THIRD LIST
-  // ================================
+  // ===============================
+  //   SUBMENU LINKS
+  // ===============================
   const subLinks = document.querySelectorAll(".second-list a");
-
   subLinks.forEach(link => {
     link.addEventListener("click", function (event) {
       event.preventDefault();
-
-      // --- TERCER NIVEL: si este item tiene tirth-list, lo abre/cierra ---
       const li2 = this.closest(".second-list > li.has-third");
       if (li2) {
         const thirdList = li2.querySelector(":scope > .tirth-list");
         if (thirdList) {
           const willOpen = !thirdList.classList.contains("active");
-
-          // Cierra otros terceros niveles antes de abrir éste
           closeAllThirdMenus();
-
-          if (willOpen) {
-            thirdList.classList.add("active");
-            li2.classList.add("active-third");
-          } else {
-            thirdList.classList.remove("active");
-            li2.classList.remove("active-third");
-          }
+          if (willOpen) { thirdList.classList.add("active"); li2.classList.add("active-third"); }
+          else { thirdList.classList.remove("active"); li2.classList.remove("active-third"); }
         }
       }
-
-      // --- Navegación normal al ancla ---
       const targetId = this.getAttribute("href").replace("#", "");
       const anchor = document.getElementById(targetId);
       if (!anchor) return;
-
-      // 1) Identificar la sección padre según el subtítulo clicado
       const parentSection = anchor.closest("div[id]");
       if (parentSection) {
-        const sectionId = parentSection.id;
-        showSection(sectionId);
-
-        const mainLink = document.querySelector(
-          `.first-list > li > a[href="#${sectionId}"]`
-        );
-
-        if (mainLink) {
-          setTopBarTitle(mainLink.textContent.trim(), sectionId);
-        }
+        showSection(parentSection.id);
+        const mainLink = document.querySelector(`.first-list > li > a[href="#${parentSection.id}"]`);
+        if (mainLink) setTopBarTitle(mainLink.textContent.trim(), parentSection.id);
       }
-      // 2) Scroll con offset
       setTimeout(() => {
         const rect = anchor.getBoundingClientRect();
         const offset = window.scrollY + rect.top - 120;
         window.scrollTo({ top: offset, behavior: "smooth" });
       }, 10);
     });
-  }); 
+  });
 
-  // === ENLACES INTERNOS EN EL CONTENIDO ===
+  // ===============================
+  //   CONTENT INTERNAL LINKS
+  // ===============================
   const contentLinks = document.querySelectorAll(".content a[href^='#']");
   contentLinks.forEach(link => {
     link.addEventListener("click", function (event) {
       event.preventDefault();
       const targetId = this.getAttribute("href").replace("#", "");
       const anchor = document.getElementById(targetId);
-
       if (!anchor) return;
-
-      // Identificar la sección padre según el enlace clicado
       const parentSection = anchor.closest("div[id]");
-
-      if (parentSection) {
-        const sectionId = parentSection.id;
-        showSection(sectionId);  
-      }
-
-      // Hacer scroll al target con offset
+      if (parentSection) showSection(parentSection.id);
       setTimeout(() => {
         const rect = anchor.getBoundingClientRect();
         const offset = window.scrollY + rect.top - 120;
@@ -264,265 +194,225 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ===============================
-  //   MENÚ HAMBURGUESA
+  //   MOBILE BURGER MENU — IMPROVED
   // ===============================
-  burgerMenu.addEventListener("click", () => {
-    if (firstList.classList.contains("active")) {
+  burgerMenu.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isOpen = firstList.classList.contains("active");
+    if (isOpen) {
       firstList.classList.remove("active");
-      content.style.transform = "translateY(0)";
-      listItems.forEach((item, index) => {
-        setTimeout(() => item.classList.remove("show"), index * 100);
-      });
+      listItems.forEach((item, index) => setTimeout(() => item.classList.remove("show"), index * 50));
     } else {
       firstList.classList.add("active");
-      content.style.transform = "translateY(120px)";
-      listItems.forEach((item, index) => {
-        setTimeout(() => item.classList.add("show"), index * 90);
-      });
+      listItems.forEach((item, index) => setTimeout(() => item.classList.add("show"), index * 50));
     }
   });
 
-  // ===============================
-  //   AJUSTE AL REDIMENSIONAR
-  // ===============================
-  window.addEventListener("resize", () => {
-    if (window.innerWidth >= 801) {
+  // Close burger when clicking outside
+  document.addEventListener("click", (e) => {
+    if (window.innerWidth <= 1000 && firstList.classList.contains("active") &&
+        !firstList.contains(e.target) && !burgerMenu.contains(e.target)) {
       firstList.classList.remove("active");
-      content.style.transform = "translateY(0)";
       listItems.forEach(item => item.classList.remove("show"));
     }
   });
 
-  // === Búsqueda con historial ===
-  const searchInput = document.querySelector(".barra input");
-  const key = "searchHistory";
-  let searchHistory = JSON.parse(localStorage.getItem(key)) || [];
-
-  let historyBox = document.createElement("div");
-  historyBox.classList.add("search-history");
-  Object.assign(historyBox.style, {
-    position: "absolute",
-    backgroundColor: "#fff",
-    border: "1px solid #ccc",
-    padding: "5px",
-    width: "180px",
-    maxHeight: "100px",
-    overflowY: "auto",
-    display: "none",
-    zIndex: "1000",
-    borderRadius: "6px",
-    boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-    top: "36px",
-    left: "2px",
-    fontSize: "0.85rem",
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 1001) {
+      firstList.classList.remove("active");
+      listItems.forEach(item => item.classList.remove("show"));
+    }
   });
-  searchInput.parentElement.style.position = "relative";
-  searchInput.parentElement.appendChild(historyBox);
 
-  let matches = [];
-  let currentMatchIndex = -1;
+  // ===============================
+  //   FULL-PAGE SEARCH WITH RESULTS PANEL
+  // ===============================
+  const searchInput = document.querySelector(".barra input");
 
-  function highlightText(searchText) {
-    const container = document.querySelector(".content");
-    if (!container) return;
-
-    container.querySelectorAll("mark").forEach(mark => {
-      const parent = mark.parentNode;
-      parent.replaceChild(document.createTextNode(mark.textContent), mark);
-      parent.normalize();
+  // Build search index from ALL sections
+  function buildSearchIndex() {
+    const index = [];
+    Object.entries(sectionMap).forEach(([sectionId, sectionEl]) => {
+      const sectionTitleEl = document.querySelector(`.first-list > li > a[href="#${sectionId}"]`);
+      const sectionTitle = sectionTitleEl ? sectionTitleEl.textContent.trim() : sectionId;
+      const elements = sectionEl.querySelectorAll("h1,h2,h3,h4,h5,h6,p,li,td,th");
+      elements.forEach(el => {
+        if (el.closest(".code-container") || el.tagName === "PRE" || el.tagName === "CODE") return;
+        const text = el.textContent.trim();
+        if (!text || text.length < 3) return;
+        const label = el.textContent.trim().substring(0, 90) + (el.textContent.trim().length > 90 ? "…" : "");
+        index.push({ sectionId, sectionTitle, element: el, text: text.toLowerCase(), label, isHeading: /^H[1-6]$/.test(el.tagName) });
+      });
     });
+    return index;
+  }
+  const searchIndex = buildSearchIndex();
 
-    function highlightNode(node) {
+  // Create search results panel
+  const searchPanel = document.createElement("div");
+  searchPanel.id = "search-results-panel";
+  searchPanel.innerHTML = `
+    <div class="srp-header">
+      <span class="srp-title">Search Results</span>
+      <span class="srp-count" id="srp-count"></span>
+      <button class="srp-close" id="srp-close" title="Close">✕</button>
+    </div>
+    <div class="srp-list" id="srp-list"></div>
+  `;
+  document.body.appendChild(searchPanel);
+
+  document.getElementById("srp-close").addEventListener("click", () => {
+    searchPanel.classList.remove("open");
+    clearHighlights();
+    searchInput.value = "";
+  });
+
+  let highlightedEls = [];
+
+  function clearHighlights() {
+    document.querySelectorAll(".srp-highlight").forEach(mark => {
+      const parent = mark.parentNode;
+      if (parent) { parent.replaceChild(document.createTextNode(mark.textContent), mark); parent.normalize(); }
+    });
+    highlightedEls = [];
+  }
+
+  function highlightInSection(sectionEl, term) {
+    function walk(node) {
       if (node.nodeType === Node.TEXT_NODE) {
-        const regex = new RegExp(`(${searchText})`, "gi");
-        const highlighted = node.textContent.replace(
-          regex,
-          '<mark style="background-color:#d8b9f2;">$1</mark>'
-        );
+        const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        if (!new RegExp(escaped, "gi").test(node.textContent)) return;
         const wrapper = document.createElement("span");
-        wrapper.innerHTML = highlighted;
+        wrapper.innerHTML = node.textContent.replace(new RegExp(`(${escaped})`, "gi"), '<mark class="srp-highlight">$1</mark>');
         node.replaceWith(wrapper);
       } else if (node.nodeType === Node.ELEMENT_NODE) {
-        if (node.tagName === "PRE" || node.closest(".code-container")) return;
-        node.childNodes.forEach(highlightNode);
+        if (["SCRIPT","STYLE","PRE","CODE"].includes(node.tagName)) return;
+        Array.from(node.childNodes).forEach(walk);
       }
     }
-
-    container.childNodes.forEach(highlightNode);
+    walk(sectionEl);
+    highlightedEls = Array.from(sectionEl.querySelectorAll(".srp-highlight"));
   }
 
-  function saveSearchTerm(term) {
-    if (!term) return;
-    const index = searchHistory.indexOf(term);
-    if (index !== -1) searchHistory.splice(index, 1);
-    searchHistory.push(term);
-    if (searchHistory.length > 5) searchHistory.shift();
-    localStorage.setItem(key, JSON.stringify(searchHistory));
-  }
+  function performSearch(term) {
+    clearHighlights();
+    const list = document.getElementById("srp-list");
+    const countEl = document.getElementById("srp-count");
+    list.innerHTML = "";
 
-  function renderHistoryBox(list) {
-    historyBox.innerHTML = "";
-    if (!list.length) {
-      historyBox.style.display = "none";
+    if (!term || term.length < 2) {
+      searchPanel.classList.remove("open");
       return;
     }
 
-    list.slice().reverse().forEach(term => {
-      const item = document.createElement("div");
-      item.textContent = term;
-      item.style.cursor = "pointer";
-      item.style.padding = "6px 8px";
+    const termLower = term.toLowerCase();
+    const results = [];
+    const seen = new Set();
 
-      item.addEventListener("mouseenter", () => (item.style.background = "#f0f0f0"));
-      item.addEventListener("mouseleave", () => (item.style.background = "transparent"));
-
-      item.addEventListener("click", () => {
-        searchInput.value = term;
-        highlightText(term);
-        saveSearchTerm(term);
-
-        matches = Array.from(document.querySelectorAll(".content mark"));
-        currentMatchIndex = 0;
-
-        if (matches.length) {
-          const scrollContainer = document.querySelector(".content") || document.scrollingElement;
-          const target = matches[0];
-          const rect = target.getBoundingClientRect();
-          const containerRect = scrollContainer.getBoundingClientRect();
-          const offset =
-            rect.top -
-            containerRect.top +
-            scrollContainer.scrollTop -
-            containerRect.height / 2 +
-            rect.height / 2;
-
-          scrollContainer.scrollTo({ top: offset, behavior: "smooth" });
-
-          matches.forEach(m => (m.style.outline = "none"));
-          target.style.outline = "2px solid #9d4edd";
-          target.style.borderRadius = "3px";
-        }
-
-        historyBox.style.display = "none";
-      });
-
-      historyBox.appendChild(item);
+    searchIndex.forEach(entry => {
+      if (!entry.text.includes(termLower)) return;
+      const key = entry.sectionId + "|" + entry.element.tagName + "|" + entry.label.substring(0,40);
+      if (seen.has(key)) return;
+      seen.add(key);
+      results.push(entry);
     });
 
-    historyBox.style.display = "block";
-  }
+    countEl.textContent = results.length > 0 ? `${results.length} result${results.length !== 1 ? "s" : ""}` : "No results";
 
-  document.addEventListener("click", e => {
-    if (!historyBox.contains(e.target) && e.target !== searchInput) {
-      historyBox.style.display = "none";
-    }
-  });
-
-  searchInput.addEventListener("focus", () => {
-    searchHistory = JSON.parse(localStorage.getItem(key)) || [];
-    renderHistoryBox(searchHistory);
-  });
-
-  searchInput.addEventListener("input", () => {
-    const value = searchInput.value.trim().toLowerCase();
-
-    if (value === "") {
-      const container = document.querySelector(".content");
-      if (container) {
-        container.querySelectorAll("mark").forEach(mark => {
-          const parent = mark.parentNode;
-          parent.replaceChild(document.createTextNode(mark.textContent), mark);
-          parent.normalize();
-        });
-      }
-      renderHistoryBox(searchHistory);
+    if (results.length === 0) {
+      list.innerHTML = `<div class="srp-empty">No matches for "<strong>${term}</strong>"</div>`;
+      searchPanel.classList.add("open");
       return;
     }
 
-    const filtered = searchHistory.filter(term =>
-      term.toLowerCase().includes(value)
-    );
-    renderHistoryBox(filtered);
-  });
+    // Group by section
+    const grouped = {};
+    results.forEach(r => {
+      if (!grouped[r.sectionId]) grouped[r.sectionId] = { title: r.sectionTitle, items: [] };
+      grouped[r.sectionId].items.push(r);
+    });
 
-  searchInput.addEventListener("keydown", event => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      const searchText = searchInput.value.trim();
-      if (searchText === "") return;
+    Object.entries(grouped).forEach(([sectionId, group]) => {
+      const groupEl = document.createElement("div");
+      groupEl.className = "srp-group";
 
-      const previousText = searchInput.dataset.lastSearch || "";
-      const isNewSearch = searchText.toLowerCase() !== previousText.toLowerCase();
+      const groupHeader = document.createElement("div");
+      groupHeader.className = "srp-group-title";
+      groupHeader.innerHTML = `<span class="srp-section-icon">📄</span> ${group.title}`;
+      groupEl.appendChild(groupHeader);
 
-      if (isNewSearch || matches.length === 0) {
-        highlightText(searchText);
-        saveSearchTerm(searchText);
-        matches = Array.from(document.querySelectorAll(".content mark"));
-        currentMatchIndex = -1;
-        searchInput.dataset.lastSearch = searchText;
-      }
+      group.items.slice(0, 6).forEach(item => {
+        const itemEl = document.createElement("div");
+        itemEl.className = "srp-item" + (item.isHeading ? " srp-heading" : "");
+        const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const preview = item.label.replace(new RegExp(`(${escaped})`, "gi"), '<mark>$1</mark>');
+        itemEl.innerHTML = `${item.isHeading ? '<span class="srp-type">§</span>' : ''}<span>${preview}</span>`;
 
-      if (!matches.length) return;
+        itemEl.addEventListener("click", () => {
+          showSection(sectionId);
+          setTimeout(() => {
+            clearHighlights();
+            highlightInSection(sectionMap[sectionId], term);
+            const targetEl = item.element;
+            const firstMark = targetEl.querySelector ? targetEl.querySelector(".srp-highlight") : null;
+            const scrollTarget = firstMark || targetEl;
+            setTimeout(() => {
+              const y = scrollTarget.getBoundingClientRect().top + window.scrollY - 160;
+              window.scrollTo({ top: y, behavior: "smooth" });
+              scrollTarget.classList.add("srp-active");
+              setTimeout(() => scrollTarget.classList.remove("srp-active"), 2500);
+            }, 80);
+          }, 60);
+          searchPanel.classList.remove("open");
+        });
 
-      currentMatchIndex = (currentMatchIndex + 1) % matches.length;
-      const target = matches[currentMatchIndex];
-
-      const scrollContainer = document.querySelector(".content") || document.scrollingElement;
-      const containerTop = scrollContainer.getBoundingClientRect().top;
-      const targetTop = target.getBoundingClientRect().top;
-      const offset =
-        scrollContainer.scrollTop +
-        (targetTop - containerTop) -
-        scrollContainer.clientHeight / 2 +
-        target.clientHeight / 2;
-
-      const maxScroll =
-        scrollContainer.scrollHeight - scrollContainer.clientHeight;
-      const finalScroll = Math.min(offset, maxScroll);
-
-      scrollContainer.scrollTo({
-        top: finalScroll,
-        behavior: "smooth",
+        groupEl.appendChild(itemEl);
       });
 
-      matches.forEach(m => (m.style.outline = "none"));
-      target.style.outline = "2px solid #9d4edd";
-      target.style.borderRadius = "3px";
-      target.style.transition = "outline 0.3s ease-in-out";
+      if (group.items.length > 6) {
+        const more = document.createElement("div");
+        more.className = "srp-more";
+        more.textContent = `+${group.items.length - 6} more in this section`;
+        groupEl.appendChild(more);
+      }
+      list.appendChild(groupEl);
+    });
 
-      historyBox.style.display = "none";
-    }
+    searchPanel.classList.add("open");
+  }
+
+  let searchTimer;
+  searchInput.addEventListener("input", () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => performSearch(searchInput.value.trim()), 200);
+  });
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") { searchPanel.classList.remove("open"); clearHighlights(); searchInput.value = ""; }
+    if (e.key === "Enter") { e.preventDefault(); performSearch(searchInput.value.trim()); }
+  });
+  document.addEventListener("click", (e) => {
+    if (!searchPanel.contains(e.target) && !e.target.closest(".search")) searchPanel.classList.remove("open");
   });
 
+  // ===============================
+  //   COPY CODE
+  // ===============================
   window.copyCode = function (element) {
     const pre = element.closest(".code-container")?.querySelector("pre");
     if (!pre) return;
-
-    const code = pre.innerText.trim();
-
-    navigator.clipboard
-      .writeText(code)
-      .then(() => {
-        const span = element.querySelector("span");
-        const original = span.textContent;
-        span.textContent = "¡Copied!";
-        span.style.color = "#0e8168";
-        setTimeout(() => {
-          span.textContent = original;
-          span.style.color = "#333";
-        }, 1500);
-      })
-      .catch(err => {
-        console.error("Error al copiar:", err);
-      });
+    navigator.clipboard.writeText(pre.innerText.trim()).then(() => {
+      const span = element.querySelector("span");
+      const original = span.textContent;
+      span.textContent = "✓ Copied!";
+      span.style.color = "#0e8168";
+      setTimeout(() => { span.textContent = original; span.style.color = "#333"; }, 1500);
+    });
   };
 
   // ===============================
-  //   SCROLL-SPY PARA SUBSECCIONES (ROBUSTO)
+  //   SCROLL-SPY
   // ===============================
   const subSectionLinks = document.querySelectorAll(".second-list a");
-
-  // id -> link (ojo: si hay ids repetidos en HTML, el scroll-spy puede oscilar)
   const subLinkMap = {};
   subSectionLinks.forEach(link => {
     const id = (link.getAttribute("href") || "").replace("#", "").trim();
@@ -530,155 +420,216 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function getVisibleMainSection() {
-    // Tu showSection() deja display:none a las otras
-    const mainSections = document.querySelectorAll(".texto > div[id]");
-    for (const sec of mainSections) {
-      const st = window.getComputedStyle(sec);
-      if (st.display !== "none") return sec;
+    for (const sec of document.querySelectorAll(".texto > div[id]")) {
+      if (window.getComputedStyle(sec).display !== "none") return sec;
     }
     return null;
   }
 
   function setActiveSubLink(activeId) {
-    // limpia lista 2
     subSectionLinks.forEach(a => a.classList.remove("active"));
-
     if (!activeId || !subLinkMap[activeId]) return;
-
     const a = subLinkMap[activeId];
     a.classList.add("active");
-
-    // Activa y abre la sección principal correspondiente
     const parentLi = a.closest(".first-list > li");
-    if (!parentLi) return;
-    if (lockedMainLi === parentLi) return;
-
-
-    // solo una sección principal activa a la vez
+    if (!parentLi || lockedMainLi === parentLi) return;
     document.querySelectorAll(".first-list > li").forEach(li => {
       li.classList.remove("active");
       const sub = li.querySelector(".second-list");
       if (sub) sub.classList.remove("active");
     });
     parentLi.classList.add("active");
-
     const submenu = parentLi.querySelector(".second-list");
     if (submenu) submenu.classList.add("active");
   }
 
-  // throttle con rAF para que no “parpadee”
   let spyTicking = false;
   function runSpy() {
     const visibleSection = getVisibleMainSection();
     if (!visibleSection) return;
-
-    // offset similar al que usas (120-130)
-    const TOP_STICKY = 60;
-    const OFFSET = TOP_STICKY + (window.innerHeight - TOP_STICKY) / 2;
-
-    let currentId = null;
-    let bestTop = -Infinity;
-
-    // solo evalúa anchors dentro de la sección visible
+    const OFFSET = 60 + (window.innerHeight - 60) / 2;
+    let currentId = null, bestTop = -Infinity;
     Object.keys(subLinkMap).forEach(id => {
-      // Si en tu HTML hay IDs repetidos, querySelectorAll devuelve varios.
-      // Nos quedamos con el que esté dentro de la sección visible y más cercano al OFFSET.
-      const candidates = Array.from(document.querySelectorAll(`#${CSS.escape(id)}`))
-        .filter(el => visibleSection.contains(el));
-
-      candidates.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= OFFSET && rect.top > bestTop) {
-          bestTop = rect.top;
-          currentId = id;
-        }
-      });
+      Array.from(document.querySelectorAll(`#${CSS.escape(id)}`))
+        .filter(el => visibleSection.contains(el))
+        .forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= OFFSET && rect.top > bestTop) { bestTop = rect.top; currentId = id; }
+        });
     });
-
     setActiveSubLink(currentId);
   }
-
-  window.addEventListener("scroll", () => {
-    if (spyTicking) return;
-    spyTicking = true;
-    requestAnimationFrame(() => {
-      runSpy();
-      spyTicking = false;
-    });
-  });
-
-  window.addEventListener("resize", () => {
-    setTimeout(runSpy, 60);
-  });
-
-  // Muy importante: cuando cambias de sección con el menú, dispara el spy
-  // (porque showSection() hace scroll programático)
+  window.addEventListener("scroll", () => { if (spyTicking) return; spyTicking = true; requestAnimationFrame(() => { runSpy(); spyTicking = false; }); });
+  window.addEventListener("resize", () => setTimeout(runSpy, 60));
   const _oldShowSection = showSection;
-  showSection = function(id, behavior = "smooth") {
-    _oldShowSection(id, behavior);
-    setTimeout(runSpy, 60);
-  };
-
-  // corre una vez al cargar
+  showSection = function(id, behavior = "smooth") { _oldShowSection(id, behavior); setTimeout(runSpy, 60); };
   setTimeout(runSpy, 60);
 
-
+  // ===============================
+  //   SCROLL TO TOP BUTTON
+  // ===============================
   const scrollBtn = document.getElementById("scrollTopBtn");
+  window.addEventListener("scroll", () => scrollBtn.classList.toggle("show", window.scrollY > 200));
+  scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
-  // Mostrar u ocultar el botón
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 200) {
-      scrollBtn.classList.add("show");
-    } else {
-      scrollBtn.classList.remove("show");
-    }
-  });
-
-  // Scroll suave al top
-  scrollBtn.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  });
-
+  // ===============================
+  //   TOP BAR TITLE
+  // ===============================
   function setTopBarTitle(text, sectionId) {
     pageTitleSpan.textContent = text;
     currentRootSection = sectionId;
   }
 
-    // ===============================
-    //   PDF MODAL (H11D1.pdf)
-    // ===============================
-    const openPdfBtn = document.getElementById("openPdfBtn");
-    const pdfModal = document.getElementById("pdfModal");
-    const closePdfBtn = document.getElementById("closePdfBtn");
-    const pdfBackdrop = document.getElementById("pdfBackdrop");
+  // ===============================
+  //   SETTINGS PANEL
+  // ===============================
+  const settingsBtn = document.getElementById("settings-btn");
 
-    function openPdfModal() {
-      if (!pdfModal) return;
-      pdfModal.classList.add("is-open");
-      pdfModal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden"; // evita scroll del fondo
-    }
+  const settingsPanel = document.createElement("div");
+  settingsPanel.id = "settings-panel";
+  settingsPanel.setAttribute("aria-hidden", "true");
+  settingsPanel.innerHTML = `
+    <div class="sp-header">
+      <span class="sp-title">⚙ Settings</span>
+      <button class="sp-close" id="sp-close" title="Close">✕</button>
+    </div>
+    <div class="sp-body">
+      <div class="sp-section">
+        <div class="sp-section-title">Appearance</div>
+        <div class="sp-row">
+          <label for="sp-font-size">Text size</label>
+          <div class="sp-control">
+            <input type="range" id="sp-font-size" min="12" max="22" value="16" step="1">
+            <span id="sp-font-label">16px</span>
+          </div>
+        </div>
+        <div class="sp-row">
+          <label>Color theme</label>
+          <div class="sp-themes">
+            <button class="sp-theme-btn active" data-theme="default" title="Default">🌤 Default</button>
+            <button class="sp-theme-btn" data-theme="dark" title="Dark mode">🌙 Dark</button>
+            <button class="sp-theme-btn" data-theme="sepia" title="Sepia">📜 Sepia</button>
+            <button class="sp-theme-btn" data-theme="high-contrast" title="High contrast">🔆 Contrast</button>
+          </div>
+        </div>
+      </div>
+      <div class="sp-section">
+        <div class="sp-section-title">Navigation</div>
+        <div class="sp-row">
+          <label for="sp-animations">Animations</label>
+          <label class="sp-toggle"><input type="checkbox" id="sp-animations" checked><span class="sp-slider"></span></label>
+        </div>
+        <div class="sp-row">
+          <label for="sp-code-wrap">Code word wrap</label>
+          <label class="sp-toggle"><input type="checkbox" id="sp-code-wrap"><span class="sp-slider"></span></label>
+        </div>
+      </div>
+      <div class="sp-section sp-about">
+        <div class="sp-section-title">About this guide</div>
+        <p class="sp-about-text"><strong>Solids 1.0</strong> — User's Guide</p>
+        <p class="sp-about-text">Developed by the Theoretical Chemistry group<br>Mérida, Yucatán, México</p>
+        <div class="sp-webmaster">
+          <span class="sp-wm-badge">🌐 Webmaster</span>
+          <span class="sp-wm-name">[ Tu Nombre ]</span>
+        </div>
+        <p class="sp-version">Web v1.0 · 2025</p>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(settingsPanel);
 
-    function closePdfModal() {
-      if (!pdfModal) return;
-      pdfModal.classList.remove("is-open");
-      pdfModal.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = ""; // restaura scroll
-    }
+  const settingsBackdrop = document.createElement("div");
+  settingsBackdrop.id = "settings-backdrop";
+  document.body.appendChild(settingsBackdrop);
 
-    if (openPdfBtn) openPdfBtn.addEventListener("click", openPdfModal);
-    if (closePdfBtn) closePdfBtn.addEventListener("click", closePdfModal);
-    if (pdfBackdrop) pdfBackdrop.addEventListener("click", closePdfModal);
+  function openSettings() { settingsPanel.classList.add("open"); settingsPanel.setAttribute("aria-hidden","false"); settingsBackdrop.classList.add("open"); }
+  function closeSettings() { settingsPanel.classList.remove("open"); settingsPanel.setAttribute("aria-hidden","true"); settingsBackdrop.classList.remove("open"); }
 
-    // Cerrar con ESC
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && pdfModal && pdfModal.classList.contains("is-open")) {
-        closePdfModal();
-      }
+  if (settingsBtn) settingsBtn.addEventListener("click", (e) => { e.preventDefault(); openSettings(); });
+  document.getElementById("sp-close").addEventListener("click", closeSettings);
+  settingsBackdrop.addEventListener("click", closeSettings);
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSettings(); });
+
+  // Font size
+  const fontSlider = document.getElementById("sp-font-size");
+  const fontLabel = document.getElementById("sp-font-label");
+  const savedFont = localStorage.getItem("sg-font-size");
+  if (savedFont) { fontSlider.value = savedFont; document.querySelector(".content").style.fontSize = savedFont + "px"; fontLabel.textContent = savedFont + "px"; }
+  fontSlider.addEventListener("input", () => {
+    fontLabel.textContent = fontSlider.value + "px";
+    document.querySelector(".content").style.fontSize = fontSlider.value + "px";
+    localStorage.setItem("sg-font-size", fontSlider.value);
+  });
+
+  // Themes
+  const themes = {
+    default: { bg: "#eeeefa", contentBg: "#ffffff", navBg: "#35424a", text: "#333", footerBg: "#35424a" },
+    dark: { bg: "#1a1a2e", contentBg: "#16213e", navBg: "#0f3460", text: "#e0e0e0", footerBg: "#0a0a1a" },
+    sepia: { bg: "#f4ecd8", contentBg: "#fdf6e3", navBg: "#5c4033", text: "#3b2a1a", footerBg: "#5c4033" },
+    "high-contrast": { bg: "#ffffff", contentBg: "#ffffff", navBg: "#000000", text: "#000000", footerBg: "#000000" }
+  };
+  const savedTheme = localStorage.getItem("sg-theme") || "default";
+  applyTheme(savedTheme);
+  document.querySelector(`[data-theme="${savedTheme}"]`)?.classList.add("active");
+
+  document.querySelectorAll(".sp-theme-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".sp-theme-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const theme = btn.getAttribute("data-theme");
+      applyTheme(theme);
+      localStorage.setItem("sg-theme", theme);
     });
+  });
+
+  function applyTheme(theme) {
+    const t = themes[theme] || themes.default;
+    document.body.style.backgroundColor = t.bg;
+    const contentEl = document.querySelector(".content");
+    if (contentEl) contentEl.style.backgroundColor = t.contentBg;
+    const navEl = document.querySelector("header nav");
+    if (navEl) navEl.style.backgroundColor = t.navBg;
+    const logoEl = document.getElementById("Solids-Menu");
+    if (logoEl) logoEl.style.backgroundColor = t.navBg;
+    document.body.setAttribute("data-theme", theme);
+    // Apply text color via CSS variable
+    document.documentElement.style.setProperty("--theme-text", t.text);
+  }
+
+  // Animations
+  const animToggle = document.getElementById("sp-animations");
+  if (localStorage.getItem("sg-animations") === "off") { animToggle.checked = false; document.body.classList.add("no-animations"); }
+  animToggle.addEventListener("change", () => {
+    document.body.classList.toggle("no-animations", !animToggle.checked);
+    localStorage.setItem("sg-animations", animToggle.checked ? "on" : "off");
+  });
+
+  // Code wrap
+  const codeWrap = document.getElementById("sp-code-wrap");
+  if (localStorage.getItem("sg-code-wrap") === "on") { codeWrap.checked = true; applyCodeWrap(true); }
+  codeWrap.addEventListener("change", () => { applyCodeWrap(codeWrap.checked); localStorage.setItem("sg-code-wrap", codeWrap.checked ? "on" : "off"); });
+  function applyCodeWrap(wrap) {
+    document.querySelectorAll(".code-container pre").forEach(pre => { pre.style.whiteSpace = wrap ? "pre-wrap" : "pre"; });
+  }
+
+  // ===============================
+  //   PDF MODAL
+  // ===============================
+  const openPdfBtn = document.getElementById("openPdfBtn");
+  const pdfModal = document.getElementById("pdfModal");
+  const closePdfBtn = document.getElementById("closePdfBtn");
+  const pdfBackdrop = document.getElementById("pdfBackdrop");
+  if (openPdfBtn) openPdfBtn.addEventListener("click", () => { pdfModal?.classList.add("is-open"); document.body.style.overflow = "hidden"; });
+  if (closePdfBtn) closePdfBtn.addEventListener("click", () => { pdfModal?.classList.remove("is-open"); document.body.style.overflow = ""; });
+  if (pdfBackdrop) pdfBackdrop.addEventListener("click", () => { pdfModal?.classList.remove("is-open"); document.body.style.overflow = ""; });
+
+  // ===============================
+  //   AOS REFRESH ON SECTION CHANGE
+  // ===============================
+  const _showSectionForAOS = showSection;
+  showSection = function(id, behavior = "smooth") {
+    _showSectionForAOS(id, behavior);
+    if (typeof AOS !== "undefined") setTimeout(() => AOS.refreshHard(), 80);
+  };
+
 });
-
-
