@@ -30,6 +30,12 @@
         <!-- Menú, similar al que tienes el documento -->
         <div class="Secciones">
             <ul class="first-list">
+                <li class="mobile-search-item" style="padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.1);">
+                    <div class="barra mobile-barra" style="background:rgba(255,255,255,0.1);border-radius:20px;display:flex;align-items:center;height:36px;padding:0 10px;">
+                        <span class="material-symbols-outlined" style="color:#aaa;font-size:18px;">search</span>
+                        <input type="text" placeholder="Search..." class="mobile-search-input" style="background:transparent;border:none;outline:none;color:#fff;flex:1;padding:0 8px;font-size:14px;">
+                    </div>
+                </li>
                 <li class="Introduction">
                     <a href="#Introduction">Introduction</a>
                     <ul class="second-list">
@@ -81,6 +87,7 @@
             </ul>
         </div>
         
+        <span class="nav-mobile-title" id="nav-mobile-title">Solids 1.0</span>
         <!-- Esto solo es el ícono del menú de hamburguesa, ntp -->
         <div class="Menu"> 
             <button class="burger-menu" id="burger-menu">
@@ -100,7 +107,7 @@
         <div class="left-content">
             <a href="#Introduction" class="home-link" id="home-btn" title="Home"><span class="material-symbols-outlined home-icon">home</span></a>
             <span class="separator">/</span>
-            <a href="#" class="page-title"><span>Introduction</span></a>
+            <a href="#" class="page-title"><span id="pg-section">Introduction</span><span class="sub-sep" id="sub-sep"> › </span><span id="sub-label" style="display:none"></span></a>
         </div>
         <div class="right-content">
             <a href="https://www.theochemmerida.org/publications" class="view-more" target="_blank"><p>View more</p></a>
@@ -1389,7 +1396,7 @@ if __name__ == "__main__":
 
 <footer>
     <div class="version">
-        <p>&copy; Solids 1.0 User&apos;s Guide &nbsp;&mdash;&nbsp; Webmaster: <a href="https://github.com/GabrielaVidales" target="_blank" rel="noopener" style="color:#bbe0f7;text-decoration:none;">Gabriela Vidales-Ayala</a></p>
+        <p>&copy; Solids 1.0 User&apos;s Guide &nbsp;&mdash;&nbsp; Webmaster: <a href="https://github.com/GabrielaVidales" target="_blank" rel="noopener" style="color:#bbe0f7;text-decoration:none;">Gabriela Vidales</a></p>
     </div>
 </footer>
 
@@ -1398,3 +1405,4 @@ if __name__ == "__main__":
 <script src="app.js"></script>
 </body>
 </html>
+
