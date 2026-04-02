@@ -825,86 +825,7 @@ footer {
     }
 }
 /* Media Queries */
-@media (max-width: 1000px) {
-    header nav {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
-        height: auto;
-        top: 0;
-        left: 0;
-        border-radius: 0;
-        z-index: 9999;
-    }
-    header nav img#Solids-Menu {
-        width: 100px;
-        height: auto;
-        position: static;
-        margin-top: 12px;
-        margin-left: 25%;
-        margin-right: 25px;
-    }
-    .search {
-        display: none;
-    }
-    .burger-menu {
-        display: block;
-        font-size: 2rem;
-        border: 0;
-        background-color: transparent; 
-        cursor: pointer; 
-        margin-top: 12px;
-        margin-left: -34%;
-        color: #d3d3d3;
-    }
-    .first-list {
-        display: none; 
-        list-style: none;
-        margin-top: 10px;
-        margin-bottom: 4px;
-        overflow: hidden;
-        max-height: 0;
-        align-content: center;
-        text-align: center;
-        width: 200px;
-        transition: max-height 0.5s ease-out;
-    }
-    .first-list li {
-        transform: translateY(-20px);
-        transition: opacity 0.5s, transform 0.5s;
-    }
-    .first-list li.show {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    .first-list.active {
-        display: flex;
-        max-height: 500px; 
-        transition: max-height 0.001s ease-in;
-    }
-    .right-content {
-        margin-left: 60%;
-    }
-    .content {
-        flex: 1;
-        max-width: 1000px;
-        margin-left: 30px;
-        margin-right: 20px;
-        margin-top: 70px;
-        padding: 0px 20px;
-        background: #ffffff; 
-        border-radius: 20px; 
-        box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
-        box-shadow: 0 2px 2px #adb7bd;
-    }
-    footer {
-        margin-left: 30px; 
-        margin-right: 20px; 
-        padding: 2px 0; 
-        height: 25px; 
-    }
-}
+
 
 
 @keyframes floatUp {
@@ -1098,145 +1019,357 @@ body.no-animations [data-aos] {
   transform: none !important;
 }
 
-/* ===================================================
-   MOBILE MENU — IMPROVED
-   =================================================== */
-@media (max-width: 1000px) {
-  /* Search panel position on mobile */
-  #search-results-panel {
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90vw;
-    max-width: 400px;
-    top: 70px;
-  }
 
-  /* Settings panel takes full width on very small screens */
-  #settings-panel { width: min(320px, 90vw); }
+  .burger-menu { margin-left: auto !important; }
+  /* Show search inside menu on very small screens */
+}
 
-  /* Better burger menu layout */
-  .burger-menu {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    width: 44px; height: 44px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.1) !important;
-    margin: 8px !important;
-    margin-left: auto !important;
-    order: 3;
-    transition: background 0.2s;
-  }
-  .burger-menu:hover { background: rgba(255,255,255,0.2) !important; }
-
+/* =====================================================
+   RESPONSIVE — TABLET (801px – 1000px)
+   ===================================================== */
+@media (min-width: 801px) and (max-width: 1000px) {
   header nav {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center;
-    flex-wrap: wrap;
+    width: 220px;
+    font-size: 14px;
+    top: 140px;
+    left: 8px;
+    height: calc(100vh - 160px);
+  }
+  header img#Solids-Menu {
+    width: 220px;
+    height: auto;
+    top: 12px;
+    left: 8px;
+  }
+  .search {
+    top: 128px;
+    left: 8px;
+    width: 220px;
+  }
+  .content {
+    margin-left: 244px;
+    margin-right: 16px;
+  }
+  footer {
+    margin-left: 244px;
+    margin-right: 16px;
+  }
+}
+
+/* =====================================================
+   MOBILE (≤ 800px) — Complete rebuild
+   ===================================================== */
+@media (max-width: 800px) {
+
+  /* ── HEADER / NAV ─────────────────────────────── */
+  header nav {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
     width: 100% !important;
     height: auto !important;
-    top: 0 !important; left: 0 !important;
+    min-height: 60px;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
     border-radius: 0 !important;
     z-index: 9999 !important;
-    padding: 0 !important;
-    background-color: #35424a;
+    padding: 0 12px !important;
+    box-sizing: border-box;
+    overflow: visible !important;
+    background-color: #35424a !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
   }
 
-  header nav img#Solids-Menu {
-    width: 80px !important;
-    height: auto !important;
+  /* Logo in top bar */
+  header img#Solids-Menu {
     position: static !important;
-    margin: 8px 12px !important;
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 10px !important;
+    margin: 8px 0 !important;
+    flex-shrink: 0;
+    object-fit: cover;
     order: 1;
   }
 
+  /* Hide desktop search bar */
   .search {
-    display: flex !important;
-    order: 2;
-    flex: 1;
-    margin: 8px 8px 8px 0 !important;
-    position: static !important;
-    width: auto !important;
-    min-width: 120px;
+    display: none !important;
   }
 
-  /* Full-width dropdown menu */
-  .first-list {
-    display: none;
-    width: 100% !important;
+  /* Hamburger button */
+  .burger-menu {
+    display: flex !important;
+    order: 3;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: none !important;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.12) !important;
+    color: #ffffff !important;
+    font-size: 1.6rem !important;
+    cursor: pointer;
     margin: 0 !important;
-    padding: 0 !important;
-    background: #2a343c;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .burger-menu:hover,
+  .burger-menu:focus {
+    background: rgba(255,255,255,0.22) !important;
+    outline: none;
+  }
+
+  /* Page title in top bar (between logo and burger) */
+  .top-bar {
+    display: none !important; /* replaced by nav title */
+  }
+
+  /* Dropdown menu — slides down below the nav bar */
+  .first-list {
+    position: fixed !important;
+    top: 60px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 9998 !important;
+    background: #2b363d !important;
     flex-direction: column !important;
     align-items: stretch !important;
     text-align: left !important;
-    order: 4;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none;
+    display: none !important;         /* hidden by default */
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
   }
 
   .first-list.active {
     display: flex !important;
-    max-height: 600px !important;
-    overflow-y: auto;
   }
 
+  /* Animate each item */
   .first-list > li {
     width: 100% !important;
     border-left: none !important;
-    border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
     padding: 0 !important;
+    line-height: 1 !important;
     opacity: 0;
-    transform: translateY(-8px);
-    transition: opacity 0.25s, transform 0.25s;
+    transform: translateY(-6px);
+    transition: opacity 0.22s ease, transform 0.22s ease;
   }
   .first-list > li.show {
     opacity: 1 !important;
     transform: translateY(0) !important;
   }
 
+  /* Main menu links */
   .first-list > li > a {
-    padding: 12px 20px !important;
-    font-size: 15px;
-    color: #d3d3d3 !important;
     display: flex !important;
     align-items: center;
     justify-content: space-between;
+    padding: 14px 20px !important;
+    font-size: 15px !important;
+    color: #d3d3d3 !important;
+    text-decoration: none;
+    width: 100%;
+    box-sizing: border-box;
   }
-  .first-list > li.active > a { color: #0e8168 !important; background: rgba(14,129,104,0.1); }
-  .first-list > li:hover > a { color: #fff !important; background: rgba(255,255,255,0.07); }
+  .first-list > li > a::after {
+    right: 18px !important;
+  }
+  .first-list > li:hover > a {
+    color: #ffffff !important;
+    background: rgba(255,255,255,0.07) !important;
+  }
+  .first-list > li.active > a {
+    color: #0e8168 !important;
+    background: rgba(14,129,104,0.12) !important;
+  }
 
+  /* Submenu */
   .second-list {
-    background: rgba(0,0,0,0.15) !important;
-    padding-left: 24px !important;
+    background: rgba(0,0,0,0.18) !important;
+    padding-left: 20px !important;
+    border-left: 3px solid #0e8168 !important;
+    margin-left: 16px !important;
   }
-  .second-list a { color: #bbb !important; }
+  .second-list li { line-height: 1 !important; }
+  .second-list a {
+    color: #b0bec5 !important;
+    font-size: 14px !important;
+    padding: 8px 12px !important;
+  }
   .second-list a:hover { color: #0e8168 !important; }
-  .second-list a.active { color: #0e8168 !important; }
+  .second-list a.active { color: #0e8168 !important; font-weight: bold; }
 
+  /* ── CONTENT AREA ──────────────────────────────── */
   .content {
-    margin-left: 12px !important;
-    margin-right: 12px !important;
-    margin-top: 80px !important;
-    padding: 12px 16px !important;
-    border-radius: 12px !important;
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+    margin-top: 72px !important;  /* below fixed nav */
+    margin-bottom: 16px !important;
+    padding: 16px 14px !important;
+    border-radius: 14px !important;
+    width: auto !important;
+    box-sizing: border-box;
+    font-size: 15px;
   }
 
+  /* Top bar inside content — show it (we hid the nav version) */
+  .top-bar {
+    display: flex !important;
+    margin-top: 0 !important;
+    margin-bottom: -36px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    font-size: 14px;
+  }
+  .left-content { font-size: 13px; }
+  .right-content { gap: 6px; }
+  .right-content .view-more p { font-size: 13px; }
+
+  /* ── TABLES ────────────────────────────────────── */
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+  th, td { padding: 6px 10px; min-width: 80px; }
+
+  /* ── CODE BLOCKS ───────────────────────────────── */
+  .code-container {
+    width: 100% !important;
+    margin: 16px 0 !important;
+  }
+  .code-container pre {
+    font-size: 12px !important;
+    padding: 10px 12px !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ── IMAGES ────────────────────────────────────── */
+  .Images {
+    max-width: 100% !important;
+    border-radius: 8px !important;
+  }
+
+  /* ── HEADINGS ──────────────────────────────────── */
+  .content h1 { font-size: 1.5rem; }
+  .content h2 { font-size: 1.25rem; }
+  .content h3 { font-size: 1.1rem; }
+
+  /* ── FOOTER ────────────────────────────────────── */
   footer {
-    margin-left: 12px !important;
-    margin-right: 12px !important;
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+    padding: 2px 0;
+  }
+  .version { font-size: 12px; padding: 0 8px; }
+
+  /* ── SCROLL TOP BTN ────────────────────────────── */
+  #scrollTopBtn {
+    bottom: 16px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
   }
 
-  /* Top bar on mobile */
-  .top-bar { margin-top: 0 !important; }
+  /* ── SEARCH RESULTS PANEL (mobile) ─────────────── */
+  #search-results-panel {
+    left: 8px !important;
+    right: 8px !important;
+    width: auto !important;
+    transform: none !important;
+    top: 64px !important;
+    max-height: 55vh;
+  }
+
+  /* ── SETTINGS PANEL (mobile) ───────────────────── */
+  #settings-panel {
+    width: 100vw !important;
+    right: -100vw !important;
+  }
+  #settings-panel.open { right: 0 !important; }
+
+  /* ── DIVIDER ───────────────────────────────────── */
+  .divider { top: 44px; }
 }
 
-@media (max-width: 480px) {
-  .search { display: none !important; }
-  .burger-menu { margin-left: auto !important; }
-  /* Show search inside menu on very small screens */
+/* =====================================================
+   VERY SMALL PHONES (≤ 400px)
+   ===================================================== */
+@media (max-width: 400px) {
+  .content {
+    margin-left: 4px !important;
+    margin-right: 4px !important;
+    padding: 12px 10px !important;
+    font-size: 14px;
+  }
+  .content h1 { font-size: 1.35rem; }
+  .content h2 { font-size: 1.15rem; }
+  header img#Solids-Menu { width: 38px !important; height: 38px !important; }
+}
+
+/* ── SETTINGS: GitHub link ─────────────────────── */
+.sp-wm-name {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+.sp-wm-name:hover { color: #bbe0f7; text-decoration: underline; }
+
+.sp-github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #0e8168;
+  text-decoration: none;
+  padding: 4px 10px;
+  border: 1px solid #0e8168;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.sp-github-link:hover {
+  background: #0e8168;
+  color: #fff;
+}
+
+/* ── MOBILE TITLE BAR ─────────────────────────────── */
+#mobile-title-bar {
+  display: none;
+}
+@media (max-width: 800px) {
+  #mobile-title-bar {
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 60px;
+    z-index: 900;
+    background: #ffffff;
+    border-bottom: 2px solid #490734;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #9832a3;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  #mobile-current-section::before {
+    content: "📍 ";
+    font-style: normal;
+  }
 }
