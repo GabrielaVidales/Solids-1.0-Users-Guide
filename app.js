@@ -1,67 +1,70 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const burgerMenu = document.getElementById("burger-menu");
-  const firstList = document.querySelector(".first-list");
-  const listItems = document.querySelectorAll(".first-list li");
+  /* ─────────────────────────────────────────────
+     CORE REFERENCES
+  ───────────────────────────────────────────── */
+  const burgerMenu   = document.getElementById("burger-menu");
+  const firstList    = document.querySelector(".first-list");
+  const listItems    = document.querySelectorAll(".first-list li");
   const firstListItems = document.querySelectorAll(".first-list > li > a");
-  const content = document.querySelector(".content");
-  const sections = document.querySelectorAll(".texto > div[id]");
-  let lockedMainLi = null;
-  const sectionMap = {};
-  sections.forEach(sec => { if (sec.id) sectionMap[sec.id] = sec; });
-  const pageTitleSpan = document.querySelector(".page-title span");
+  const sections     = document.querySelectorAll(".texto > div[id]");
+  const pageTitleSpan = document.getElementById("pg-section");
+  let lockedMainLi   = null;
   let currentRootSection = "Introduction";
 
-  // ===============================
-  //   SHOW / HIDE SECTIONS
-  // ===============================
+  const sectionMap = {};
+  sections.forEach(sec => { if (sec.id) sectionMap[sec.id] = sec; });
+
+  /* ─────────────────────────────────────────────
+     SHOW / HIDE SECTIONS
+  ───────────────────────────────────────────── */
   function showSection(id, behavior = "smooth") {
     if (!sectionMap[id]) return;
-    Object.values(sectionMap).forEach(sec => { sec.style.display = "none"; });
+    Object.values(sectionMap).forEach(s => (s.style.display = "none"));
     sectionMap[id].style.display = "block";
     requestAnimationFrame(() => {
-      const rect = sectionMap[id].getBoundingClientRect();
+      const rect   = sectionMap[id].getBoundingClientRect();
       const offset = window.scrollY + rect.top - 130;
       window.scrollTo({ top: offset, behavior });
     });
-    // Close mobile menu after navigation
-    if (window.innerWidth <= 1000) {
+    // close mobile menu on navigation
+    if (window.innerWidth <= 800) {
       firstList.classList.remove("active");
-      listItems.forEach(item => item.classList.remove("show"));
+      listItems.forEach(i => i.classList.remove("show"));
     }
   }
 
-  // ===============================
-  //   REFRESH FIX — keep current section
-  // ===============================
+  /* ─────────────────────────────────────────────
+     REFRESH FIX — preserve section on reload
+  ───────────────────────────────────────────── */
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
   window.addEventListener("load", () => {
-    const hash = window.location.hash.replace("#", "").trim();
-    const TOP_OFFSET = 160;
+    const hash    = window.location.hash.replace("#", "").trim();
+    const OFFSET  = 160;
     const contentTop = document.querySelector(".content");
 
     if (!hash) {
       showSection("Introduction", "auto");
       requestAnimationFrame(() => {
-        const y = contentTop.getBoundingClientRect().top + window.scrollY - TOP_OFFSET;
+        const y = contentTop.getBoundingClientRect().top + window.scrollY - OFFSET;
         window.scrollTo({ top: y, behavior: "auto" });
       });
       return;
     }
     if (sectionMap[hash]) {
       showSection(hash, "auto");
-      const mainLink = document.querySelector(`.first-list > li > a[href="#${hash}"]`);
-      if (mainLink) setTopBarTitle(mainLink.textContent.trim(), hash);
+      const ml = document.querySelector(`.first-list > li > a[href="#${hash}"]`);
+      if (ml) setTopBarTitle(ml.textContent.trim(), hash);
       return;
     }
     const anchor = document.getElementById(hash);
     if (anchor) {
-      const parentSection = anchor.closest("div[id]");
-      if (parentSection && sectionMap[parentSection.id]) {
-        showSection(parentSection.id, "auto");
+      const ps = anchor.closest("div[id]");
+      if (ps && sectionMap[ps.id]) {
+        showSection(ps.id, "auto");
         requestAnimationFrame(() => {
-          const y = anchor.getBoundingClientRect().top + window.scrollY - TOP_OFFSET;
+          const y = anchor.getBoundingClientRect().top + window.scrollY - OFFSET;
           window.scrollTo({ top: y, behavior: "auto" });
         });
         return;
@@ -70,33 +73,26 @@ document.addEventListener("DOMContentLoaded", () => {
     showSection("Introduction", "auto");
   });
 
-  // ===============================
-  //   HOME BUTTON
-  // ===============================
+  /* ─────────────────────────────────────────────
+     HOME BUTTON & LOGO
+  ───────────────────────────────────────────── */
   const homeBtn = document.getElementById("home-btn");
-  if (homeBtn) {
-    homeBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      showSection("Introduction");
-      setTopBarTitle("Introduction", "Introduction");
-    });
-  }
+  if (homeBtn) homeBtn.addEventListener("click", e => {
+    e.preventDefault();
+    showSection("Introduction");
+    setTopBarTitle("Introduction", "Introduction");
+  });
 
-  // ===============================
-  //   LOGO CLICK
-  // ===============================
   const solidsLogo = document.getElementById("Solids-Menu");
-  if (solidsLogo) {
-    solidsLogo.addEventListener("click", (event) => {
-      event.preventDefault();
-      showSection("Introduction");
-      setTopBarTitle("Introduction", "Introduction");
-    });
-  }
+  if (solidsLogo) solidsLogo.addEventListener("click", e => {
+    e.preventDefault();
+    showSection("Introduction");
+    setTopBarTitle("Introduction", "Introduction");
+  });
 
-  // ===============================
-  //   MAIN MENU ITEMS
-  // ===============================
+  /* ─────────────────────────────────────────────
+     MAIN MENU ITEMS
+  ───────────────────────────────────────────── */
   function closeAllThirdMenus(exceptLi = null) {
     document.querySelectorAll(".tirth-list.active").forEach(ul => {
       const li = ul.closest("li.has-third");
@@ -107,158 +103,295 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   firstListItems.forEach(item => {
-    item.addEventListener("click", function (event) {
-      event.preventDefault();
+    item.addEventListener("click", function(e) {
+      e.preventDefault();
       const href = this.getAttribute("href");
       if (!href) return;
       const id = href.replace("#", "");
-      const parentLi = this.parentElement;
+      const parentLi   = this.parentElement;
       const secondList = parentLi.querySelector(".second-list");
-      const wasOpen = parentLi.classList.contains("active");
+      const wasOpen    = parentLi.classList.contains("active");
 
       document.querySelectorAll(".first-list > li").forEach(li => {
         if (li !== parentLi) {
           li.classList.remove("active");
-          const sub = li.querySelector(".second-list");
-          if (sub) sub.classList.remove("active");
+          li.querySelector(".second-list")?.classList.remove("active");
         }
       });
       closeAllThirdMenus();
 
       if (wasOpen) {
         parentLi.classList.remove("active");
-        if (secondList) secondList.classList.remove("active");
+        secondList?.classList.remove("active");
         lockedMainLi = parentLi;
         return;
       }
       lockedMainLi = null;
       parentLi.classList.add("active");
-      if (secondList) secondList.classList.add("active");
+      secondList?.classList.add("active");
       showSection(id);
       setTopBarTitle(this.textContent.trim(), id);
     });
   });
 
-  // ===============================
-  //   SUBMENU LINKS
-  // ===============================
-  const subLinks = document.querySelectorAll(".second-list a");
-  subLinks.forEach(link => {
-    link.addEventListener("click", function (event) {
-      event.preventDefault();
+  /* ─────────────────────────────────────────────
+     SUBMENU LINKS
+  ───────────────────────────────────────────── */
+  document.querySelectorAll(".second-list a").forEach(link => {
+    link.addEventListener("click", function(e) {
+      e.preventDefault();
       const li2 = this.closest(".second-list > li.has-third");
       if (li2) {
-        const thirdList = li2.querySelector(":scope > .tirth-list");
-        if (thirdList) {
-          const willOpen = !thirdList.classList.contains("active");
+        const tl = li2.querySelector(":scope > .tirth-list");
+        if (tl) {
+          const willOpen = !tl.classList.contains("active");
           closeAllThirdMenus();
-          if (willOpen) { thirdList.classList.add("active"); li2.classList.add("active-third"); }
-          else { thirdList.classList.remove("active"); li2.classList.remove("active-third"); }
+          tl.classList.toggle("active", willOpen);
+          li2.classList.toggle("active-third", willOpen);
         }
       }
       const targetId = this.getAttribute("href").replace("#", "");
-      const anchor = document.getElementById(targetId);
+      const anchor   = document.getElementById(targetId);
       if (!anchor) return;
-      const parentSection = anchor.closest("div[id]");
-      if (parentSection) {
-        showSection(parentSection.id);
-        const mainLink = document.querySelector(`.first-list > li > a[href="#${parentSection.id}"]`);
-        if (mainLink) setTopBarTitle(mainLink.textContent.trim(), parentSection.id);
+      const ps = anchor.closest("div[id]");
+      if (ps) {
+        showSection(ps.id);
+        const ml = document.querySelector(`.first-list > li > a[href="#${ps.id}"]`);
+        if (ml) setTopBarTitle(ml.textContent.trim(), ps.id);
+        // Update subsection label in top-bar
+        setSubBarTitle(this.textContent.trim());
       }
       setTimeout(() => {
-        const rect = anchor.getBoundingClientRect();
-        const offset = window.scrollY + rect.top - 120;
-        window.scrollTo({ top: offset, behavior: "smooth" });
+        window.scrollTo({ top: window.scrollY + anchor.getBoundingClientRect().top - 120, behavior: "smooth" });
       }, 10);
     });
   });
 
-  // ===============================
-  //   CONTENT INTERNAL LINKS
-  // ===============================
-  const contentLinks = document.querySelectorAll(".content a[href^='#']");
-  contentLinks.forEach(link => {
-    link.addEventListener("click", function (event) {
-      event.preventDefault();
-      const targetId = this.getAttribute("href").replace("#", "");
-      const anchor = document.getElementById(targetId);
+  /* ─────────────────────────────────────────────
+     CONTENT INTERNAL LINKS
+  ───────────────────────────────────────────── */
+  document.querySelectorAll(".content a[href^='#']").forEach(link => {
+    link.addEventListener("click", function(e) {
+      e.preventDefault();
+      const anchor = document.getElementById(this.getAttribute("href").replace("#", ""));
       if (!anchor) return;
-      const parentSection = anchor.closest("div[id]");
-      if (parentSection) showSection(parentSection.id);
+      const ps = anchor.closest("div[id]");
+      if (ps) showSection(ps.id);
       setTimeout(() => {
-        const rect = anchor.getBoundingClientRect();
-        const offset = window.scrollY + rect.top - 120;
-        window.scrollTo({ top: offset, behavior: "smooth" });
+        window.scrollTo({ top: window.scrollY + anchor.getBoundingClientRect().top - 120, behavior: "smooth" });
       }, 20);
     });
   });
 
-  // ===============================
-  //   MOBILE BURGER MENU — IMPROVED
-  // ===============================
-  burgerMenu.addEventListener("click", (e) => {
+  /* ─────────────────────────────────────────────
+     TOP BAR TITLE (section + subsection breadcrumb)
+  ───────────────────────────────────────────── */
+  const subLabelEl = document.getElementById("sub-label");
+
+  function setTopBarTitle(text, sectionId) {
+    if (pageTitleSpan) pageTitleSpan.textContent = text;
+    currentRootSection = sectionId;
+    if (subLabelEl) { subLabelEl.textContent = ""; subLabelEl.style.display = "none"; }
+    // mobile bar
+    const mb = document.getElementById("mobile-current-section");
+    if (mb) mb.textContent = text;
+    const navTitle = document.getElementById("nav-mobile-title");
+    if (navTitle) navTitle.textContent = text;
+  }
+
+  function setSubBarTitle(subText) {
+    if (!subLabelEl) return;
+    subLabelEl.textContent = subText;
+    subLabelEl.style.display = "inline";
+  }
+
+  /* ─────────────────────────────────────────────
+     MOBILE BURGER MENU
+  ───────────────────────────────────────────── */
+  burgerMenu.addEventListener("click", e => {
     e.stopPropagation();
     const isOpen = firstList.classList.contains("active");
-    if (isOpen) {
-      firstList.classList.remove("active");
-      listItems.forEach((item, index) => setTimeout(() => item.classList.remove("show"), index * 50));
-    } else {
-      firstList.classList.add("active");
-      listItems.forEach((item, index) => setTimeout(() => item.classList.add("show"), index * 50));
-    }
+    firstList.classList.toggle("active", !isOpen);
+    listItems.forEach((item, i) =>
+      setTimeout(() => item.classList.toggle("show", !isOpen), i * 45)
+    );
   });
 
-  // Close burger when clicking outside
-  document.addEventListener("click", (e) => {
-    if (window.innerWidth <= 1000 && firstList.classList.contains("active") &&
+  document.addEventListener("click", e => {
+    if (window.innerWidth <= 800 && firstList.classList.contains("active") &&
         !firstList.contains(e.target) && !burgerMenu.contains(e.target)) {
       firstList.classList.remove("active");
-      listItems.forEach(item => item.classList.remove("show"));
+      listItems.forEach(i => i.classList.remove("show"));
     }
   });
 
   window.addEventListener("resize", () => {
-    if (window.innerWidth >= 1001) {
+    if (window.innerWidth > 800) {
       firstList.classList.remove("active");
-      listItems.forEach(item => item.classList.remove("show"));
+      listItems.forEach(i => i.classList.remove("show"));
     }
   });
 
-  // ===============================
-  //   FULL-PAGE SEARCH WITH RESULTS PANEL
-  // ===============================
+  /* ─────────────────────────────────────────────
+     SCROLL-SPY — updates menu + breadcrumb
+  ───────────────────────────────────────────── */
+  const subSectionLinks = document.querySelectorAll(".second-list a");
+  const subLinkMap = {};
+  subSectionLinks.forEach(link => {
+    const id = (link.getAttribute("href") || "").replace("#", "").trim();
+    if (id) subLinkMap[id] = link;
+  });
+
+  function getVisibleMainSection() {
+    for (const s of document.querySelectorAll(".texto > div[id]"))
+      if (window.getComputedStyle(s).display !== "none") return s;
+    return null;
+  }
+
+  function setActiveSubLink(activeId) {
+    subSectionLinks.forEach(a => a.classList.remove("active"));
+    if (!activeId || !subLinkMap[activeId]) return;
+    const a = subLinkMap[activeId];
+    a.classList.add("active");
+    // update breadcrumb subsection
+    setSubBarTitle(a.textContent.trim());
+    // update mobile bar
+    const mb = document.getElementById("mobile-current-section");
+    if (mb) mb.textContent = (pageTitleSpan?.textContent || "") + " › " + a.textContent.trim();
+
+    const parentLi = a.closest(".first-list > li");
+    if (!parentLi || lockedMainLi === parentLi) return;
+    document.querySelectorAll(".first-list > li").forEach(li => {
+      li.classList.remove("active");
+      li.querySelector(".second-list")?.classList.remove("active");
+    });
+    parentLi.classList.add("active");
+    parentLi.querySelector(".second-list")?.classList.add("active");
+  }
+
+  let spyTicking = false;
+  function runSpy() {
+    const vis = getVisibleMainSection();
+    if (!vis) return;
+    const OFFSET = 60 + (window.innerHeight - 60) / 2;
+    let currentId = null, bestTop = -Infinity;
+    Object.keys(subLinkMap).forEach(id => {
+      Array.from(document.querySelectorAll(`#${CSS.escape(id)}`))
+        .filter(el => vis.contains(el))
+        .forEach(el => {
+          const t = el.getBoundingClientRect().top;
+          if (t <= OFFSET && t > bestTop) { bestTop = t; currentId = id; }
+        });
+    });
+    setActiveSubLink(currentId);
+  }
+
+  window.addEventListener("scroll", () => {
+    if (spyTicking) return;
+    spyTicking = true;
+    requestAnimationFrame(() => { runSpy(); spyTicking = false; });
+  });
+  window.addEventListener("resize", () => setTimeout(runSpy, 60));
+
+  // Wrap showSection to also run spy + AOS refresh
+  const _showSectionBase = showSection;
+  showSection = function(id, behavior = "smooth") {
+    _showSectionBase(id, behavior);
+    setTimeout(runSpy, 60);
+    if (typeof AOS !== "undefined") setTimeout(() => AOS.refreshHard(), 80);
+  };
+  setTimeout(runSpy, 60);
+
+  /* ─────────────────────────────────────────────
+     READING PROGRESS BAR
+  ───────────────────────────────────────────── */
+  const progressBar = document.createElement("div");
+  progressBar.id = "reading-progress";
+  document.body.appendChild(progressBar);
+
+  window.addEventListener("scroll", () => {
+    const el   = document.querySelector(".content");
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const total = el.offsetHeight - window.innerHeight;
+    const done  = Math.max(0, -rect.top);
+    progressBar.style.width = Math.min(100, (done / total) * 100) + "%";
+  }, { passive: true });
+
+  /* ─────────────────────────────────────────────
+     SCROLL TO TOP BUTTON
+  ───────────────────────────────────────────── */
+  const scrollBtn = document.getElementById("scrollTopBtn");
+  window.addEventListener("scroll", () => scrollBtn?.classList.toggle("show", window.scrollY > 300), { passive: true });
+  scrollBtn?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+  /* ─────────────────────────────────────────────
+     MOBILE SEARCH INPUT (in dropdown menu)
+  ─────────────────────────────────────────────── */
+  const mobileSearchInput = document.querySelector(".mobile-search-input");
+  if (mobileSearchInput) {
+    mobileSearchInput.addEventListener("input", () => {
+      const val = mobileSearchInput.value.trim();
+      if (searchInput) searchInput.value = val;
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => val ? performSearch(val) : renderHistory(), 200);
+    });
+    mobileSearchInput.addEventListener("keydown", e => {
+      if (e.key === "Enter") { e.preventDefault(); performSearch(mobileSearchInput.value.trim()); }
+    });
+  }
+
+  /* ─────────────────────────────────────────────
+     COPY CODE
+  ───────────────────────────────────────────── */
+  window.copyCode = function(element) {
+    const pre = element.closest(".code-container")?.querySelector("pre");
+    if (!pre) return;
+    navigator.clipboard.writeText(pre.innerText.trim()).then(() => {
+      const span = element.querySelector("span");
+      const orig = span.textContent;
+      span.textContent = "✓ Copied!";
+      span.style.color = "#0e8168";
+      setTimeout(() => { span.textContent = orig; span.style.color = ""; }, 1600);
+    });
+  };
+
+  /* ─────────────────────────────────────────────
+     SEARCH — full-page with results panel
+  ───────────────────────────────────────────── */
   const searchInput = document.querySelector(".barra input");
 
-  // Build search index from ALL sections
   function buildSearchIndex() {
-    const index = [];
+    const idx = [];
     Object.entries(sectionMap).forEach(([sectionId, sectionEl]) => {
-      const sectionTitleEl = document.querySelector(`.first-list > li > a[href="#${sectionId}"]`);
-      const sectionTitle = sectionTitleEl ? sectionTitleEl.textContent.trim() : sectionId;
-      const elements = sectionEl.querySelectorAll("h1,h2,h3,h4,h5,h6,p,li,td,th");
-      elements.forEach(el => {
-        if (el.closest(".code-container") || el.tagName === "PRE" || el.tagName === "CODE") return;
+      const titleEl    = document.querySelector(`.first-list > li > a[href="#${sectionId}"]`);
+      const sectionTitle = titleEl ? titleEl.textContent.trim() : sectionId;
+      sectionEl.querySelectorAll("h1,h2,h3,h4,h5,h6,p,li,td,th").forEach(el => {
+        if (el.closest(".code-container") || ["PRE","CODE","SCRIPT","STYLE"].includes(el.tagName)) return;
         const text = el.textContent.trim();
         if (!text || text.length < 3) return;
-        const label = el.textContent.trim().substring(0, 90) + (el.textContent.trim().length > 90 ? "…" : "");
-        index.push({ sectionId, sectionTitle, element: el, text: text.toLowerCase(), label, isHeading: /^H[1-6]$/.test(el.tagName) });
+        idx.push({
+          sectionId, sectionTitle, element: el,
+          text: text.toLowerCase(),
+          label: text.substring(0, 90) + (text.length > 90 ? "…" : ""),
+          isHeading: /^H[1-6]$/.test(el.tagName)
+        });
       });
     });
-    return index;
+    return idx;
   }
   const searchIndex = buildSearchIndex();
 
-  // Create search results panel
+  // Search panel DOM
   const searchPanel = document.createElement("div");
   searchPanel.id = "search-results-panel";
   searchPanel.innerHTML = `
     <div class="srp-header">
-      <span class="srp-title">Search Results</span>
+      <span class="srp-title">🔍 Search Results</span>
       <span class="srp-count" id="srp-count"></span>
       <button class="srp-close" id="srp-close" title="Close">✕</button>
     </div>
-    <div class="srp-list" id="srp-list"></div>
-  `;
+    <div class="srp-list" id="srp-list"></div>`;
   document.body.appendChild(searchPanel);
 
   document.getElementById("srp-close").addEventListener("click", () => {
@@ -267,31 +400,70 @@ document.addEventListener("DOMContentLoaded", () => {
     searchInput.value = "";
   });
 
-  let highlightedEls = [];
+  // Search history
+  const HIST_KEY = "sg-search-history";
+  let searchHistory = JSON.parse(localStorage.getItem(HIST_KEY) || "[]");
 
-  function clearHighlights() {
-    document.querySelectorAll(".srp-highlight").forEach(mark => {
-      const parent = mark.parentNode;
-      if (parent) { parent.replaceChild(document.createTextNode(mark.textContent), mark); parent.normalize(); }
+  function saveHistory(term) {
+    if (!term) return;
+    searchHistory = [term, ...searchHistory.filter(t => t !== term)].slice(0, 8);
+    localStorage.setItem(HIST_KEY, JSON.stringify(searchHistory));
+  }
+
+  function renderHistory() {
+    const list = document.getElementById("srp-list");
+    const countEl = document.getElementById("srp-count");
+    list.innerHTML = "";
+    if (!searchHistory.length) { searchPanel.classList.remove("open"); return; }
+    countEl.textContent = "Recent searches";
+    const group = document.createElement("div");
+    group.className = "srp-group";
+    group.innerHTML = `<div class="srp-group-title"><span>🕐</span> Recent</div>`;
+    searchHistory.forEach(term => {
+      const item = document.createElement("div");
+      item.className = "srp-item srp-history";
+      item.innerHTML = `<span class="srp-hist-term">${term}</span><button class="srp-hist-del" data-term="${term}" title="Remove">×</button>`;
+      item.querySelector(".srp-hist-del").addEventListener("click", e => {
+        e.stopPropagation();
+        searchHistory = searchHistory.filter(t => t !== term);
+        localStorage.setItem(HIST_KEY, JSON.stringify(searchHistory));
+        renderHistory();
+      });
+      item.addEventListener("click", e => {
+        if (e.target.classList.contains("srp-hist-del")) return;
+        searchInput.value = term;
+        performSearch(term);
+      });
+      group.appendChild(item);
     });
-    highlightedEls = [];
+    list.appendChild(group);
+    searchPanel.classList.add("open");
+  }
+
+  let hlEls = [];
+  function clearHighlights() {
+    document.querySelectorAll(".srp-highlight").forEach(m => {
+      m.parentNode?.replaceChild(document.createTextNode(m.textContent), m);
+      m.parentNode?.normalize();
+    });
+    hlEls = [];
   }
 
   function highlightInSection(sectionEl, term) {
+    const esc = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     function walk(node) {
       if (node.nodeType === Node.TEXT_NODE) {
-        const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        if (!new RegExp(escaped, "gi").test(node.textContent)) return;
-        const wrapper = document.createElement("span");
-        wrapper.innerHTML = node.textContent.replace(new RegExp(`(${escaped})`, "gi"), '<mark class="srp-highlight">$1</mark>');
-        node.replaceWith(wrapper);
+        if (!new RegExp(esc, "gi").test(node.textContent)) return;
+        const w = document.createElement("span");
+        w.innerHTML = node.textContent.replace(new RegExp(`(${esc})`, "gi"), '<mark class="srp-highlight">$1</mark>');
+        node.replaceWith(w);
       } else if (node.nodeType === Node.ELEMENT_NODE) {
         if (["SCRIPT","STYLE","PRE","CODE"].includes(node.tagName)) return;
         Array.from(node.childNodes).forEach(walk);
       }
     }
     walk(sectionEl);
-    highlightedEls = Array.from(sectionEl.querySelectorAll(".srp-highlight"));
+    hlEls = Array.from(sectionEl.querySelectorAll(".srp-highlight"));
   }
 
   function performSearch(term) {
@@ -301,31 +473,30 @@ document.addEventListener("DOMContentLoaded", () => {
     list.innerHTML = "";
 
     if (!term || term.length < 2) {
-      searchPanel.classList.remove("open");
+      renderHistory();
       return;
     }
 
-    const termLower = term.toLowerCase();
-    const results = [];
+    const termLow = term.toLowerCase();
     const seen = new Set();
-
-    searchIndex.forEach(entry => {
-      if (!entry.text.includes(termLower)) return;
-      const key = entry.sectionId + "|" + entry.element.tagName + "|" + entry.label.substring(0,40);
-      if (seen.has(key)) return;
+    const results = searchIndex.filter(e => {
+      if (!e.text.includes(termLow)) return false;
+      const key = e.sectionId + "|" + e.element.tagName + "|" + e.label.substring(0,40);
+      if (seen.has(key)) return false;
       seen.add(key);
-      results.push(entry);
+      return true;
     });
 
-    countEl.textContent = results.length > 0 ? `${results.length} result${results.length !== 1 ? "s" : ""}` : "No results";
+    countEl.textContent = results.length ? `${results.length} result${results.length !== 1 ? "s" : ""}` : "No results";
 
-    if (results.length === 0) {
+    if (!results.length) {
       list.innerHTML = `<div class="srp-empty">No matches for "<strong>${term}</strong>"</div>`;
       searchPanel.classList.add("open");
       return;
     }
 
-    // Group by section
+    saveHistory(term);
+
     const grouped = {};
     results.forEach(r => {
       if (!grouped[r.sectionId]) grouped[r.sectionId] = { title: r.sectionTitle, items: [] };
@@ -335,37 +506,27 @@ document.addEventListener("DOMContentLoaded", () => {
     Object.entries(grouped).forEach(([sectionId, group]) => {
       const groupEl = document.createElement("div");
       groupEl.className = "srp-group";
-
-      const groupHeader = document.createElement("div");
-      groupHeader.className = "srp-group-title";
-      groupHeader.innerHTML = `<span class="srp-section-icon">📄</span> ${group.title}`;
-      groupEl.appendChild(groupHeader);
+      groupEl.innerHTML = `<div class="srp-group-title"><span>📄</span> ${group.title}</div>`;
 
       group.items.slice(0, 6).forEach(item => {
+        const esc = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
         const itemEl = document.createElement("div");
         itemEl.className = "srp-item" + (item.isHeading ? " srp-heading" : "");
-        const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const preview = item.label.replace(new RegExp(`(${escaped})`, "gi"), '<mark>$1</mark>');
-        itemEl.innerHTML = `${item.isHeading ? '<span class="srp-type">§</span>' : ''}<span>${preview}</span>`;
-
+        itemEl.innerHTML = `${item.isHeading ? '<span class="srp-type">§</span>' : ''}<span>${item.label.replace(new RegExp(`(${esc})`, "gi"), "<mark>$1</mark>")}</span>`;
         itemEl.addEventListener("click", () => {
           showSection(sectionId);
           setTimeout(() => {
             clearHighlights();
             highlightInSection(sectionMap[sectionId], term);
-            const targetEl = item.element;
-            const firstMark = targetEl.querySelector ? targetEl.querySelector(".srp-highlight") : null;
-            const scrollTarget = firstMark || targetEl;
+            const firstMark = item.element.querySelector?.(".srp-highlight") || item.element;
             setTimeout(() => {
-              const y = scrollTarget.getBoundingClientRect().top + window.scrollY - 160;
-              window.scrollTo({ top: y, behavior: "smooth" });
-              scrollTarget.classList.add("srp-active");
-              setTimeout(() => scrollTarget.classList.remove("srp-active"), 2500);
+              window.scrollTo({ top: firstMark.getBoundingClientRect().top + window.scrollY - 160, behavior: "smooth" });
+              firstMark.classList.add("srp-active");
+              setTimeout(() => firstMark.classList.remove("srp-active"), 2500);
             }, 80);
           }, 60);
           searchPanel.classList.remove("open");
         });
-
         groupEl.appendChild(itemEl);
       });
 
@@ -382,110 +543,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   let searchTimer;
-  searchInput.addEventListener("input", () => {
+  searchInput?.addEventListener("input", () => {
     clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => performSearch(searchInput.value.trim()), 200);
+    const val = searchInput.value.trim();
+    searchTimer = setTimeout(() => val ? performSearch(val) : renderHistory(), 200);
   });
-  searchInput.addEventListener("keydown", (e) => {
+  searchInput?.addEventListener("focus", () => {
+    if (!searchInput.value.trim()) renderHistory();
+  });
+  searchInput?.addEventListener("keydown", e => {
     if (e.key === "Escape") { searchPanel.classList.remove("open"); clearHighlights(); searchInput.value = ""; }
-    if (e.key === "Enter") { e.preventDefault(); performSearch(searchInput.value.trim()); }
+    if (e.key === "Enter")  { e.preventDefault(); performSearch(searchInput.value.trim()); }
   });
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", e => {
     if (!searchPanel.contains(e.target) && !e.target.closest(".search")) searchPanel.classList.remove("open");
   });
 
-  // ===============================
-  //   COPY CODE
-  // ===============================
-  window.copyCode = function (element) {
-    const pre = element.closest(".code-container")?.querySelector("pre");
-    if (!pre) return;
-    navigator.clipboard.writeText(pre.innerText.trim()).then(() => {
-      const span = element.querySelector("span");
-      const original = span.textContent;
-      span.textContent = "✓ Copied!";
-      span.style.color = "#0e8168";
-      setTimeout(() => { span.textContent = original; span.style.color = "#333"; }, 1500);
-    });
-  };
-
-  // ===============================
-  //   SCROLL-SPY
-  // ===============================
-  const subSectionLinks = document.querySelectorAll(".second-list a");
-  const subLinkMap = {};
-  subSectionLinks.forEach(link => {
-    const id = (link.getAttribute("href") || "").replace("#", "").trim();
-    if (id) subLinkMap[id] = link;
-  });
-
-  function getVisibleMainSection() {
-    for (const sec of document.querySelectorAll(".texto > div[id]")) {
-      if (window.getComputedStyle(sec).display !== "none") return sec;
-    }
-    return null;
-  }
-
-  function setActiveSubLink(activeId) {
-    subSectionLinks.forEach(a => a.classList.remove("active"));
-    if (!activeId || !subLinkMap[activeId]) return;
-    const a = subLinkMap[activeId];
-    a.classList.add("active");
-    const parentLi = a.closest(".first-list > li");
-    if (!parentLi || lockedMainLi === parentLi) return;
-    document.querySelectorAll(".first-list > li").forEach(li => {
-      li.classList.remove("active");
-      const sub = li.querySelector(".second-list");
-      if (sub) sub.classList.remove("active");
-    });
-    parentLi.classList.add("active");
-    const submenu = parentLi.querySelector(".second-list");
-    if (submenu) submenu.classList.add("active");
-  }
-
-  let spyTicking = false;
-  function runSpy() {
-    const visibleSection = getVisibleMainSection();
-    if (!visibleSection) return;
-    const OFFSET = 60 + (window.innerHeight - 60) / 2;
-    let currentId = null, bestTop = -Infinity;
-    Object.keys(subLinkMap).forEach(id => {
-      Array.from(document.querySelectorAll(`#${CSS.escape(id)}`))
-        .filter(el => visibleSection.contains(el))
-        .forEach(el => {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= OFFSET && rect.top > bestTop) { bestTop = rect.top; currentId = id; }
-        });
-    });
-    setActiveSubLink(currentId);
-  }
-  window.addEventListener("scroll", () => { if (spyTicking) return; spyTicking = true; requestAnimationFrame(() => { runSpy(); spyTicking = false; }); });
-  window.addEventListener("resize", () => setTimeout(runSpy, 60));
-  const _oldShowSection = showSection;
-  showSection = function(id, behavior = "smooth") { _oldShowSection(id, behavior); setTimeout(runSpy, 60); };
-  setTimeout(runSpy, 60);
-
-  // ===============================
-  //   SCROLL TO TOP BUTTON
-  // ===============================
-  const scrollBtn = document.getElementById("scrollTopBtn");
-  window.addEventListener("scroll", () => scrollBtn.classList.toggle("show", window.scrollY > 200));
-  scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-
-  // ===============================
-  //   TOP BAR TITLE
-  // ===============================
-  function setTopBarTitle(text, sectionId) {
-    pageTitleSpan.textContent = text;
-    currentRootSection = sectionId;
-    // Update mobile title bar
-    const mobileTitle = document.getElementById("mobile-current-section");
-    if (mobileTitle) mobileTitle.textContent = text;
-  }
-
-  // ===============================
-  //   SETTINGS PANEL
-  // ===============================
+  /* ─────────────────────────────────────────────
+     SETTINGS PANEL
+  ───────────────────────────────────────────── */
   const settingsBtn = document.getElementById("settings-btn");
 
   const settingsPanel = document.createElement("div");
@@ -494,46 +570,46 @@ document.addEventListener("DOMContentLoaded", () => {
   settingsPanel.innerHTML = `
     <div class="sp-header">
       <span class="sp-title">⚙ Settings</span>
-      <button class="sp-close" id="sp-close" title="Close">✕</button>
+      <button class="sp-close" id="sp-close" title="Close settings">✕</button>
     </div>
     <div class="sp-body">
+
       <div class="sp-section">
         <div class="sp-section-title">Appearance</div>
         <div class="sp-row">
           <label for="sp-font-size">Text size</label>
           <div class="sp-control">
-            <input type="range" id="sp-font-size" min="12" max="22" value="16" step="1">
+            <button class="sp-font-btn" id="sp-font-dec">A−</button>
             <span id="sp-font-label">16px</span>
+            <button class="sp-font-btn" id="sp-font-inc">A+</button>
           </div>
         </div>
-        <div class="sp-row">
+        <div class="sp-row sp-theme-row">
           <label>Color theme</label>
           <div class="sp-themes">
-            <button class="sp-theme-btn active" data-theme="default" title="Default">🌤 Default</button>
+            <button class="sp-theme-btn active" data-theme="default" title="Default">☀ Default</button>
             <button class="sp-theme-btn" data-theme="dark" title="Dark mode">🌙 Dark</button>
             <button class="sp-theme-btn" data-theme="sepia" title="Sepia">📜 Sepia</button>
-            <button class="sp-theme-btn" data-theme="high-contrast" title="High contrast">🔆 Contrast</button>
+            <button class="sp-theme-btn" data-theme="contrast" title="High contrast">◑ Contrast</button>
           </div>
         </div>
       </div>
+
       <div class="sp-section">
-        <div class="sp-section-title">Navigation</div>
+        <div class="sp-section-title">Animations</div>
         <div class="sp-row">
-          <label for="sp-animations">Animations</label>
+          <label for="sp-animations">Enable animations</label>
           <label class="sp-toggle"><input type="checkbox" id="sp-animations" checked><span class="sp-slider"></span></label>
         </div>
-        <div class="sp-row">
-          <label for="sp-code-wrap">Code word wrap</label>
-          <label class="sp-toggle"><input type="checkbox" id="sp-code-wrap"><span class="sp-slider"></span></label>
-        </div>
       </div>
+
       <div class="sp-section sp-about">
         <div class="sp-section-title">About this guide</div>
         <p class="sp-about-text"><strong>Solids 1.0</strong> — User's Guide</p>
-        <p class="sp-about-text">Developed by the Theoretical Chemistry group<br>Mérida, Yucatán, México</p>
+        <p class="sp-about-text">Theoretical Chemistry Group<br>Mérida, Yucatán, México</p>
         <div class="sp-webmaster">
           <span class="sp-wm-badge">🌐 Webmaster</span>
-          <a class="sp-wm-name" href="https://github.com/GabrielaVidales" target="_blank" rel="noopener">Gabriela Vidales-Ayala</a>
+          <a class="sp-wm-name" href="https://github.com/GabrielaVidales" target="_blank" rel="noopener">Gabriela Vidales</a>
         </div>
         <a class="sp-github-link" href="https://github.com/GabrielaVidales" target="_blank" rel="noopener">
           <svg height="14" viewBox="0 0 16 16" width="14" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -541,40 +617,43 @@ document.addEventListener("DOMContentLoaded", () => {
         </a>
         <p class="sp-version">Web v1.0 · 2025</p>
       </div>
-    </div>
-  `;
+    </div>`;
   document.body.appendChild(settingsPanel);
 
   const settingsBackdrop = document.createElement("div");
   settingsBackdrop.id = "settings-backdrop";
   document.body.appendChild(settingsBackdrop);
 
-  function openSettings() { settingsPanel.classList.add("open"); settingsPanel.setAttribute("aria-hidden","false"); settingsBackdrop.classList.add("open"); }
+  function openSettings()  { settingsPanel.classList.add("open"); settingsPanel.setAttribute("aria-hidden","false"); settingsBackdrop.classList.add("open"); }
   function closeSettings() { settingsPanel.classList.remove("open"); settingsPanel.setAttribute("aria-hidden","true"); settingsBackdrop.classList.remove("open"); }
 
-  if (settingsBtn) settingsBtn.addEventListener("click", (e) => { e.preventDefault(); openSettings(); });
+  settingsBtn?.addEventListener("click", e => { e.preventDefault(); openSettings(); });
   document.getElementById("sp-close").addEventListener("click", closeSettings);
   settingsBackdrop.addEventListener("click", closeSettings);
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSettings(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeSettings(); });
 
-  // Font size
-  const fontSlider = document.getElementById("sp-font-size");
+  // Font size with +/− buttons
+  let fontSize = parseInt(localStorage.getItem("sg-font-size") || "16");
   const fontLabel = document.getElementById("sp-font-label");
-  const savedFont = localStorage.getItem("sg-font-size");
-  if (savedFont) { fontSlider.value = savedFont; document.querySelector(".content").style.fontSize = savedFont + "px"; fontLabel.textContent = savedFont + "px"; }
-  fontSlider.addEventListener("input", () => {
-    fontLabel.textContent = fontSlider.value + "px";
-    document.querySelector(".content").style.fontSize = fontSlider.value + "px";
-    localStorage.setItem("sg-font-size", fontSlider.value);
-  });
+  function applyFontSize(sz) {
+    sz = Math.min(22, Math.max(12, sz));
+    fontSize = sz;
+    fontLabel.textContent = sz + "px";
+    document.querySelector(".content").style.fontSize = sz + "px";
+    localStorage.setItem("sg-font-size", sz);
+  }
+  applyFontSize(fontSize);
+  document.getElementById("sp-font-inc").addEventListener("click", () => applyFontSize(fontSize + 1));
+  document.getElementById("sp-font-dec").addEventListener("click", () => applyFontSize(fontSize - 1));
 
-  // Themes
+  // Themes — full dark mode with white text
   const themes = {
-    default: { bg: "#eeeefa", contentBg: "#ffffff", navBg: "#35424a", text: "#333", footerBg: "#35424a" },
-    dark: { bg: "#1a1a2e", contentBg: "#16213e", navBg: "#0f3460", text: "#e0e0e0", footerBg: "#0a0a1a" },
-    sepia: { bg: "#f4ecd8", contentBg: "#fdf6e3", navBg: "#5c4033", text: "#3b2a1a", footerBg: "#5c4033" },
-    "high-contrast": { bg: "#ffffff", contentBg: "#ffffff", navBg: "#000000", text: "#000000", footerBg: "#000000" }
+    default:  { bg:"#eeeefa", contentBg:"#ffffff", navBg:"#35424a", text:"#222222", link:"#0e8168", heading:"#110846", code:"#d0e0ea", border:"#e0e0e0" },
+    dark:     { bg:"#0d1117", contentBg:"#161b22", navBg:"#0d1117", text:"#e6edf3", link:"#58a6ff", heading:"#cdd9e5", code:"#2d3748", border:"#30363d" },
+    sepia:    { bg:"#f4ecd8", contentBg:"#fdf6e3", navBg:"#5c4033", text:"#3b2a1a", link:"#8b5e3c", heading:"#2a1a0a", code:"#e8dcc8", border:"#d4c5a9" },
+    contrast: { bg:"#ffffff", contentBg:"#ffffff", navBg:"#000000", text:"#000000", link:"#0000cc", heading:"#000000", code:"#f0f0f0", border:"#000000" }
   };
+
   const savedTheme = localStorage.getItem("sg-theme") || "default";
   applyTheme(savedTheme);
   document.querySelector(`[data-theme="${savedTheme}"]`)?.classList.add("active");
@@ -583,27 +662,41 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => {
       document.querySelectorAll(".sp-theme-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      const theme = btn.getAttribute("data-theme");
-      applyTheme(theme);
-      localStorage.setItem("sg-theme", theme);
+      const th = btn.getAttribute("data-theme");
+      applyTheme(th);
+      localStorage.setItem("sg-theme", th);
     });
   });
 
   function applyTheme(theme) {
     const t = themes[theme] || themes.default;
-    document.body.style.backgroundColor = t.bg;
-    const contentEl = document.querySelector(".content");
-    if (contentEl) contentEl.style.backgroundColor = t.contentBg;
-    const navEl = document.querySelector("header nav");
-    if (navEl) navEl.style.backgroundColor = t.navBg;
-    const logoEl = document.getElementById("Solids-Menu");
-    if (logoEl) logoEl.style.backgroundColor = t.navBg;
+    const root = document.documentElement;
+    root.style.setProperty("--th-bg",      t.bg);
+    root.style.setProperty("--th-content", t.contentBg);
+    root.style.setProperty("--th-nav",     t.navBg);
+    root.style.setProperty("--th-text",    t.text);
+    root.style.setProperty("--th-link",    t.link);
+    root.style.setProperty("--th-heading", t.heading);
+    root.style.setProperty("--th-code",    t.code);
+    root.style.setProperty("--th-border",  t.border);
     document.body.setAttribute("data-theme", theme);
-    // Apply text color via CSS variable
-    document.documentElement.style.setProperty("--theme-text", t.text);
+
+    // apply inline for elements not using vars
+    document.body.style.backgroundColor = t.bg;
+    const content = document.querySelector(".content");
+    if (content) { content.style.backgroundColor = t.contentBg; content.style.color = t.text; }
+    const nav = document.querySelector("header nav");
+    if (nav) nav.style.backgroundColor = t.navBg;
+
+    // headings
+    document.querySelectorAll(".content h1,.content h2,.content h3").forEach(h => h.style.color = t.heading);
+    // links in content
+    document.querySelectorAll(".texto a").forEach(a => a.style.color = t.link);
+    // inline code
+    document.querySelectorAll("code.highLine").forEach(c => { c.style.backgroundColor = t.code; });
   }
 
-  // Animations
+  // Animations toggle
   const animToggle = document.getElementById("sp-animations");
   if (localStorage.getItem("sg-animations") === "off") { animToggle.checked = false; document.body.classList.add("no-animations"); }
   animToggle.addEventListener("change", () => {
@@ -611,32 +704,36 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("sg-animations", animToggle.checked ? "on" : "off");
   });
 
-  // Code wrap
-  const codeWrap = document.getElementById("sp-code-wrap");
-  if (localStorage.getItem("sg-code-wrap") === "on") { codeWrap.checked = true; applyCodeWrap(true); }
-  codeWrap.addEventListener("change", () => { applyCodeWrap(codeWrap.checked); localStorage.setItem("sg-code-wrap", codeWrap.checked ? "on" : "off"); });
-  function applyCodeWrap(wrap) {
-    document.querySelectorAll(".code-container pre").forEach(pre => { pre.style.whiteSpace = wrap ? "pre-wrap" : "pre"; });
-  }
+  /* ─────────────────────────────────────────────
+     PDF MODAL
+  ───────────────────────────────────────────── */
+  const openPdfBtn   = document.getElementById("openPdfBtn");
+  const pdfModal     = document.getElementById("pdfModal");
+  const closePdfBtn  = document.getElementById("closePdfBtn");
+  const pdfBackdrop  = document.getElementById("pdfBackdrop");
+  openPdfBtn?.addEventListener("click",  () => { pdfModal?.classList.add("is-open");    document.body.style.overflow = "hidden"; });
+  closePdfBtn?.addEventListener("click", () => { pdfModal?.classList.remove("is-open"); document.body.style.overflow = ""; });
+  pdfBackdrop?.addEventListener("click", () => { pdfModal?.classList.remove("is-open"); document.body.style.overflow = ""; });
 
-  // ===============================
-  //   PDF MODAL
-  // ===============================
-  const openPdfBtn = document.getElementById("openPdfBtn");
-  const pdfModal = document.getElementById("pdfModal");
-  const closePdfBtn = document.getElementById("closePdfBtn");
-  const pdfBackdrop = document.getElementById("pdfBackdrop");
-  if (openPdfBtn) openPdfBtn.addEventListener("click", () => { pdfModal?.classList.add("is-open"); document.body.style.overflow = "hidden"; });
-  if (closePdfBtn) closePdfBtn.addEventListener("click", () => { pdfModal?.classList.remove("is-open"); document.body.style.overflow = ""; });
-  if (pdfBackdrop) pdfBackdrop.addEventListener("click", () => { pdfModal?.classList.remove("is-open"); document.body.style.overflow = ""; });
+  /* ─────────────────────────────────────────────
+     IMAGE ZOOM on click
+  ───────────────────────────────────────────── */
+  const imgOverlay = document.createElement("div");
+  imgOverlay.id = "img-zoom-overlay";
+  imgOverlay.innerHTML = `<img id="img-zoom-img" src="" alt=""><button id="img-zoom-close">✕</button>`;
+  document.body.appendChild(imgOverlay);
 
-  // ===============================
-  //   AOS REFRESH ON SECTION CHANGE
-  // ===============================
-  const _showSectionForAOS = showSection;
-  showSection = function(id, behavior = "smooth") {
-    _showSectionForAOS(id, behavior);
-    if (typeof AOS !== "undefined") setTimeout(() => AOS.refreshHard(), 80);
-  };
+  document.querySelectorAll(".Images").forEach(img => {
+    img.style.cursor = "zoom-in";
+    img.addEventListener("click", () => {
+      document.getElementById("img-zoom-img").src = img.src;
+      imgOverlay.classList.add("open");
+      document.body.style.overflow = "hidden";
+    });
+  });
+  function closeZoom() { imgOverlay.classList.remove("open"); document.body.style.overflow = ""; }
+  imgOverlay.addEventListener("click", e => { if (e.target === imgOverlay) closeZoom(); });
+  document.getElementById("img-zoom-close").addEventListener("click", closeZoom);
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeZoom(); });
 
 });
