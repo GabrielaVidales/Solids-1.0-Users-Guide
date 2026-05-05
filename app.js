@@ -24,10 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
     sectionMap[id].style.display = "block";
     requestAnimationFrame(() => {
       if (scrollToTop) {
-        // Scroll al inicio absoluto de la sección (justo debajo del top-bar)
-        const rect   = sectionMap[id].getBoundingClientRect();
-        const offset = window.scrollY + rect.top - 70;
-        window.scrollTo({ top: Math.max(0, offset), behavior });
+        // Ir al inicio absoluto de la página (top = 0)
+        window.scrollTo({ top: 0, behavior });
       } else {
         const rect   = sectionMap[id].getBoundingClientRect();
         const offset = window.scrollY + rect.top - 130;
@@ -128,9 +126,9 @@ document.addEventListener("DOMContentLoaded", () => {
       closeAllThirdMenus();
 
       if (wasOpen) {
-        parentLi.classList.remove("active");
-        secondList?.classList.remove("active");
-        lockedMainLi = parentLi;
+        // Aunque ya esté abierto, scrolleamos al inicio de la sección
+        showSection(id, "smooth", true);
+        setTopBarTitle(this.textContent.trim(), id);
         return;
       }
       lockedMainLi = null;
