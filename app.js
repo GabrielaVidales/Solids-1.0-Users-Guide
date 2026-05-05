@@ -18,14 +18,21 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ─────────────────────────────────────────────
      SHOW / HIDE SECTIONS
   ───────────────────────────────────────────── */
-  function showSection(id, behavior = "smooth") {
+  function showSection(id, behavior = "smooth", scrollToTop = false) {
     if (!sectionMap[id]) return;
     Object.values(sectionMap).forEach(s => (s.style.display = "none"));
     sectionMap[id].style.display = "block";
     requestAnimationFrame(() => {
-      const rect   = sectionMap[id].getBoundingClientRect();
-      const offset = window.scrollY + rect.top - 130;
-      window.scrollTo({ top: offset, behavior });
+      if (scrollToTop) {
+        // Scroll al inicio absoluto de la sección (justo debajo del top-bar)
+        const rect   = sectionMap[id].getBoundingClientRect();
+        const offset = window.scrollY + rect.top - 70;
+        window.scrollTo({ top: Math.max(0, offset), behavior });
+      } else {
+        const rect   = sectionMap[id].getBoundingClientRect();
+        const offset = window.scrollY + rect.top - 130;
+        window.scrollTo({ top: offset, behavior });
+      }
     });
     // close mobile menu on navigation
     if (window.innerWidth <= 800) {
@@ -129,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
       lockedMainLi = null;
       parentLi.classList.add("active");
       secondList?.classList.add("active");
-      showSection(id);
+      showSection(id, "smooth", true);
       setTopBarTitle(this.textContent.trim(), id);
     });
   });
@@ -295,8 +302,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Wrap showSection to also run spy + AOS refresh
   const _showSectionBase = showSection;
-  showSection = function(id, behavior = "smooth") {
-    _showSectionBase(id, behavior);
+  showSection = function(id, behavior = "smooth", scrollToTop = false) {
+    _showSectionBase(id, behavior, scrollToTop);
     setTimeout(runSpy, 60);
     if (typeof AOS !== "undefined") setTimeout(() => AOS.refreshHard(), 80);
   };
