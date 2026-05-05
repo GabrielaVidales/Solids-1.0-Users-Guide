@@ -343,6 +343,7 @@ header nav img#Solids-Menu:hover {
 .first-list > li > a {
   position: relative;
   padding-right: 30px;   /* espacio para la v */
+  font-style: italic;
 }
 
 /* v por defecto (cerrado) */
@@ -1232,7 +1233,7 @@ body.no-animations [data-aos] { opacity: 1 !important; transform: none !importan
     display: flex !important; align-items: center;
     justify-content: space-between; padding: 15px 20px !important;
     font-size: 15px !important; color: #d3d3d3 !important;
-    box-sizing: border-box; width: 100%;
+    box-sizing: border-box; width: 100%; font-style: italic;
   }
   .first-list > li > a::after { right: 18px !important; }
   .first-list > li:hover > a { color: #fff !important; background: rgba(255,255,255,0.06) !important; }
