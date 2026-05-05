@@ -22,11 +22,11 @@ header nav {
     width: 300px;
     font-size: 16px;
     position: fixed;
-    top: 160px;       /* debajo del logo y la barra */
+    top: 193px;       /* debajo del logo y la barra */
     left: 10px;
     border-radius: 20px;
     background-color: #35424a;
-    height: calc(100vh - 180px); /* resta altura del logo + búsqueda */
+    height: calc(100vh - 210px); /* resta altura del logo + búsqueda */
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin;
@@ -67,46 +67,64 @@ header img#Solids-Menu:hover {
 /* ==== BARRA DE BÚSQUEDA FIJA ==== */
 .search {
     position: fixed;
-    top: 150px;        /* justo debajo del logo */
+    top: 143px;        /* justo debajo del logo */
     left: 10px;
     width: 300px;
-    height: 35px;
+    height: 40px;
     display: flex;
     align-items: center;
-    background-color: white;
-    border-radius: 20px;
-    border: 1.5px solid #598aa8;
-    box-shadow: 0 2px 2px #bbe0f7;
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 1.5px solid #c8dae6;
+    box-shadow: 0 4px 12px rgba(89, 138, 168, 0.18), 0 1px 3px rgba(0,0,0,0.08);
     z-index: 20;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .search:focus-within {
-    border: 2px solid #598aa8;
-    box-shadow: 0 2px 2px #bbe0f7;
+    border: 1.5px solid #598aa8;
+    box-shadow: 0 4px 16px rgba(89, 138, 168, 0.32), 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .barra {
     display: flex;
     align-items: center;
-    height: 30px;
-    width: 98%;
+    height: 38px;
+    width: 100%;
     position: relative;
+    padding: 0 4px;
+    box-sizing: border-box;
 }
 
 .barra input {
     flex: 1;
     border: none;
     outline: none;
-    background-color: white;
-    font-size: 15px;
-    border-radius: 20px;
-    padding-right: 10px;
+    background-color: transparent;
+    font-size: 14px;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: #35424a;
+    border-radius: 12px;
+    padding-right: 12px;
+    letter-spacing: 0.2px;
+}
+
+.barra input::placeholder {
+    color: #adb7bd;
+    font-style: italic;
+    font-size: 13px;
 }
 
 #lupa {
-    padding: 10px 5px 10px 15px;
-    font-size: 20px;
-    font-weight: bolder;
+    padding: 0 6px 0 12px;
+    font-size: 18px;
+    color: #598aa8;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+}
+
+.search:focus-within #lupa {
     color: #35424a;
 }
 
@@ -152,39 +170,7 @@ header nav img#Solids-Menu:hover {
     transition: transform 0.1s ease-in-out;
 }
 
-/*Search*/
-.search {
-    display: flex;
-    align-items: center;
-    height: 30px;
-    background-color: white;
-    border-radius: 20px;
-    border: 1.5px solid #598aa8;
-    box-shadow: 0 2px 2px #bbe0f7;
-}
-.search:focus-within {
-    border: 2px solid #598aa8; 
-    box-shadow: 0 2px 2px #bbe0f7;
-}
-.barra {
-    display: flex; 
-    align-items: center;
-    height: 30px;
-    width: 98%;
-}
-.barra input {
-    flex: 1;
-    border: none; 
-    outline: none;
-    background-color: white;
-    font-size: 15px;
-}
-#lupa {
-    padding: 10px 5px 10px 15px;
-    font-size: 20px; 
-    font-weight: bolder;
-    color:#35424a;
-}
+/*Search — see definición principal arriba en ==== BARRA DE BÚSQUEDA FIJA ====*/
 
 /* --- MENÚ LATERAL PRINCIPAL --- */
 .first-list {
@@ -954,7 +940,7 @@ body.no-animations [data-aos] { opacity: 1 !important; transform: none !importan
    ===================================================== */
 #search-results-panel {
   position: fixed;
-  top: 195px;
+  top: 193px;
   left: 10px;
   width: 300px;
   max-height: 440px;
@@ -1143,9 +1129,9 @@ body.no-animations [data-aos] { opacity: 1 !important; transform: none !importan
    TABLET (801 – 1000px) — sidebar still shows, smaller
    ===================================================== */
 @media (min-width: 801px) and (max-width: 1000px) {
-  header nav { width: 220px; font-size: 14px; top: 138px; left: 8px; height: calc(100vh - 158px); }
+  header nav { width: 220px; font-size: 14px; top: 162px; left: 8px; height: calc(100vh - 178px); }
   header img#Solids-Menu { width: 220px; height: auto; top: 12px; left: 8px; }
-  .search { top: 126px; left: 8px; width: 220px; }
+  .search { top: 138px; left: 8px; width: 220px; height: 36px; }
   .content { margin-left: 240px; margin-right: 14px; }
   footer  { margin-left: 240px; margin-right: 14px; }
   .burger-menu { display: none !important; }
