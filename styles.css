@@ -22,11 +22,11 @@ header nav {
     width: 300px;
     font-size: 16px;
     position: fixed;
-    top: 193px;       /* debajo del logo y la barra */
+    top: 150px;       /* nav empieza aquí, la barra de search (z-index:25) se sobreplone */
     left: 10px;
     border-radius: 20px;
     background-color: #35424a;
-    height: calc(100vh - 210px); /* resta altura del logo + búsqueda */
+    height: calc(100vh - 165px);
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin;
@@ -67,64 +67,51 @@ header img#Solids-Menu:hover {
 /* ==== BARRA DE BÚSQUEDA FIJA ==== */
 .search {
     position: fixed;
-    top: 143px;        /* justo debajo del logo */
+    top: 143px;        /* justo debajo del logo, sobrelapada con el nav */
     left: 10px;
     width: 300px;
-    height: 40px;
+    height: 35px;
     display: flex;
     align-items: center;
-    background-color: #ffffff;
-    border-radius: 12px;
-    border: 1.5px solid #c8dae6;
-    box-shadow: 0 4px 12px rgba(89, 138, 168, 0.18), 0 1px 3px rgba(0,0,0,0.08);
-    z-index: 20;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background-color: white;
+    border-radius: 20px;
+    border: 1.5px solid #598aa8;
+    box-shadow: 0 0 12px rgba(89,138,168,0.55), 0 2px 4px rgba(0,0,0,0.12);
+    z-index: 25;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .search:focus-within {
-    border: 1.5px solid #598aa8;
-    box-shadow: 0 4px 16px rgba(89, 138, 168, 0.32), 0 2px 4px rgba(0,0,0,0.1);
+    border: 2px solid #598aa8;
+    box-shadow: 0 0 18px rgba(89,138,168,0.75), 0 3px 8px rgba(0,0,0,0.15);
 }
 
 .barra {
     display: flex;
     align-items: center;
-    height: 38px;
-    width: 100%;
+    height: 30px;
+    width: 98%;
     position: relative;
-    padding: 0 4px;
-    box-sizing: border-box;
 }
 
 .barra input {
     flex: 1;
     border: none;
     outline: none;
-    background-color: transparent;
-    font-size: 14px;
-    font-family: Georgia, 'Times New Roman', serif;
-    color: #35424a;
-    border-radius: 12px;
-    padding-right: 12px;
-    letter-spacing: 0.2px;
+    background-color: white;
+    font-size: 15px;
+    border-radius: 20px;
+    padding-right: 10px;
 }
 
 .barra input::placeholder {
     color: #adb7bd;
-    font-style: italic;
-    font-size: 13px;
 }
 
 #lupa {
-    padding: 0 6px 0 12px;
-    font-size: 18px;
-    color: #598aa8;
-    display: flex;
-    align-items: center;
-    transition: color 0.2s ease;
-}
-
-.search:focus-within #lupa {
+    padding: 10px 5px 10px 15px;
+    font-size: 20px;
+    font-weight: bolder;
     color: #35424a;
 }
 
@@ -170,7 +157,10 @@ header nav img#Solids-Menu:hover {
     transition: transform 0.1s ease-in-out;
 }
 
-/*Search — see definición principal arriba en ==== BARRA DE BÚSQUEDA FIJA ====*/
+/* Solids 1.0 title — solo visible en móvil */
+.nav-mobile-title {
+    display: none;
+}
 
 /* --- MENÚ LATERAL PRINCIPAL --- */
 .first-list {
@@ -941,7 +931,7 @@ body.no-animations [data-aos] { opacity: 1 !important; transform: none !importan
    ===================================================== */
 #search-results-panel {
   position: fixed;
-  top: 193px;
+  top: 183px;
   left: 10px;
   width: 300px;
   max-height: 440px;
